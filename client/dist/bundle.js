@@ -102,15 +102,23 @@ __webpack_require__.r(__webpack_exports__);
 
 var ReviewList = function ReviewList() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+
+  // STATE that holds list of all reviews
   var reviews = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
     return state.ratingsReviews.reviews;
   });
+
+  // STATE that holds only rendered reviews, starts with 2, add 2 whenever click 'more reviews'
   var renderedReviews = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
     return state.ratingsReviews.renderedReviews;
   });
+
+  // might make this its own component eventually
   var reviewCards = renderedReviews.map(function (review) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, review.reviewer_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Summary: ", review.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Review: ", review.body));
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, review.reviewer_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Summary: ", review.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Review: ", review.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "MORE REVIEW INFO EVENTUALLY"));
   });
+
+  // add next 2 more reviews from total list to rendered list
   var handleMoreReviews = function handleMoreReviews() {
     var start = renderedReviews.length;
     var reviewsToAdd = reviews.slice(start, start + 2);
@@ -118,7 +126,7 @@ var ReviewList = function ReviewList() {
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Ratings & Reviews"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Rating Breakdown goes here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Product Breakdown goes here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, reviews.length, " reviews, sorted by FIX_ME"), reviewCards, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handleMoreReviews
-  }, "MORE REVIEWS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "ADD A REVIEW +"));
+  }, "MORE REVIEWS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "ADD A REVIEW + -TODO-"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ReviewList);
 
@@ -177,21 +185,49 @@ function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Sym
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
+var exampleData = [{
+  "review_id": 5,
+  "rating": 3,
+  "summary": "I'm enjoying wearing these shades",
+  "recommend": false,
+  "response": null,
+  "body": "Comfortable and practical.",
+  "date": "2019-04-14T00:00:00.000Z",
+  "reviewer_name": "shortandsweeet",
+  "helpfulness": 5,
+  "photos": [{
+    "id": 1,
+    "url": "urlplaceholder/review_5_photo_number_1.jpg"
+  }, {
+    "id": 2,
+    "url": "urlplaceholder/review_5_photo_number_2.jpg"
+  }]
+}, {
+  "review_id": 3,
+  "rating": 4,
+  "summary": "I am liking these glasses",
+  "recommend": false,
+  "response": "Glad you're enjoying the product!",
+  "body": "They are very dark. But that's good because I'm in very sunny spots",
+  "date": "2019-06-23T00:00:00.000Z",
+  "reviewer_name": "bigbrotherbenjamin",
+  "helpfulness": 5,
+  "photos": []
+}, {
+  "review_id": 4,
+  "rating": 4,
+  "summary": "I am liking these pants",
+  "recommend": true,
+  "response": "Glad you're enjoying the product!",
+  "body": "They are very dark. like my soul",
+  "date": "2019-06-23T00:00:00.000Z",
+  "reviewer_name": "bwork22",
+  "helpfulness": 5,
+  "photos": []
+}];
 var initialState = {
-  reviews: [{
-    summary: 'nice bag',
-    reviewer_name: 'steve',
-    body: 'yeah it is a nice bag'
-  }, {
-    summary: 'nice coat',
-    reviewer_name: 'robert',
-    body: 'yeah it is a nice coat'
-  }, {
-    summary: 'horrible shoes',
-    reviewer_name: 'ray',
-    body: 'they hurt my feet'
-  }],
-  renderedReviews: []
+  reviews: exampleData,
+  renderedReviews: exampleData.slice(0, 2)
 };
 var ratingsReviewsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
   name: 'ratingsReviews',
