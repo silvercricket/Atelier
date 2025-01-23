@@ -15,10 +15,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ProductOverview_ProductOverview_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductOverview/ProductOverview.jsx */ "./client/src/components/ProductOverview/ProductOverview.jsx");
+/* harmony import */ var _RatingsReviews_RatingsReviews_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RatingsReviews/RatingsReviews.jsx */ "./client/src/components/RatingsReviews/RatingsReviews.jsx");
+
 
 
 var App = function App(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ProductOverview_ProductOverview_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "hello world"));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ProductOverview_ProductOverview_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_RatingsReviews_RatingsReviews_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "hello world"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -56,6 +58,72 @@ var ProductOverview = function ProductOverview() {
 
 /***/ }),
 
+/***/ "./client/src/components/RatingsReviews/RatingsReviews.jsx":
+/*!*****************************************************************!*\
+  !*** ./client/src/components/RatingsReviews/RatingsReviews.jsx ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _store_ratingsReviewsSlice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/ratingsReviewsSlice.js */ "./client/src/store/ratingsReviewsSlice.js");
+/* harmony import */ var _reviewList_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reviewList.jsx */ "./client/src/components/RatingsReviews/reviewList.jsx");
+
+
+
+var RatingsReviews = function RatingsReviews() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_reviewList_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RatingsReviews);
+
+/***/ }),
+
+/***/ "./client/src/components/RatingsReviews/reviewList.jsx":
+/*!*************************************************************!*\
+  !*** ./client/src/components/RatingsReviews/reviewList.jsx ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/dist/react-redux.mjs");
+/* harmony import */ var _store_ratingsReviewsSlice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/ratingsReviewsSlice.js */ "./client/src/store/ratingsReviewsSlice.js");
+
+
+
+var ReviewList = function ReviewList() {
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+  var reviews = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
+    return state.ratingsReviews.reviews;
+  });
+  var renderedReviews = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
+    return state.ratingsReviews.renderedReviews;
+  });
+  var reviewCards = renderedReviews.map(function (review) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, review.reviewer_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Summary: ", review.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Review: ", review.body));
+  });
+  var handleMoreReviews = function handleMoreReviews() {
+    var start = renderedReviews.length;
+    var reviewsToAdd = reviews.slice(start, start + 2);
+    dispatch((0,_store_ratingsReviewsSlice_js__WEBPACK_IMPORTED_MODULE_1__.moreReviews)(reviewsToAdd));
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Ratings & Reviews"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Rating Breakdown goes here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Product Breakdown goes here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, reviews.length, " reviews, sorted by FIX_ME"), reviewCards, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: handleMoreReviews
+  }, "MORE REVIEWS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "ADD A REVIEW +"));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ReviewList);
+
+/***/ }),
+
 /***/ "./client/src/store/productOverviewSlice.js":
 /*!**************************************************!*\
   !*** ./client/src/store/productOverviewSlice.js ***!
@@ -88,6 +156,64 @@ var increase = productOverviewSlice.actions.increase;
 
 /***/ }),
 
+/***/ "./client/src/store/ratingsReviewsSlice.js":
+/*!*************************************************!*\
+  !*** ./client/src/store/ratingsReviewsSlice.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addReview: () => (/* binding */ addReview),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   moreReviews: () => (/* binding */ moreReviews),
+/* harmony export */   ratingsReviewsSlice: () => (/* binding */ ratingsReviewsSlice)
+/* harmony export */ });
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+var initialState = {
+  reviews: [{
+    summary: 'nice bag',
+    reviewer_name: 'steve',
+    body: 'yeah it is a nice bag'
+  }, {
+    summary: 'nice coat',
+    reviewer_name: 'robert',
+    body: 'yeah it is a nice coat'
+  }, {
+    summary: 'horrible shoes',
+    reviewer_name: 'ray',
+    body: 'they hurt my feet'
+  }],
+  renderedReviews: []
+};
+var ratingsReviewsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
+  name: 'ratingsReviews',
+  initialState: initialState,
+  reducers: {
+    addReview: function addReview(state, action) {
+      state.reviews = [].concat(_toConsumableArray(state.reviews), [action.payload]);
+      console.log(state.reviews);
+    },
+    moreReviews: function moreReviews(state, action) {
+      state.renderedReviews = state.renderedReviews.concat(action.payload);
+    }
+  }
+});
+var _ratingsReviewsSlice$ = ratingsReviewsSlice.actions,
+  addReview = _ratingsReviewsSlice$.addReview,
+  moreReviews = _ratingsReviewsSlice$.moreReviews;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ratingsReviewsSlice.reducer);
+
+/***/ }),
+
 /***/ "./client/src/store/store.js":
 /*!***********************************!*\
   !*** ./client/src/store/store.js ***!
@@ -98,13 +224,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   store: () => (/* binding */ store)
 /* harmony export */ });
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
 /* harmony import */ var _productOverviewSlice_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./productOverviewSlice.js */ "./client/src/store/productOverviewSlice.js");
+/* harmony import */ var _ratingsReviewsSlice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ratingsReviewsSlice.js */ "./client/src/store/ratingsReviewsSlice.js");
 
 
-var store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.configureStore)({
+
+var store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.configureStore)({
   reducer: {
-    productOverview: _productOverviewSlice_js__WEBPACK_IMPORTED_MODULE_0__["default"]
+    productOverview: _productOverviewSlice_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ratingsReviews: _ratingsReviewsSlice_js__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
