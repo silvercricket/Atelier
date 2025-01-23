@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import productOverviewReducer from './productOverviewSlice.js'
+import productOverviewReducer from './productOverviewSlice.js';
+import relatedItemsReducer from './relatedItemsSlice.js';
 
 
 export const store = configureStore({
   reducer: {
-    productOverview: productOverviewReducer
+    productOverview: productOverviewReducer,
+    relatedItems: relatedItemsReducer
   }
 })

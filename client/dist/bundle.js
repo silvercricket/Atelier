@@ -14,11 +14,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _ProductOverview_ProductOverview_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductOverview/ProductOverview.jsx */ "./client/src/components/ProductOverview/ProductOverview.jsx");
+/* harmony import */ var _RelatedItems_RelatedItems_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RelatedItems/RelatedItems.jsx */ "./client/src/components/RelatedItems/RelatedItems.jsx");
+/* harmony import */ var _ProductOverview_ProductOverview_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProductOverview/ProductOverview.jsx */ "./client/src/components/ProductOverview/ProductOverview.jsx");
+
 
 
 var App = function App(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ProductOverview_ProductOverview_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "hello world"));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ProductOverview_ProductOverview_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_RelatedItems_RelatedItems_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "hello world"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -56,6 +58,71 @@ var ProductOverview = function ProductOverview() {
 
 /***/ }),
 
+/***/ "./client/src/components/RelatedItems/RelatedItemCard.jsx":
+/*!****************************************************************!*\
+  !*** ./client/src/components/RelatedItems/RelatedItemCard.jsx ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/dist/react-redux.mjs");
+/* harmony import */ var _store_relatedItemsSlice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/relatedItemsSlice.js */ "./client/src/store/relatedItemsSlice.js");
+
+
+
+var RelatedItemCard = function RelatedItemCard() {
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+  var detailView = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
+    return state.relatedItems.detailView;
+  });
+  var itemCard = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
+    return state.relatedItems.relatedItems[state.relatedItems.currentCardIndex];
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, itemCard.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: function onClick() {
+      dispatch((0,_store_relatedItemsSlice_js__WEBPACK_IMPORTED_MODULE_1__.showPreviousCard)());
+    }
+  }, "Show Previous Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: function onClick() {
+      dispatch((0,_store_relatedItemsSlice_js__WEBPACK_IMPORTED_MODULE_1__.showNextCard)());
+    }
+  }, "Show Next Item"), detailView ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Hello, World") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Goodbye, World"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: function onClick() {
+      dispatch((0,_store_relatedItemsSlice_js__WEBPACK_IMPORTED_MODULE_1__.showDetailView)());
+    }
+  }, "Toggle Detail View"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Product Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "$100"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Rating"));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RelatedItemCard);
+
+/***/ }),
+
+/***/ "./client/src/components/RelatedItems/RelatedItems.jsx":
+/*!*************************************************************!*\
+  !*** ./client/src/components/RelatedItems/RelatedItems.jsx ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _RelatedItemCard_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RelatedItemCard.jsx */ "./client/src/components/RelatedItems/RelatedItemCard.jsx");
+
+
+var RelatedItems = function RelatedItems() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_RelatedItemCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RelatedItems);
+
+/***/ }),
+
 /***/ "./client/src/store/productOverviewSlice.js":
 /*!**************************************************!*\
   !*** ./client/src/store/productOverviewSlice.js ***!
@@ -88,6 +155,75 @@ var increase = productOverviewSlice.actions.increase;
 
 /***/ }),
 
+/***/ "./client/src/store/relatedItemsSlice.js":
+/*!***********************************************!*\
+  !*** ./client/src/store/relatedItemsSlice.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   relatedItemsSlice: () => (/* binding */ relatedItemsSlice),
+/* harmony export */   showDetailView: () => (/* binding */ showDetailView),
+/* harmony export */   showNextCard: () => (/* binding */ showNextCard),
+/* harmony export */   showPreviousCard: () => (/* binding */ showPreviousCard)
+/* harmony export */ });
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+
+var initialState = {
+  detailView: false,
+  relatedItems: [{
+    "id": 40344,
+    "campus": "hr-rfp",
+    "name": "Camo Onesie",
+    "slogan": "Blend in to your crowd",
+    "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
+    "category": "Jackets",
+    "default_price": "140.00",
+    "created_at": "2021-08-13T14:38:44.509Z",
+    "updated_at": "2021-08-13T14:38:44.509Z"
+  }, {
+    "id": 40345,
+    "campus": "hr-rfp",
+    "name": "Bright Future Sunglasses",
+    "slogan": "You've got to wear shades",
+    "description": "Where you're going you might not need roads, but you definitely need some shades. Give those baby blues a rest and let the future shine bright on these timeless lenses.",
+    "category": "Accessories",
+    "default_price": "69.00",
+    "created_at": "2021-08-13T14:38:44.509Z",
+    "updated_at": "2021-08-13T14:38:44.509Z"
+  }],
+  currentCardIndex: 0
+};
+var relatedItemsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
+  name: 'relatedItem',
+  initialState: initialState,
+  reducers: {
+    showDetailView: function showDetailView(state) {
+      state.detailView = !state.detailView;
+    },
+    showNextCard: function showNextCard(state) {
+      if (state.currentCardIndex !== state.relatedItems.length - 1) {
+        state.currentCardIndex += 1;
+      }
+    },
+    showPreviousCard: function showPreviousCard(state) {
+      if (state.currentCardIndex !== 0) {
+        state.currentCardIndex -= 1;
+      }
+    }
+  }
+});
+var _relatedItemsSlice$ac = relatedItemsSlice.actions,
+  showDetailView = _relatedItemsSlice$ac.showDetailView,
+  showNextCard = _relatedItemsSlice$ac.showNextCard,
+  showPreviousCard = _relatedItemsSlice$ac.showPreviousCard;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (relatedItemsSlice.reducer);
+
+/***/ }),
+
 /***/ "./client/src/store/store.js":
 /*!***********************************!*\
   !*** ./client/src/store/store.js ***!
@@ -98,13 +234,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   store: () => (/* binding */ store)
 /* harmony export */ });
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
 /* harmony import */ var _productOverviewSlice_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./productOverviewSlice.js */ "./client/src/store/productOverviewSlice.js");
+/* harmony import */ var _relatedItemsSlice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./relatedItemsSlice.js */ "./client/src/store/relatedItemsSlice.js");
 
 
-var store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.configureStore)({
+
+var store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.configureStore)({
   reducer: {
-    productOverview: _productOverviewSlice_js__WEBPACK_IMPORTED_MODULE_0__["default"]
+    productOverview: _productOverviewSlice_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+    relatedItems: _relatedItemsSlice_js__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
