@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Grand-Line-Voyagers-FEC/Atelier#readme",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
