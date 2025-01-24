@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  value: 0
+  questions: []
 }
 
-export const productOverviewSlice = createSlice({
+export const qaSlice = createSlice({
   name: 'qa',
   initialState,
   reducers: {
-    increase: (state) => {
-      state.value += 1
+    setQuestions: (state, action) => {
+      state.questions = action.payload;
     }
   }
 })
 
-export const { increase } = qaSlice.actions;
+export const { setQuestions } = qaSlice.actions;
 
 export default qaSlice.reducer;
