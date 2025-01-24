@@ -62,7 +62,6 @@ export const ratingsReviewsSlice = createSlice({
       console.log(state.reviews);
     },
     moreReviews: (state, action) => {
-
       state.renderedReviews = state.renderedReviews.concat(action.payload);
     }
   }

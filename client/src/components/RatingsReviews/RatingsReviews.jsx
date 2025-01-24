@@ -6,7 +6,9 @@ const RatingsReviews = () => {
 
   return (
     <div>
+      <h1>Ratings & Reviews</h1>
       <div>
+        <RatingBreakdown />
         <ReviewList />
       </div>
     </div>
@@ -14,5 +16,6 @@ const RatingsReviews = () => {
 }
 
 import ReviewList from './reviewList.jsx';
+import RatingBreakdown from './ratingBreakdown.jsx';
 
 export default RatingsReviews;
