@@ -3,7 +3,7 @@
 // workflow commands
 // git checkout main
 // git fetch origin
-// git reset --hard origin main
+// git reset --hard origin/main
 // git checkout -b branch-name
 
 // do some work
