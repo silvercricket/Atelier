@@ -16,15 +16,17 @@ const ReviewList = () => {
     return state.ratingsReviews.renderedReviews;
   })
 
-  // might make this its own component eventually
+  // will make this its own component eventually
   let reviewCards = renderedReviews.map((review) => {
     return (
-      <div>
-        <h3>{review.reviewer_name}</h3>
-        <p>Summary: {review.summary}</p>
-        <p>Review: {review.body}</p>
-        <p>MORE REVIEW INFO EVENTUALLY</p>
-      </div>
+      <ReviewTile review={review}/>
+
+      // <div>
+      //   <h3>{review.reviewer_name}</h3>
+      //   <p>Summary: {review.summary}</p>
+      //   <p>Review: {review.body}</p>
+      //   <p>MORE REVIEW INFO EVENTUALLY</p>
+      // </div>
     );
   })
 
@@ -37,13 +39,16 @@ const ReviewList = () => {
   }
 
   return (
-    <div>
+    <div className="reviewList">
       <div>Product Breakdown goes here</div>
       <h3>{reviews.length} reviews, sorted by FIX_ME</h3>
       {reviewCards}
-      <button onClick={handleMoreReviews}>MORE REVIEWS</button><button>ADD A REVIEW + -TODO-</button>
+      {reviewCards.length < reviews.length ? <button onClick={handleMoreReviews}>MORE REVIEWS</button> : null}
+      <button>ADD A REVIEW + -TODO-</button>
     </div>
   );
 }
 
+
+import ReviewTile from './reviewTile.jsx';
 export default ReviewList;
