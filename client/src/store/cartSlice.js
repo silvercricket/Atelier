@@ -4,7 +4,7 @@ const initialState = {
   cart: []
 }
 
-// TO DO -- THUNK
+// TO DO -- CREATE ASYNC THUNKS
 
 const cartSlice = createSlice({
   name: 'cart',
