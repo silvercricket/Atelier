@@ -38,8 +38,6 @@ const ReviewList = () => {
 
   return (
     <div>
-      <h1>Ratings & Reviews</h1>
-      <div>Rating Breakdown goes here</div>
       <div>Product Breakdown goes here</div>
       <h3>{reviews.length} reviews, sorted by FIX_ME</h3>
       {reviewCards}
