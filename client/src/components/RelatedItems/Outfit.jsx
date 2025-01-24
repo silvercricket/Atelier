@@ -16,18 +16,11 @@ const Outfit = () => {
     return state.relatedItems.outfit;
   })
 
-  // const selectOutfitItem = state => state.value;
-
   const handleAddOutfit = () => {
-    const addToOutfitAction = {
-      type: 'addToOutfit',
-      payload: 'Lemon Pepper Steppers'
-    }
-    dispatch(addToOutfit(addToOutfitAction.payload))
+    dispatch(addToOutfit(action.payload))
   }
   return (
     <div>
-      <div>{itemCard.name}</div>
       {outfit.map((item) => <span>{item}</span>)}
       <button value = {itemCard.name} onClick = {handleAddOutfit}>Add To Outfit</button>
     </div>
