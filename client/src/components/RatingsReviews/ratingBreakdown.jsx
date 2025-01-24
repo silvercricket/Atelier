@@ -28,16 +28,16 @@ const RatingBreakdown = () => {
 
 
   // disgusting wet code I can't figure out how to pass in a star value and only make one function :(
-    const fiveStar = useSelector((state) => {
-      const reviews = state.ratingsReviews.reviews;
-      let starCount = 0;
-      for (let review of reviews) {
-        if (review.rating === 5) {
-          starCount++;
-        }
+  const fiveStar = useSelector((state) => {
+    const reviews = state.ratingsReviews.reviews;
+    let starCount = 0;
+    for (let review of reviews) {
+      if (review.rating === 5) {
+        starCount++;
       }
-      return Math.round((starCount / reviews.length) * 100);
-    });
+    }
+    return Math.round((starCount / reviews.length) * 100);
+  });
 
   const fourStar = useSelector((state) => {
     const reviews = state.ratingsReviews.reviews;
@@ -83,10 +83,23 @@ const RatingBreakdown = () => {
     return Math.round((starCount / reviews.length) * 100);
   });
 
+  const stars = {
+    empty: <i class="fa-regular fa-star"></i>,
+    half: <i class="fa-regular fa-star-half-stroke"></i>,
+    full: <i class="fa-solid fa-star"></i>
+  }
+
 
   return (
     <div>
-      <h2>{avgRating}</h2><p>STAR ICONS HERE</p>
+      <h2>{avgRating}</h2>
+        <div class="rating">
+          {avgRating >= 1 ? stars.full : avgRating >= 0.5 ? stars.half : stars.empty}
+          {avgRating >= 2 ? stars.full : avgRating >= 1.5 ? stars.half : stars.empty}
+          {avgRating >= 3 ? stars.full : avgRating >= 2.5 ? stars.half : stars.empty}
+          {avgRating >= 4 ? stars.full : avgRating >= 3.5 ? stars.half : stars.empty}
+          {avgRating >= 5 ? stars.full : avgRating >= 4.5 ? stars.half : stars.empty}
+        </div>
       <p>{percentRec}% of reviews reccomend this product</p>
       <p>5 stars</p><progress value={fiveStar} max="100"></progress>
       <p>4 stars</p><progress value={fourStar} max="100"></progress>
