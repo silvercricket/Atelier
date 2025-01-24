@@ -6,8 +6,8 @@ const RatingsReviews = () => {
 
   return (
     <div>
-      <h1>Ratings & Reviews</h1>
-      <div>
+      <h1 className="rrHeader">Ratings & Reviews</h1>
+      <div className="ratingsReviews">
         <RatingBreakdown />
         <ReviewList />
       </div>

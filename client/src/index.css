@@ -72,3 +72,43 @@ textarea:not([rows]) {
   scroll-margin-block: 5ex;
 }
 
+
+.rrHeader {
+  margin-bottom: 25px;
+}
+
+.ratingsReviews {
+  display: flex;
+  flex-direction: row;
+  border-width: 5px;
+  border-style: solid;
+}
+
+.reviewList {
+  flex-basis: 600px;
+  float: right;
+  margin-left: 30px;
+  margin-right: 10px;
+  flex-grow: 8;
+}
+
+.reviewTile {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-width: 2px;
+  border-style: groove;
+  padding: 5px;
+}
+
+.starBars {
+  border-width: 2px;
+  border-style: groove;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.ratingBreakdown {
+  float: left;
+  margin-left: 15px;
+}
+
