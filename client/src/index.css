@@ -92,6 +92,7 @@ textarea:not([rows]) {
   flex-grow: 8;
 }
 
+/* ReviewTiles */
 .reviewTile {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -100,7 +101,14 @@ textarea:not([rows]) {
   padding: 15px;
 }
 
+.reviewerName {
+  float: right;
+  margin-top: 0px;
+  padding-right: 15px;
+}
+
 .starBars {
+  clear: left;
   margin-top: 10px;
   padding: 5px;
 }
@@ -108,5 +116,40 @@ textarea:not([rows]) {
 .ratingBreakdown {
   float: left;
   margin-left: 15px;
+}
+
+.charTable {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.colHead {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+#newSummary {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+#newBody {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+#uploadPic {
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+#email {
+  margin-top: 8px;
+  margin-bottom: 24px;
 }
 
