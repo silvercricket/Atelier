@@ -5,7 +5,7 @@ import QAList from './QAList.jsx';
 const QA = () => {
   return (
     <section>
-      <h4>Questions and Answers</h4>
+      <h3>Questions and Answers</h3>
       <QAList />
     </section>
   )
