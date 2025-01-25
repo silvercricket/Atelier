@@ -1,32 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { showDetailView, showPreviousCard, showNextCard } from '../../store/relatedItemsSlice.js';
+import ComparisonCard from './ComparisonCard.jsx';
+import { showDetailView, showPreviousCard, showNextCard, addToOutfit } from '../../store/relatedItemsSlice.js';
 
-const RelatedItemCard = ({name}) => {
+const RelatedItemCard = ( {category, name, price} ) => {
 
   const dispatch = useDispatch();
 
-    const detailView = useSelector((state) => {
-      return state.relatedItems.detailView;
-    })
+  const detailView = useSelector((state) => {
+    return state.relatedItems.detailView;
+  })
 
-    const itemCard = useSelector((state) => {
-      return state.relatedItems.relatedItems[state.relatedItems.currentCardIndex]
-    })
+  const itemCard = useSelector((state) => {
+    return state.relatedItems.relatedItems[state.relatedItems.currentCardIndex]
+  })
+
+  const [comparisonCard, setComparisonCard] = useState(false);
+
+  const handleDetailClick = (event) => {
+    var target = event.target.value;
+    // dispatch(showDetailView());
+    setComparisonCard(!comparisonCard);
+  }
+
+  const handleAddToOutfit = (event) => {
+    dispatch(addToOutfit(event.target.value))
+  }
 
   return (
-    <span>
-      <img></img>
-      <div>{name}</div>
-      {/* <div>{itemCard.name}</div> */}
-      <button onClick = {() => {dispatch(showPreviousCard())}}>Show Previous Item</button>
-      <button onClick = {() => {dispatch(showNextCard())}}>Show Next Item</button>
-      {/* {detailView ? <p>Hello, World</p> : <p>Goodbye, World</p>} */}
+    <div className = "relatedItemCard">
+      <img onClick = {handleDetailClick}></img>
+      <div onClick = {handleDetailClick}>
+        <p>{category}</p>
+        <div>{name}</div>
+        <div>{price}</div>
+        <div>Rating</div>
+      </div>
+      <span className = "actionButton" onClick ={handleDetailClick}>&#9733;</span>
+      <button value = {name} onClick = {handleAddToOutfit}>Add To Outfit</button>
+      {comparisonCard ? <ComparisonCard item = {name} price = {price}/> : null}
       {/* <button onClick = {() => {dispatch(showDetailView())}}>Toggle Detail View</button> */}
-      <p>Product Name</p>
-      <p>$100</p>
-      <p>Rating</p>
-    </span>
+    </div>
   )
 }
 
