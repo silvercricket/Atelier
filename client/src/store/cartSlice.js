@@ -1,3 +1,4 @@
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -8,34 +9,31 @@ const initialState = {
   error: null
 }
 
-export const getCart = createAsyncThunk('cart/getCart', async () => {
+export const getCart = createAsyncThunk('cart/getCart', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart')
+    const response = await axios.get('/api/cart', {
+    })
     return response.data;
   } catch (err) {
-    return err.message;
+    return rejectWithValue(err.message);
   }
 })
 
-// export const postCart = createAsyncThunk('cart/postCart', async (initialCart) => {
-export const postCart = createAsyncThunk('cart/postCart', async ({ sku_id, count }) => {
+export const postCart = createAsyncThunk('cart/postCart', async ({ sku_id, count }, { rejectWithValue }) => {
   try {
-    // const response = await axios.post(initialCart, 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart')
-    const response = await axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart', { sku_id, count })
+    const response = await axios.post('/api/cart', { sku_id, count })
     return response.data;
   } catch (err) {
-    return err.message;
+    return rejectWithValue(err.message);
   }
 })
 
-// export const postCart = createAsyncThunk('cart/postCart', async (initialCart) => {
-export const putCart = createAsyncThunk('cart/putCart', async ({ sku_id, count }) => {
+export const putCart = createAsyncThunk('cart/putCart', async ({ sku_id, count }, { rejectWithValue }) => {
   try {
-    // const response = await axios.post(initialCart, 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart')
-    const response = await axios.put('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart', { sku_id, count })
+    const response = await axios.put('/api/cart', { sku_id, count })
     return response.data;
   } catch (err) {
-    return err.message;
+    return rejectWithValue(err.message);
   }
 })
 

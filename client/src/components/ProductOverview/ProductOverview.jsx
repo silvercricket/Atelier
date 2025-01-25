@@ -13,6 +13,7 @@ const ProductOverview = () => {
 
   return (
     <div>
+      <AddToCart />
     </div>
   )
 }
