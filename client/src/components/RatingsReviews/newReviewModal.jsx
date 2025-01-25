@@ -17,6 +17,16 @@ const NewReviewModal = () => {
     return state.ratingsReviews.formOpen;
   })
 
+  const handleRating = (e) => {
+    setRating(e.target.value);
+  }
+
+  const stars = {
+    empty: <i className="fa-regular fa-star"></i>,
+    half: <i className="fa-regular fa-star-half-stroke"></i>,
+    full: <i className="fa-solid fa-star"></i>
+  }
+
 
 
   if (!isOpen) return null;
@@ -27,9 +37,16 @@ const NewReviewModal = () => {
       <div className="reviewModal">
         <form>
           {/* rating */}
-          <label>Rate this product!
-            <input type="text" required/>
+          <label>Rate this product 1-5 stars!
+            <input type="number" id="newReviewStars" min="0" max="5" value={rating} onChange={handleRating} required/>
           </label>
+          <div>
+            {rating >= 1 ? stars.full : rating >= 0.5 ? stars.half : stars.empty}
+            {rating >= 2 ? stars.full : rating >= 1.5 ? stars.half : stars.empty}
+            {rating >= 3 ? stars.full : rating >= 2.5 ? stars.half : stars.empty}
+            {rating >= 4 ? stars.full : rating >= 3.5 ? stars.half : stars.empty}
+            {rating >= 5 ? stars.full : rating >= 4.5 ? stars.half : stars.empty}
+          </div>
           {/* recommend */}
           <p>Would you recommend this product?</p>
           <input type="radio" value="yes"/>
