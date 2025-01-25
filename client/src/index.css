@@ -153,3 +153,32 @@ textarea:not([rows]) {
   margin-bottom: 24px;
 }
 
+.relatedItemCard {
+  border-width: 2px;
+  border-style: groove;
+  float: left;
+  width: 33%;
+  padding: 5px;
+}
+
+
+/* RELATED ITEMS */
+.relatedItems {
+  overflow-x: scroll;
+}
+
+.comparisonCard {
+  position: absolute;
+  border-width: 2px;
+  border-style: groove;
+  padding: 5px;
+  background-color: white;
+}
+
+.outfitItemCard {
+  border-width: 2px;
+  border-style: groove;
+  float: left;
+  width: 33%;
+  padding: 5px;
+}

@@ -18,19 +18,17 @@ const RelatedItemCard = ( {category, name, price} ) => {
   const [comparisonCard, setComparisonCard] = useState(false);
 
   const handleDetailClick = (event) => {
-    event.preventDefault();
     var target = event.target.value;
     // dispatch(showDetailView());
     setComparisonCard(!comparisonCard);
   }
 
   const handleAddToOutfit = (event) => {
-    event.preventDefault();
     dispatch(addToOutfit(event.target.value))
   }
 
   return (
-    <span>
+    <div className = "relatedItemCard">
       <img onClick = {handleDetailClick}></img>
       <div onClick = {handleDetailClick}>
         <p>{category}</p>
@@ -42,7 +40,7 @@ const RelatedItemCard = ( {category, name, price} ) => {
       <button value = {name} onClick = {handleAddToOutfit}>Add To Outfit</button>
       {comparisonCard ? <ComparisonCard item = {name} price = {price}/> : null}
       {/* <button onClick = {() => {dispatch(showDetailView())}}>Toggle Detail View</button> */}
-    </span>
+    </div>
   )
 }
 
