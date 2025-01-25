@@ -11,7 +11,7 @@ const ReviewTile = ({review}) => {
 
   return (
     <div className="reviewTile">
-      <h3>{review.reviewer_name}</h3>
+      <h3 className="reviewerName">{review.reviewer_name}</h3>
       <div>
         {review.rating >= 1 ? stars.full : review.rating >= 0.5 ? stars.half : stars.empty}
         {review.rating >= 2 ? stars.full : review.rating >= 1.5 ? stars.half : stars.empty}
@@ -26,6 +26,7 @@ const ReviewTile = ({review}) => {
       <p>seller response here eventually</p>
       <p>Was this review helpful?</p>
       <button>Yes - not functional</button><button>No - not functional</button>
+      <p>{review.helpfulness} customers found this review helpful</p>
 
     </div>
   );

@@ -50,7 +50,8 @@ const exampleData = [
 
 const initialState = {
   reviews : exampleData,
-  renderedReviews: exampleData.slice(0, 2)
+  renderedReviews: exampleData.slice(0, 2),
+  formOpen: false
 };
 
 export const ratingsReviewsSlice = createSlice({
@@ -63,10 +64,13 @@ export const ratingsReviewsSlice = createSlice({
     },
     moreReviews: (state, action) => {
       state.renderedReviews = state.renderedReviews.concat(action.payload);
+    },
+    isFormOpen: (state) => {
+      state.formOpen = !state.formOpen;
     }
   }
 });
 
-export const { addReview, moreReviews } = ratingsReviewsSlice.actions;
+export const { addReview, moreReviews, isFormOpen } = ratingsReviewsSlice.actions;
 
 export default ratingsReviewsSlice.reducer;

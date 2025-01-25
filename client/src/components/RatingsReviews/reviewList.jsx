@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { moreReviews } from '../../store/ratingsReviewsSlice.js';
+import { moreReviews, isFormOpen } from '../../store/ratingsReviewsSlice.js';
 
 const ReviewList = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const ReviewList = () => {
       <h3>{reviews.length} reviews, sorted by FIX_ME</h3>
       {reviewCards}
       {reviewCards.length < reviews.length ? <button onClick={handleMoreReviews}>MORE REVIEWS</button> : null}
-      <button>ADD A REVIEW + -TODO-</button>
+      <button onClick={() => dispatch(isFormOpen())}>ADD A REVIEW + -TODO-</button>
     </div>
   );
 }
