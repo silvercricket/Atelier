@@ -24,7 +24,7 @@ const ComparisonCard = ({ item, price }) => {
   })
 
   return (
-    <div>
+    <div className = "comparisonCard">
       <small>Comparing</small>
       <h3>Current Item:</h3>
       <p>{testInitialItem.name}</p>

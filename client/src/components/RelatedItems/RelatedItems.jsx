@@ -18,7 +18,7 @@ const RelatedItems = () => {
   })
 
   return (
-    <div>
+    <div className = "relatedItems">
       <h2>Related Items</h2>
       {relatedItems.map((item) => <RelatedItemCard category = {item.category} name = {item.name} price = {item.default_price}/>)}
       <div>
