@@ -112,7 +112,7 @@ export const qaSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchQuestions.fulfilled, (state, action) => {
-      state.questions = action.payload.results;
+      state.questions = action.payload.results.sort((a, b) => b.question_helpfulness - a.question_helpfulness);
     });
     builder.addCase(fetchQuestions.rejected, (state, action) => {
       console.log('Failed to fetch questions.', action.payload);
