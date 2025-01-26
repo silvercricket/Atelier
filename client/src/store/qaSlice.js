@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const exampleData = {
   "product_id": "40347",
@@ -88,20 +89,37 @@ const exampleData = {
   ]
 }
 
+// THUNKS
+export const fetchQuestions = createAsyncThunk(
+  'qa/fetchQuestions',
+  async (productId) => {
+    const response = await axios.get(`/api/qa/questions?product_id=${productId}`);
+    return response.data;
+  }
+);
+
 const initialState = {
-  questions: exampleData.results
+  // TODO: For testing only
+  productId: 40347,
+  // Array of questions sorted by helpfulness
+  questions: []
 }
 
 export const qaSlice = createSlice({
   name: 'qa',
   initialState,
   reducers: {
-    setQuestions: (state, action) => {
-      state.questions = action.payload;
-    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchQuestions.fulfilled, (state, action) => {
+      state.questions = action.payload.results;
+    });
+    builder.addCase(fetchQuestions.rejected, (state, action) => {
+      console.log('Failed to fetch questions.', action.payload);
+    });
   }
 })
 
-export const { setQuestions } = qaSlice.actions;
+export const { } = qaSlice.actions;
 
 export default qaSlice.reducer;
