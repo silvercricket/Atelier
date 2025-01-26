@@ -227,3 +227,15 @@ textarea:not([rows]) {
   flex-direction: row;
   gap: 1rem;
 }
+
+.qa-answer-thumbnails-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.qa-answer-thumbnail-container {
+  width: 5rem;
+  height: 3rem;
+}
