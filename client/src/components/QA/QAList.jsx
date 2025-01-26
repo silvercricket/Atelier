@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchQuestions } from '../../store/qaSlice.js';
 
+import QASearch from './QASearch.jsx';
 import QAListItem from './QAListItem.jsx';
 import QAButtons from './QAButtons.jsx';
 
@@ -21,7 +22,10 @@ const QAList = () => {
   return (
     <> {
         questions.length > 0 ? (
-          questions.map((question) => <QAListItem question={question} key={question.question_id} />)
+          <>
+            <QASearch />
+            {questions.map((question) => <QAListItem question={question} key={question.question_id} />)}
+          </>
         ) : (
           <p>Be first to ask a question!</p>
         )

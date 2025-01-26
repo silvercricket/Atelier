@@ -182,3 +182,48 @@ textarea:not([rows]) {
   width: 33%;
   padding: 5px;
 }
+
+/* QUESTIONS & ANSWERS */
+.qa-title {
+  text-transform: uppercase;
+}
+
+.qa-search {
+  width: 100%;
+}
+
+.qa-search::placeholder {
+  text-transform: uppercase;
+}
+
+.qa-question-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.qa-question {
+  margin: 0;
+}
+
+.qa-question-info-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.link-button {
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.qa-answer-info-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
