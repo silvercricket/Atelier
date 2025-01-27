@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 const RatingBreakdown = () => {
   const dispatch = useDispatch();
 
+
+
   const avgRating = useSelector((state) => {
     const reviews = state.ratingsReviews.reviews;
     let sum = 0;
@@ -24,8 +26,6 @@ const RatingBreakdown = () => {
     }
     return Math.round((recommendCount / reviews.length) * 100);
   })
-
-
 
   // disgusting wet code I can't figure out how to pass in a star value and only make one function :(
   const fiveStar = useSelector((state) => {
@@ -82,6 +82,8 @@ const RatingBreakdown = () => {
     }
     return Math.round((starCount / reviews.length) * 100);
   });
+
+
 
   const stars = {
     empty: <i className="fa-regular fa-star"></i>,
