@@ -1,15 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { hideAddQuestionModal } from '../../store/qaSlice.js';
 
-const QAModal = ({ children }) => {
-  const dispatch = useDispatch();
+const QAModal = ({ children, closeModalHandler }) => {
 
   return (
     <div className="qa-modal-background">
       <div className="qa-modal-container">
-        <button onClick={() => dispatch(hideAddQuestionModal())}>X</button>
+        <button onClick={closeModalHandler}>X</button>
         {children}
       </div>
     </div>

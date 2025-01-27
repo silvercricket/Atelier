@@ -34,18 +34,47 @@ export const addQuestion = createAsyncThunk(
   }
 );
 
+export const addAnswer = createAsyncThunk(
+  'qa/addAnswer',
+  async (formData, thunkAPI) => {
+    const questionId = thunkAPI.getState().qa.questionId;
+    const answer = {
+      body: formData.answer,
+      name: formData.nickname,
+      email: formData.email,
+      photos: formData.photos
+    }
+    try {
+      const response = await axios.post(`/api/qa/questions/${questionId}/answers`, answer);
+      return response.data;
+    } catch(err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+
+  }
+);
+
 const initialState = {
   // TODO: For testing only
   productId: 40347,
   productName: 'Great Product Name',
   // Array of questions sorted by helpfulness
   questions: [],
-  // addQuestionModal' status can be: 'form', 'error', 'success'
+  // addQuestionModal status can be: 'form', 'error', 'success'
   addQuestionModal: {
     show: false,
     status: 'form',
     successMsg: '',
     errorMsg: ''
+  },
+  // addAnswerModal status can be: 'form', 'error', 'success'
+  addAnswerModal: {
+    show: false,
+    status: 'form',
+    questionBody: '',
+    questionId: null,
+    successMsg: '',
+    errorMsg: '',
   }
 }
 
@@ -59,6 +88,14 @@ export const qaSlice = createSlice({
     },
     hideAddQuestionModal: (state) => {
       state.addQuestionModal = initialState.addQuestionModal;
+    },
+    showAddAnswerModal: (state, action) => {
+      state.addAnswerModal.questionBody = action.payload.questionBody;
+      state.addAnswerModal.questionId = action.payload.questionId;
+      state.addAnswerModal.show = true;
+    },
+    hideAddAnswerModal: (state) => {
+      state.addAnswerModal = initialState.addAnswerModal;
     }
   },
   extraReducers: (builder) => {
@@ -76,12 +113,22 @@ export const qaSlice = createSlice({
     });
     builder.addCase(addQuestion.rejected, (state, action) => {
       console.log('Failed to add a question.', action.payload);
-      state.addQuestionModal.errorMsg = 'Failed to add a question. Please try again.';
+      state.addQuestionModal.errorMsg = 'Failed to add your question. Please try again.';
       state.addQuestionModal.status = 'error';
+    });
+    // Add an Answer
+    builder.addCase(addAnswer.fulfilled, (state, action) => {
+      state.addAnswerModal.successMsg = 'Thank you for submitting your answer!';
+      state.addAnswerModal.status = 'success';
+    });
+    builder.addCase(addAnswer.rejected, (state, action) => {
+      console.log('Failed to submit an answer.', action.payload);
+      state.addAnswerModal.errorMsg = 'Failed to submit your answer. Please try again.';
+      state.addAnswerModal.status = 'error';
     });
   }
 })
 
-export const { showAddQuestionModal, hideAddQuestionModal } = qaSlice.actions;
+export const { showAddQuestionModal, hideAddQuestionModal, showAddAnswerModal, hideAddAnswerModal } = qaSlice.actions;
 
 export default qaSlice.reducer;
