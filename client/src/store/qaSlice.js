@@ -101,6 +101,7 @@ export const fetchQuestions = createAsyncThunk(
 const initialState = {
   // TODO: For testing only
   productId: 40347,
+  productName: 'Great Product Name',
   // Array of questions sorted by helpfulness
   questions: []
 }

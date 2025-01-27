@@ -239,3 +239,34 @@ textarea:not([rows]) {
   width: 5rem;
   height: 3rem;
 }
+
+.qa-modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+}
+
+.qa-modal-container {
+  min-width: 50vw;
+  min-height: 50vh;
+  background-color: #fff;
+}
+
+.qa-modal-subtitle {
+  display: block;
+}
+
+.qa-form-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.qa-form-notice {
+  margin: 0;
+}
