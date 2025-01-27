@@ -98,29 +98,61 @@ export const fetchQuestions = createAsyncThunk(
   }
 );
 
+export const addQuestion = createAsyncThunk(
+  'qa/addQuestion',
+  async (formData, thunkAPI) => {
+    const productId = thunkAPI.getState().qa.productId;
+    const question = {
+      body: formData.question,
+      name: formData.nickname,
+      email: formData.email,
+      product_id: productId
+    }
+    console.log(question);
+    const response = await axios.post('/api/qa/questions', question);
+    return response.data;
+  }
+);
+
 const initialState = {
   // TODO: For testing only
   productId: 40347,
   productName: 'Great Product Name',
   // Array of questions sorted by helpfulness
-  questions: []
+  questions: [],
+  addQuestionModal: false
 }
 
 export const qaSlice = createSlice({
   name: 'qa',
   initialState,
   reducers: {
+    // Add Question Modal
+    showAddQuestionModal: (state) => {
+      state.addQuestionModal = true;
+    },
+    hideAddQuestionModal: (state) => {
+      state.addQuestionModal = false;
+    }
   },
   extraReducers: (builder) => {
+    // Fetch Questions
     builder.addCase(fetchQuestions.fulfilled, (state, action) => {
       state.questions = action.payload.results.sort((a, b) => b.question_helpfulness - a.question_helpfulness);
     });
     builder.addCase(fetchQuestions.rejected, (state, action) => {
       console.log('Failed to fetch questions.', action.payload);
     });
+    // Add a Question
+    builder.addCase(addQuestion.fulfilled, (state, action) => {
+      console.log('Added a question', action.payload);
+    });
+    builder.addCase(addQuestion.rejected, (state, action) => {
+      console.log('Failed to add a question.', action.payload);
+    });
   }
 })
 
-export const { } = qaSlice.actions;
+export const { showAddQuestionModal, hideAddQuestionModal } = qaSlice.actions;
 
 export default qaSlice.reducer;

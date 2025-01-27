@@ -1,6 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import validateFormData from './lib/validateFormData.js';
+import { addQuestion } from '../../store/qaSlice.js';
 
 import QAFormInput from './QAFormInput.jsx';
 
@@ -11,13 +14,11 @@ const QAAddQuestion = () => {
     nickname: '',
     email: ''
   };
-  const initialFormErrors = {
-    question: '',
-    nickname: '',
-    email: ''
-  }
+
   const [formData, setFormData] = useState(initialFormState);
-  const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [errMsg, setFormErrMsg] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleInputChange = (name, value) => {
     setFormData((formData) => {
@@ -30,8 +31,15 @@ const QAAddQuestion = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData(initialFormState);
+    setFormErrMsg('');
+
+    const errStr = validateFormData(formData);
+    if (errStr !== '') {
+      setFormErrMsg(errStr);
+    } else {
+      dispatch(addQuestion(formData));
+      setFormData(initialFormState);
+    }
   }
 
   return (
@@ -44,9 +52,9 @@ const QAAddQuestion = () => {
         label="Your question"
         mandatory={true}
         placeholder="Please type your question..."
+        maxLength={1000}
         value={formData.question}
         onChangeHandler={handleInputChange}
-        errMsg={formErrors.question}
         />
 
         <QAFormInput
@@ -54,22 +62,30 @@ const QAAddQuestion = () => {
         label="Your nickname"
         mandatory={true}
         placeholder="Example: jackson11!"
+        maxLength={60}
         value={formData.nickname}
         onChangeHandler={handleInputChange}
         notice="For privacy reasons, do not use your full name"
-        errMsg={formErrors.nickname}
         />
 
         <QAFormInput
         name={"email"}
         label="Your email"
         mandatory={true}
-        placeholder="Example: johndoe@gmail.com"
+        placeholder="Example: jackson11@email.com"
+        maxLength={60}
         value={formData.email}
         onChangeHandler={handleInputChange}
         notice="For authentication reasons, you will not be emailed"
-        errMsg={formErrors.email}
         />
+
+        {
+          errMsg &&
+          <div className="qa-form-err-msg-container">
+            <p>You must enter the following:</p>
+            <div>{ errMsg.split('\n').map((msg) => <p className="qa-form-err-msg">{msg}</p>) }</div>
+          </div>
+        }
 
         <button>Submit question</button>
       </form>

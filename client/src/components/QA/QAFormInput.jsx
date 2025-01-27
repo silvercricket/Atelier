@@ -1,14 +1,13 @@
 import React from 'react';
 
-const QAFormInput = ({ tag = 'input', name, label, mandatory, placeholder, value, onChangeHandler, notice, errMsg }) => {
+const QAFormInput = ({ tag = 'input', name, label, mandatory, placeholder, maxLength, value, onChangeHandler, notice }) => {
   return (
     <>
       <label className="qa-form-label">{label}{mandatory && '*'}
-        { tag === 'textarea' && <textarea placeholder={placeholder} value={value} onChange={(e) => onChangeHandler(name, e.target.value)}/>}
-        { tag === 'input' && <input type="text" placeholder={placeholder} value={value} onChange={(e) => onChangeHandler(name, e.target.value)} /> }
+        { tag === 'textarea' && <textarea placeholder={placeholder} maxLength={maxLength} value={value} onChange={(e) => onChangeHandler(name, e.target.value)}/>}
+        { tag === 'input' && <input type="text" placeholder={placeholder} maxLength={maxLength} value={value} onChange={(e) => onChangeHandler(name, e.target.value)} /> }
       </label>
       { notice && <p className="qa-form-notice">{notice}</p> }
-      { errMsg && <p className="qa-form-err-msg">{errMsg}</p> }
     </>
   )
 };
