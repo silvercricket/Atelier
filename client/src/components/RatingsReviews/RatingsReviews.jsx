@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addReview } from '../../store/ratingsReviewsSlice.js';
 
 const RatingsReviews = () => {
 
+
   const isOpen = useSelector((state) => {
-    return state.ratingsReviews.formOpen;
+    return state.newReviewForm.formOpen;
   })
 
   return (
