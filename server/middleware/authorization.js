@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
     headers: { Authorization: header },
     data: body
   }).then((results) => {
-    console.log('RESULTS: ', results.data);
+    console.log('RESULTS.DATA IN AUTH: ', results.data);
     res.send(results.data);
     next();
   }).catch(() => {

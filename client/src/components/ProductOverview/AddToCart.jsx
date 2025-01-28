@@ -6,7 +6,8 @@ import { getCart, postCart, putCart } from '../../store/cartSlice.js';
 const AddToCart = () => {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart)
-  // console.log('CART', cart);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [quantity, setQuantity] = useState(1);
 
 
   const handleGetCart = () => {
@@ -15,10 +16,19 @@ const AddToCart = () => {
 
 
   return (
-    <div>
-      {/* <button onClick={handleGetCart}>Get Cart</button> */}
+    <div className="add-to-cart">
+      <div className="selectors">
+      </div>
+
+      <div className="add-to-bag">
+        <button className="add-to-bag-button">
+          ADD TO BAG
+          <span>+</span>
+        </button>
+        <button className="favorite-button">★</button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default AddToCart;

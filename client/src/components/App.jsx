@@ -5,6 +5,7 @@ import ProductOverview from './ProductOverview/ProductOverview.jsx';
 import ProductDetails from './ProductOverview/ProductDetails.jsx';
 import QA from './QA/QA.jsx';
 import RatingsReviews from './RatingsReviews/RatingsReviews.jsx';
+import '../index.css';
 
 var App = (props) => {
   return (
@@ -15,7 +16,6 @@ var App = (props) => {
             path="/"
             element={
               <div>
-                <ProductDetails />
                 <ProductOverview />
                 <QA />
                 <RelatedItems />
@@ -27,7 +27,6 @@ var App = (props) => {
             path="/product/:id"
             element={
               <div>
-                <ProductDetails />
                 <ProductOverview />
                 <QA />
                 <RelatedItems />

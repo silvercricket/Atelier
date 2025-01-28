@@ -78,9 +78,9 @@ export const productsSlice = createSlice({
       })
       .addCase(getProductStyles.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        const { productId, ...getProductStyles } = action.payload;
+        const { productId, ...productStyles } = action.payload;
         state.currentProduct = productId;
-        state.productStyles[productId] = getProductStyles;
+        state.productStyles = productStyles;
       })
       .addCase(getProductStyles.rejected, (state, action) => {
         state.status = 'failed';
