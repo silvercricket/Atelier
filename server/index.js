@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
 
 // attach auth key to all routes
-app.use('/api', auth);
+app.use('/api/*', auth);
 
 app.listen(3000, () => {
   console.log('currently listening on port 3000');

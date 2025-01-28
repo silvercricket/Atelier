@@ -22,7 +22,6 @@ module.exports = (req, res, next) => {
     console.error('failed');
     next();
   });
-
 }
 
 // app.use((req, res, next) => {

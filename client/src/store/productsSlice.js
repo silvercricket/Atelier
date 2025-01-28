@@ -47,7 +47,7 @@ const initialState = {
       },
     ],
   },
-  productStyles: {},
+  // productStyles: {},
   status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
   error: null
 }
@@ -107,6 +107,7 @@ export const productsSlice = createSlice({
       .addCase(getProductDetails.fulfilled, (state, action) => {
         state.status = 'succeeded';
         const { productId, ...productDetails } = action.payload;
+        console.log('**ID**', productId);
         state.currentProduct = productId;
         state.productDetails[productId] = productDetails;
       })

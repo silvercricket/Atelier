@@ -6,7 +6,7 @@ import { getCart, postCart, putCart } from '../../store/cartSlice.js';
 const AddToCart = () => {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart)
-  console.log('CART', cart);
+  // console.log('CART', cart);
 
 
   const handleGetCart = () => {
