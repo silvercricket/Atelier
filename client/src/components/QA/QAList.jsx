@@ -15,7 +15,7 @@ const QAList = () => {
 
   useEffect(() => {
     if (productId) {
-      dispatch(fetchQuestions(productId));
+      dispatch(fetchQuestions());
     }
   }, [productId]);
 

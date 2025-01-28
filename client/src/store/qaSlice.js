@@ -4,7 +4,8 @@ import axios from 'axios';
 // THUNKS
 export const fetchQuestions = createAsyncThunk(
   'qa/fetchQuestions',
-  async (productId) => {
+  async (_, thunkAPI) => {
+    const productId = thunkAPI.getState().qa.productId;
     try {
       const response = await axios.get(`/api/qa/questions?product_id=${productId}`);
       return response.data;
@@ -37,12 +38,12 @@ export const addQuestion = createAsyncThunk(
 export const addAnswer = createAsyncThunk(
   'qa/addAnswer',
   async (formData, thunkAPI) => {
-    const questionId = thunkAPI.getState().qa.questionId;
+    const questionId = thunkAPI.getState().qa.addAnswerModal.questionId;
     const answer = {
       body: formData.answer,
       name: formData.nickname,
       email: formData.email,
-      photos: formData.photos
+      // photos: formData.photos
     }
     try {
       const response = await axios.post(`/api/qa/questions/${questionId}/answers`, answer);
@@ -71,7 +72,7 @@ const initialState = {
   addAnswerModal: {
     show: false,
     status: 'form',
-    questionBody: '',
+    question: '',
     questionId: null,
     successMsg: '',
     errorMsg: '',
@@ -90,7 +91,7 @@ export const qaSlice = createSlice({
       state.addQuestionModal = initialState.addQuestionModal;
     },
     showAddAnswerModal: (state, action) => {
-      state.addAnswerModal.questionBody = action.payload.questionBody;
+      state.addAnswerModal.question = action.payload.questionBody;
       state.addAnswerModal.questionId = action.payload.questionId;
       state.addAnswerModal.show = true;
     },
