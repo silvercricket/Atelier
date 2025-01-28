@@ -10,13 +10,12 @@ const ProductDetails = () => {
   const id = 40344
 
 
-  // TO DO --> TEST PRODUCTS REDUCERS
 
   const products = useSelector(state => state.products);
   const productDetails = useSelector(state => state.products?.productDetails[id]);
 
-  // console.log('P', products)
-  // console.log('PD', productDetails)
+  console.log('P', products)
+
 
   useEffect(() => {
     console.log('Dispatching with ID:', id);
