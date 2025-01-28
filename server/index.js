@@ -1,16 +1,20 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const app = express();
 const auth = require('./middleware/authorization.js');
 const axios = require('axios')
 
+const app = express();
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
 
 // attach auth key to all routes
-app.use('/api/*', auth);
+app.use('/*', auth);
+
+app.get('/products/:id', auth, (req, res) => {
+  console.log('GETTING PRODUCT ID:', req.params.id);
+});
 
 app.listen(3000, () => {
   console.log('currently listening on port 3000');

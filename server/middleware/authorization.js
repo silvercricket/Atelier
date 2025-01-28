@@ -9,11 +9,15 @@ module.exports = (req, res, next) => {
   const type = req.method;
   const endpoint = req.url;
   const body = req.body;
-  console.log(endpoint);
+  const url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp${endpoint}`
+
+  console.log('URL: ', url)
+  console.log('Making request to:', endpoint);
+
   axios({
     method: type,
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp${endpoint}`,
-    headers: { Authorization : header },
+    url: url,
+    headers: { Authorization: header },
     data: body
   }).then((results) => {
     console.log('RESULTS: ', results.data);
