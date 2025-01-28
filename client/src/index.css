@@ -253,13 +253,21 @@ textarea:not([rows]) {
 }
 
 .qa-modal-container {
+  position: relative;
   min-width: 50vw;
   min-height: 50vh;
+  padding: 3rem;
   background-color: #fff;
+}
+
+.qa-modal-title {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 .qa-modal-subtitle {
   display: block;
+  font-size: 1.25rem;
 }
 
 .qa-form-label {
@@ -269,4 +277,16 @@ textarea:not([rows]) {
 
 .qa-form-notice {
   margin: 0;
+}
+
+.qa-photo-uploader-thumbnails-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.qa-btn-close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
