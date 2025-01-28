@@ -7,34 +7,26 @@ import axios from 'axios';
 const ProductDetails = () => {
   const dispatch = useDispatch();
   // const { id } = useParams();
-  const id = 40344
-
-
+  const id = 40344;
 
   const products = useSelector(state => state.products);
   const productDetails = useSelector(state => state.products?.productDetails[id]);
 
   console.log('P', products)
 
-
   useEffect(() => {
-    console.log('Dispatching with ID:', id);
     dispatch(getProductDetails(id));
   }, [dispatch, id]);
 
-  if (!productDetails) {
-    console.log('Product details not found for id:', id);
-    return <div>Loading product details...</div>;
-  }
 
   const handleGetProductDetails = () => {
-    dispatch(getProductDetails(id))
+    dispatch(getProductDetails(id));
   }
 
   return (
     <div>
       <button onClick={handleGetProductDetails}>Product Details</button>
-      {productDetails.name ? (
+      {productDetails ? (
         <div>
           <h1>{productDetails.name}</h1>
           <p>{productDetails.description}</p>
