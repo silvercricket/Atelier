@@ -13,7 +13,8 @@ module.exports = (req, res, next) => {
   axios({
     method: type,
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp${endpoint}`,
-    headers: { Authorization : header }
+    headers: { Authorization : header },
+    data: body
   }).then((results) => {
     console.log('RESULTS: ', results.data);
     res.send(results.data);
