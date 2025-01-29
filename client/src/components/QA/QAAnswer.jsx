@@ -21,7 +21,7 @@ const QAAnswer = ({ answer }) => {
       return;
     }
     setHelpfulTouched(true);
-    axios.put(`/api/qa/answers/${answer.id}/helpful`)
+    axios.put(`/api/qa/answers/${answer.answer_id}/helpful`)
     .then((_response) => {
       dispatch(fetchQuestions());
     })
@@ -35,7 +35,7 @@ const QAAnswer = ({ answer }) => {
       return;
     }
     setReportTouched(true);
-    axios.put(`/api/qa/answers/${answer.id}/report`)
+    axios.put(`/api/qa/answers/${answer.answer_id}/report`)
     .then((_response) => {
     })
     .catch((err) => {

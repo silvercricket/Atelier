@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import axios from 'axios';
 import QANotification from './QANotification.jsx';
@@ -42,11 +43,15 @@ const QAPhotoUploader = ({ formData, setFormData }) => {
         )
       }
 
-      { (!isUploading && formData.photos.length < 5) ? (
+      { (!isUploading && formData.photos.length < 5) && (
           <label>Upload a photo <span>(You can attach up to 5 photos)</span>
             <input type="file" accept="image/*" onChange={handleFileInputChange} />
           </label>
-        ) : (
+        )
+      }
+
+      {
+        formData.photos.length === 5 && (
           <QANotification type="notification" msg="You have attached maximum number of photos." />
         )
       }
@@ -60,7 +65,7 @@ const QAPhotoUploader = ({ formData, setFormData }) => {
       {
         formData.photos.length > 0 && (
         <div className="qa-photo-uploader-thumbnails-container">
-          { formData.thumbnails.map((thumbnailUrl) => <img src={thumbnailUrl} />) }
+          { formData.thumbnails.map((thumbnailUrl) => <img src={thumbnailUrl} key={uuidv4()} />) }
         </div>
         )
       }

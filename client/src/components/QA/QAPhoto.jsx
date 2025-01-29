@@ -7,8 +7,7 @@ const QAPhoto = ({ photo }) => {
   const [expandPhoto, setExpandPhoto] = useState(false);
 
   const handlePhotoClick = () => {
-    console.log('CLICKED')
-    expandPhoto(true);
+    setExpandPhoto(true);
   }
 
   return (

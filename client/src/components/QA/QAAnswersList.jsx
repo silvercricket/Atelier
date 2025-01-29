@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 import QAAnswer from './QAAnswer.jsx';
 
@@ -43,7 +44,7 @@ const QAAnswersList = ({ question }) => {
               {
                 answersToDisplay.map((answer) => {
                   return (
-                    <QAAnswer answer={answer} key={answer.answer_id} />
+                    <QAAnswer answer={answer} key={uuidv4()} />
                   )
                 })
               }

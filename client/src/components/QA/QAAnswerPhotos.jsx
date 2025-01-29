@@ -1,4 +1,7 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import QAPhoto from './QAPhoto.jsx';
 
 const QAAnswerPhotos = ({ photos }) => {
 
@@ -7,9 +10,7 @@ const QAAnswerPhotos = ({ photos }) => {
       {
         photos.map((photo) => {
           return (
-            <div className="qa-answer-thumbnail-container">
-              <img className="qa-answer-thumbnail" src={photo.url.replace(/v\d+/, 'c_fill,w_90,h_60')} />
-            </div>
+            <QAPhoto photo={photo} key={uuidv4()} />
           )
         })
       }
