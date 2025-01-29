@@ -1,45 +1,39 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ComparisonCard from './ComparisonCard.jsx';
-import { showDetailView, showPreviousCard, showNextCard, addToOutfit } from '../../store/relatedItemsSlice.js';
+import { showPreviousCard, showNextCard, addToOutfit } from '../../store/relatedItemsSlice.js';
 
-const RelatedItemCard = ( {category, name, price} ) => {
+const RelatedItemCard = ( {item} ) => {
 
   const dispatch = useDispatch();
-
-  const detailView = useSelector((state) => {
-    return state.relatedItems.detailView;
-  })
-
-  const itemCard = useSelector((state) => {
-    return state.relatedItems.relatedItems[state.relatedItems.currentCardIndex]
-  })
 
   const [comparisonCard, setComparisonCard] = useState(false);
 
   const handleDetailClick = (event) => {
-    var target = event.target.value;
-    // dispatch(showDetailView());
     setComparisonCard(!comparisonCard);
   }
 
   const handleAddToOutfit = (event) => {
-    dispatch(addToOutfit(event.target.value))
+    var outfit = {
+      category: item.category,
+      name: event.target.value,
+      price: item.default_price
+    }
+    dispatch(addToOutfit(outfit))
   }
 
   return (
     <div className = "relatedItemCard">
+      <span className = "actionButton" onClick ={handleDetailClick}>&#9733;</span>
       <img onClick = {handleDetailClick}></img>
       <div onClick = {handleDetailClick}>
-        <p>{category}</p>
-        <div>{name}</div>
-        <div>{price}</div>
+        <p>{item.category}</p>
+        <div>{item.name}</div>
+        <div>{item.default_price}</div>
         <div>Rating</div>
       </div>
-      <span className = "actionButton" onClick ={handleDetailClick}>&#9733;</span>
-      <button value = {name} onClick = {handleAddToOutfit}>Add To Outfit</button>
-      {comparisonCard ? <ComparisonCard item = {name} price = {price}/> : null}
-      {/* <button onClick = {() => {dispatch(showDetailView())}}>Toggle Detail View</button> */}
+      <button value = {item.name} onClick = {handleAddToOutfit}>Add To Outfit</button>
+      {comparisonCard ? <ComparisonCard item = {item.name} price = {item.default_price}/> : null}
     </div>
   )
 }
