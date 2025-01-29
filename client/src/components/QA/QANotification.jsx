@@ -10,6 +10,14 @@ const QANotification = ({ type, msg }) => {
      notificationClassName = 'qa-notification-error';
   }
 
+  if (type === 'loading') {
+    notificationClassName = 'qa-notification-loading';
+  }
+
+  if (type === 'notification') {
+    notificationClassName = 'qa-notification-notification';
+  }
+
   return (
     <div className={notificationClassName}>
       <p>{msg}</p>

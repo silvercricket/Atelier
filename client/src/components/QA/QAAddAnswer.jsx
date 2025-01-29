@@ -6,6 +6,7 @@ import validateFormData from './lib/validateFormData.js';
 import { addAnswer } from '../../store/qaSlice.js';
 
 import QAFormInput from './QAFormInput.jsx';
+import QAPhotoUploader from './QAPhotoUploader.jsx';
 
 const QAAddAnswer = () => {
   const productName = useSelector((state) => state.qa.productName);
@@ -14,7 +15,9 @@ const QAAddAnswer = () => {
   const initialFormState = {
     answer: '',
     nickname: '',
-    email: ''
+    email: '',
+    photos: [],
+    thumbnails: []
   };
 
   const [formData, setFormData] = useState(initialFormState);
@@ -68,7 +71,7 @@ const QAAddAnswer = () => {
         maxLength={60}
         value={formData.nickname}
         onChangeHandler={handleInputChange}
-        notice="For privacy reasons, do not use your full name"
+        notice="For privacy reasons, do not use your full name or email address"
         />
 
         <QAFormInput
@@ -81,6 +84,8 @@ const QAAddAnswer = () => {
         onChangeHandler={handleInputChange}
         notice="For authentication reasons, you will not be emailed"
         />
+
+        <QAPhotoUploader formData={formData} setFormData={setFormData} />
 
         {
           errMsg &&
