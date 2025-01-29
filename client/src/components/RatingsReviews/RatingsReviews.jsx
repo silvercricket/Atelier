@@ -12,7 +12,7 @@ const RatingsReviews = () => {
     <div>
       <h1 className="rrHeader">Ratings & Reviews</h1>
       <div className="ratingsReviews">
-        <RatingBreakdown />
+        <Breakdowns />
         <ReviewList />
         { isOpen ? <NewReviewModal /> : null}
       </div>
@@ -22,6 +22,8 @@ const RatingsReviews = () => {
 
 import ReviewList from './reviewList.jsx';
 import RatingBreakdown from './ratingBreakdown.jsx';
-import NewReviewModal from './newReviewModal.jsx'
+import ProductBreakdown from './productBreakdown.jsx';
+import NewReviewModal from './newReviewModal.jsx';
+import Breakdowns from './breakdowns.jsx';
 
 export default RatingsReviews;

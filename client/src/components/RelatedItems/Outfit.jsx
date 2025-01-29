@@ -11,8 +11,6 @@ const Outfit = () => {
     return state.relatedItems.relatedItems[state.relatedItems.currentCardIndex]
   })
 
-
-
   const outfit = useSelector((state) => {
     return state.relatedItems.outfit;
   })
@@ -22,8 +20,7 @@ const Outfit = () => {
   }
   return (
     <div>
-      {outfit.map((item) => <OutfitItemCard name = {item}/>)}
-      {/* <button value = {itemCard.name} onClick = {handleAddOutfit}>Add To Outfit</button> */}
+      {outfit.map((item) => <OutfitItemCard item = {item}/>)}
     </div>
   )
 }

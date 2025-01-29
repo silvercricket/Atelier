@@ -6,8 +6,6 @@ import{ isFormOpen } from '../../store/ratingsReviews/newReviewFormSlice.js';
 const ReviewList = () => {
   const dispatch = useDispatch();
 
-  // const [ renderedReviews, setRenderedReviews ] = useState([]);
-
 
   // fetch reviews for current product upon mounting
   useEffect(() => {
@@ -42,7 +40,6 @@ const ReviewList = () => {
 
   return (
     <div className="reviewList">
-      <div>Product Breakdown goes here</div>
       <h3>{reviews.length} reviews, sorted by FIX_ME</h3>
       {reviewCards}
       {reviewCards.length < reviews.length ? <button onClick={handleMoreReviews}>MORE REVIEWS</button> : null}
