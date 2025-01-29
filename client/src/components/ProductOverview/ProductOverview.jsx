@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import ImageGallery from './ImageGallery.jsx';
 import ProductDetails from './ProductDetails.jsx';
 import AddToCart from './AddToCart.jsx';
@@ -12,13 +11,15 @@ import './ProductOverview.css';
 
 const ProductOverview = () => {
   const dispatch = useDispatch();
-  const id = 40344;
+  // TO DO --> id state
+  // const [id, SetId] = useState()
+  // const id = 40347;
 
   useEffect(() => {
     dispatch(getProducts());
-    dispatch(getProductDetails(id));
-    dispatch(getProductStyles(id));
-  }, [dispatch, id]);
+    dispatch(getProductDetails());
+    dispatch(getProductStyles());
+  }, [dispatch]);
 
   return (
     <div className='product-container'>
