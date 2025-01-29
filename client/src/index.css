@@ -73,6 +73,8 @@ textarea:not([rows]) {
 }
 
 
+
+/* RATINGS AND REVIEWS */
 .rrHeader {
   margin-bottom: 25px;
 }
@@ -90,6 +92,11 @@ textarea:not([rows]) {
   margin-left: 30px;
   margin-right: 10px;
   flex-grow: 8;
+}
+
+.breakdowns {
+  display: flex;
+  flex-direction: column;
 }
 
 /* ReviewTiles */
@@ -172,6 +179,7 @@ textarea:not([rows]) {
 .rating-container {
   text-align: center;
   font-family: Arial, sans-serif;
+  padding-top: 30px;
 }
 
 .slider {

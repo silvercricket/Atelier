@@ -23,7 +23,7 @@ const ProductBreakdown = () => {
     console.log('rating: ', rating, 'position: ', position);
     return (
       <div className="rating-container">
-        <span>Rating: {rating}/5</span>
+        <span>{char}: {rating}/5</span>
         <div className="slider">
           <div className="slider-track">
             <div className="slider-thumb" style={{left: position}}></div>
