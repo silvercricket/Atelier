@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 const ReviewTile = ({review}) => {
-
   const stars = {
     empty: <i className="fa-regular fa-star"></i>,
     half: <i className="fa-regular fa-star-half-stroke"></i>,
