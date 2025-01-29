@@ -1,8 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addReview } from '../../store/ratingsReviewsSlice.js';
 
 const RatingsReviews = () => {
+
+
+  const isOpen = useSelector((state) => {
+    return state.newReviewForm.formOpen;
+  })
 
   return (
     <div>
@@ -10,6 +14,7 @@ const RatingsReviews = () => {
       <div className="ratingsReviews">
         <RatingBreakdown />
         <ReviewList />
+        { isOpen ? <NewReviewModal /> : null}
       </div>
     </div>
   )
@@ -17,5 +22,6 @@ const RatingsReviews = () => {
 
 import ReviewList from './reviewList.jsx';
 import RatingBreakdown from './ratingBreakdown.jsx';
+import NewReviewModal from './newReviewModal.jsx'
 
 export default RatingsReviews;
