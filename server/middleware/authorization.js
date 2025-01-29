@@ -11,8 +11,8 @@ module.exports = (req, res, next) => {
   const body = req.body;
   const url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp${endpoint}`
 
-  console.log('URL: ', url)
-  console.log('Making request to:', endpoint);
+  // console.log('URL: ', url)
+  // console.log('Making request to:', endpoint);
 
   axios({
     method: type,

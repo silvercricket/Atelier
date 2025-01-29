@@ -1,6 +1,11 @@
+import React from 'react';
+import { Provider } from 'react-redux';
 import { render, screen, cleanup } from '@testing-library/react';
+import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
+import { thunk } from 'redux-thunk';
+import MockAdapter from 'axios-mock-adapter';
 import ProductOverview from '../ProductOverview.jsx';
 
 
@@ -61,7 +66,7 @@ const initialState = {
   }
 };
 
-const mockStore = configureStore([]);
+const mockStore = configureStore([thunk]);
 
 describe('ProductOverview', () => {
   let store;
