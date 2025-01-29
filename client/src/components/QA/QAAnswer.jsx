@@ -37,7 +37,6 @@ const QAAnswer = ({ answer }) => {
     setReportTouched(true);
     axios.put(`/api/qa/answers/${answer.id}/report`)
     .then((_response) => {
-      console.log('Reported');
     })
     .catch((err) => {
       console.log(err);
