@@ -184,6 +184,10 @@ textarea:not([rows]) {
 }
 
 /* QUESTIONS & ANSWERS */
+.qa p, .qa h4 {
+  margin: 0;
+}
+
 .qa-title {
   text-transform: uppercase;
 }
@@ -206,6 +210,10 @@ textarea:not([rows]) {
 
 .qa-question {
   margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.5rem;
 }
 
 .qa-question-info-container {
@@ -222,10 +230,17 @@ textarea:not([rows]) {
   cursor: pointer;
 }
 
+.qa-answers-list-container {
+  display: flex;
+  direction: row;
+  gap: 0.5rem;
+}
+
 .qa-answer-info-container {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  font-size: 0.8rem;
 }
 
 .qa-answer-thumbnails-container {
