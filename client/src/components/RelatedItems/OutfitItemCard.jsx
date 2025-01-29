@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-const OutfitItemCard = ({name}) => {
+const OutfitItemCard = ({item}) => {
 
   return (
     <div className = "outfitItemCard">
-      <div>{name}</div>
+      <span className = "actionButtonOutfit">&times;</span>
+      <div>{item.category}</div>
+      <div>{item.name}</div>
+      <div>{item.price}</div>
     </div>
   )
 }

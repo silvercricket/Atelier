@@ -9,5 +9,9 @@ import { createRoot } from 'react-dom/client';
 const domNode = document.getElementById('root');
 const root = createRoot(domNode);
 
-root.render(<Provider store = {store}><App /></Provider>);
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
 
