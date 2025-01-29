@@ -1,8 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, thunkAPI } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  currentProduct: null,
+  currentProduct: 40347,
   productList: [],
   productDetails: {},
   productStyles: {},
@@ -19,8 +19,9 @@ export const getProducts = createAsyncThunk('products/getProducts', async (_, { 
   }
 });
 
-export const getProductDetails = createAsyncThunk('products/getProductDetails', async (productId, { rejectWithValue }) => {
+export const getProductDetails = createAsyncThunk('products/getProductDetails', async (_, { rejectWithValue, getState }) => {
   try {
+    const productId = getState().products.currentProduct;
     const response = await axios.get(`/products/${productId}`);
     return response.data;
   } catch (err) {
@@ -29,8 +30,10 @@ export const getProductDetails = createAsyncThunk('products/getProductDetails', 
 });
 
 
-export const getProductStyles = createAsyncThunk('products/getProductStyles', async (productId, { rejectWithValue }) => {
+export const getProductStyles = createAsyncThunk('products/getProductStyles', async (_, { rejectWithValue, getState }) => {
   try {
+    const productId = getState().products.currentProduct;
+    console.log('ID', productId)
     const response = await axios.get(`/products/${productId}/styles`)
     return response.data;
   } catch (err) {

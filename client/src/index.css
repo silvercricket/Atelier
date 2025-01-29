@@ -255,6 +255,11 @@ textarea:not([rows]) {
 }
 
 /* QUESTIONS & ANSWERS */
+.qa p, .qa h4 {
+  margin: 0;
+}
+
+/* QUESTIONS & ANSWERS */
   .qa p, .qa h4 {
     margin: 0;
   }
