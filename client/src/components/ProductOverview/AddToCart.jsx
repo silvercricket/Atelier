@@ -17,8 +17,8 @@ const AddToCart = () => {
 
   return (
     <div className="add-to-cart">
-      {/* <div className="selectors">
-      </div> */}
+      <div className="selectors">
+      </div>
       <div className="add-to-bag">
         <button className="add-to-bag-button">
           ADD TO BAG

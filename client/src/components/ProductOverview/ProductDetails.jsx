@@ -12,7 +12,7 @@ const ProductDetails = () => {
   return (
     <div className='product-details'>
       <div className='reviews-product-details'>
-        <span>Read Add Reviews</span>
+        <span>Read All Reviews</span>
       </div>
       {productDetails ? (
         <div>
