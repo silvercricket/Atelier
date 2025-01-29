@@ -65,7 +65,7 @@ const QAAddQuestion = () => {
         maxLength={60}
         value={formData.nickname}
         onChangeHandler={handleInputChange}
-        notice="For privacy reasons, do not use your full name"
+        notice="For privacy reasons, do not use your full name or email address"
         />
 
         <QAFormInput
