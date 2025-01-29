@@ -1,9 +1,91 @@
 .product-container {
   display: grid;
   grid-template-columns: 60% 40%;
-  gap: 30px;
-  padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  gap: 40px;
 }
 
+.left-column {
+  position: relative;
+}
+
+.right-column {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reviews-link {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.reviews-link a {
+  text-decoration: underline;
+  color: #666;
+}
+
+.category {
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.product-name {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.price {
+  font-size: 20px;
+}
+
+.style-selector {
+  margin: 20px 0;
+}
+
+.style-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.selector-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.size-selector,
+.quantity-selector {
+  padding: 15px;
+  border: 1px solid #222;
+  background: white;
+}
+
+.button-row {
+  display: flex;
+  gap: 15px;
+}
+
+.add-to-bag {
+  flex-grow: 1;
+  padding: 15px;
+  border: 1px solid #222;
+  background: white;
+  display: flex;
+  justify-content: normal;
+  align-items: center;
+}
+
+.favorite {
+  width: 50px;
+  border: 1px solid #222;
+  background: white;
+  font-size: 20px;
+}

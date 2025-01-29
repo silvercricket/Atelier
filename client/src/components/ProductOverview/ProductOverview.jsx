@@ -10,7 +10,6 @@ import { getProducts, getProductDetails, getProductStyles } from '../../store/pr
 import './ProductOverview.css';
 
 
-
 const ProductOverview = () => {
   const dispatch = useDispatch();
   const id = 40344;
@@ -21,13 +20,16 @@ const ProductOverview = () => {
     dispatch(getProductStyles(id));
   }, [dispatch, id]);
 
-
   return (
     <div className='product-container'>
-      <ImageGallery />
-      <ProductDetails />
-      <StyleSelector />
-      <AddToCart />
+      <div className='left-column'>
+        <ImageGallery />
+      </div>
+      <div className='right-column'>
+        <ProductDetails />
+        <StyleSelector />
+        <AddToCart />
+      </div>
     </div>
   )
 }
