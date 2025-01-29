@@ -1,6 +1,7 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import { fetchQuestions } from '../../store/qaSlice.js';
 
@@ -24,7 +25,7 @@ const QAList = () => {
         questions.length > 0 ? (
           <>
             <QASearch />
-            {questions.map((question) => <QAListItem question={question} key={question.question_id} />)}
+            {questions.map((question) => <QAListItem question={question} key={uuidv4()} />)}
           </>
         ) : (
           <p>Be first to ask a question!</p>
@@ -35,4 +36,4 @@ const QAList = () => {
   )
 };
 
-export default QAList;
+export default memo(QAList);

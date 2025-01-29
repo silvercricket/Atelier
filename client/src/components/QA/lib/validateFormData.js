@@ -2,6 +2,9 @@ const validateFormData = (formData) => {
   let errMsg = '';
 
   Object.keys(formData).forEach((inputName) => {
+    if (typeof formData[inputName] !== 'string') {
+      return;
+    }
 
     if (formData[inputName].length === 0) {
       errMsg += `Your ${inputName}.\n`
