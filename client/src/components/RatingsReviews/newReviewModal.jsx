@@ -19,6 +19,7 @@ const NewReviewModal = () => {
 
   const handleRating = (e) => {
     setRating(e.target.value);
+    console.log(rating);
   }
 
   const stars = {
