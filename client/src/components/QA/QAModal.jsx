@@ -7,7 +7,7 @@ const QAModal = ({ children, closeModalHandler }) => {
   return (
     <div className="qa-modal-background">
       <div className="qa-modal-container">
-        <button onClick={closeModalHandler}>X</button>
+        <button className="qa-btn-close-modal" onClick={closeModalHandler}>X</button>
         {children}
       </div>
     </div>

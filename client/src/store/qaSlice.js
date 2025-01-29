@@ -43,7 +43,7 @@ export const addAnswer = createAsyncThunk(
       body: formData.answer,
       name: formData.nickname,
       email: formData.email,
-      // photos: formData.photos
+      photos: formData.photos
     }
     try {
       const response = await axios.post(`/api/qa/questions/${questionId}/answers`, answer);

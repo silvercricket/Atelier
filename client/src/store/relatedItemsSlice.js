@@ -20,62 +20,6 @@ const relatedItemIds = [
   40350
 ];
 
-const testData = [{
-  "id": 40344,
-  "campus": "hr-rfp",
-  "name": "Camo Onesie",
-  "slogan": "Blend in to your crowd",
-  "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
-  "category": "Jackets",
-  "default_price": "140.00",
-  "created_at": "2021-08-13T14:38:44.509Z",
-  "updated_at": "2021-08-13T14:38:44.509Z"
-},
-{
-  "id": 40345,
-  "campus": "hr-rfp",
-  "name": "Bright Future Sunglasses",
-  "slogan": "You've got to wear shades",
-  "description": "Where you're going you might not need roads, but you definitely need some shades. Give those baby blues a rest and let the future shine bright on these timeless lenses.",
-  "category": "Accessories",
-  "default_price": "69.00",
-  "created_at": "2021-08-13T14:38:44.509Z",
-  "updated_at": "2021-08-13T14:38:44.509Z"
-},
-{
-  "id": 40346,
-  "campus": "hr-rfp",
-  "name": "Morning Joggers",
-  "slogan": "Make yourself a morning person",
-  "description": "Whether you're a morning person or not.  Whether you're gym bound or not.  Everyone looks good in joggers.",
-  "category": "Pants",
-  "default_price": "40.00",
-  "created_at": "2021-08-13T14:38:44.509Z",
-  "updated_at": "2021-08-13T14:38:44.509Z"
-},
-{
-  "id": 40347,
-  "campus": "hr-rfp",
-  "name": "Slacker's Slacks",
-  "slogan": "Comfortable for everything, or nothing",
-  "description": "I'll tell you how great they are after I nap for a bit.",
-  "category": "Pants",
-  "default_price": "65.00",
-  "created_at": "2021-08-13T14:38:44.509Z",
-  "updated_at": "2021-08-13T14:38:44.509Z"
-},
-{
-  "id": 40348,
-  "campus": "hr-rfp",
-  "name": "Heir Force Ones",
-  "slogan": "A sneaker dynasty",
-  "description": "Now where da boxes where I keep mine? You should peep mine, maybe once or twice but never three times. I'm just a sneaker pro, I love Pumas and shell toes, but can't nothin compare to a fresh crispy white pearl",
-  "category": "Kicks",
-  "default_price": "99.00",
-  "created_at": "2021-08-13T14:38:44.509Z",
-  "updated_at": "2021-08-13T14:38:44.509Z"
-}];
-
 const testDataRelatedItems = [
   {
     "id": 40345,
@@ -177,25 +121,44 @@ const testDataRelatedItems = [
 
 const initialState = {
   detailView: false,
-  relatedItems: testDataRelatedItems,
+  relatedItems: [],
+  relatedItemIds: [],
   currentCardIndex: 0,
-  outfit: []
+  status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+  outfit: [],
+  error: null,
+  relatedItemDetails: []
 
 }
 
-export const fetchAPIData = createAsyncThunk('api/products', async () => {
-  const response = await axios.get('/api/products')
-  console.log(response)
-  // return response.todos
+export const getRelatedItems = createAsyncThunk('products/related', async (productId, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(`/api/products/${productId}/related`)
+    return response.data;
+  } catch (err) {
+    return rejectWithValue(err.message);
+  }
 })
+
+export const getRelatedItemDetails = createAsyncThunk('products/related/details', async (productId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/api/products/${productId}`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.message)
+    }
+})
+
+// export const fetchAPIData = createAsyncThunk('api/products', async () => {
+//   const response = await axios.get('/api/products')
+//   console.log(response)
+//   // return response.todos
+// })
 
 export const relatedItemsSlice = createSlice({
   name: 'relatedItem',
   initialState,
   reducers: {
-    showDetailView: (state) => {
-      state.detailView = !state.detailView;
-    },
     showNextCard: (state) => {
       if (state.currentCardIndex !== state.relatedItems.length - 1) {
         state.currentCardIndex += 1;
@@ -208,12 +171,39 @@ export const relatedItemsSlice = createSlice({
     },
     addToOutfit: (state, action) => {
       if (!state.outfit.includes(action.payload)) {
+        console.log(action.payload)
         state.outfit = [...state.outfit, action.payload]
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getRelatedItems.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(getRelatedItems.fulfilled, (state, action) => {
+        state.status = 'fulfilled'
+        state.relatedItemIds = action.payload;
+      })
+      .addCase(getRelatedItems.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(getRelatedItemDetails.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(getRelatedItemDetails.fulfilled, (state, action) => {
+        state.status = 'fulfilled'
+        state.relatedItemDetails = [...state.relatedItemDetails, action.payload];
+        state.relatedItems = [...state.relatedItems, action.payload];
+      })
+      .addCase(getRelatedItemDetails.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
   }
 })
 
-export const { showDetailView, showNextCard, showPreviousCard, addToOutfit } = relatedItemsSlice.actions;
+export const { showNextCard, showPreviousCard, addToOutfit } = relatedItemsSlice.actions;
 
 export default relatedItemsSlice.reducer;

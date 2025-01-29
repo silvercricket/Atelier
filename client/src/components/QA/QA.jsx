@@ -15,7 +15,7 @@ const QA = () => {
   const dispatch = useDispatch();
 
   return (
-    <section>
+    <section className="qa">
       <h3 className="qa-title">Questions & Answers</h3>
       <QAList />
       {
