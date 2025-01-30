@@ -8,8 +8,9 @@ const initialState = {
 };
 
 export const fetchChars = createAsyncThunk('productBreakdown/fetchChars', async (_, thunkAPI) => {
+  const product_id = thunkAPI.getState().products.currentProduct;
   return axios
-    .get(`/api/reviews/meta/?product_id=40347`)
+    .get(`/api/reviews/meta/?product_id=${product_id}`)
     .then((response) => {
       return response.data.characteristics;
     })
