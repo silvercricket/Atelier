@@ -253,8 +253,6 @@ textarea:not([rows]) {
   gap: 5px;
   scroll-snap-type: mandatory;
 }
-
-
 /* QUESTIONS & ANSWERS */
   .qa p, .qa h4 {
     margin: 0;

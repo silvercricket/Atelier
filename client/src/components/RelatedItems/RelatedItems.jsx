@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RelatedItemCard from './RelatedItemCard.jsx'
 import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails } from '../../store/relatedItemsSlice.js';
@@ -10,24 +10,20 @@ const RelatedItems = () => {
   const dispatch = useDispatch();
 
   const status = useSelector((state) => {
-    return state.relatedItems.status
+    return state.relatedItems.status || true
   })
 
   const error = useSelector((state) => {
-    return state.relatedItems.error
-  })
-
-  const itemCard = useSelector((state) => {
-    return state.relatedItems.relatedItems[state.relatedItems.currentCardIndex]
+    return state.relatedItems.error || null
   })
 
   const relatedItems = useSelector((state) => {
-    return state.relatedItems.relatedItems
+    return state.relatedItems.relatedItems || []
   })
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(getRelatedItems(40350))
+      dispatch(getRelatedItems(40347))
       .then((results) => {
         results.payload.forEach((productId) => {
           dispatch(getRelatedItemDetails(productId))
@@ -40,7 +36,7 @@ const RelatedItems = () => {
     <div className = "relatedItems">
       <h2>Related Items</h2>
       <div className = "relatedItemsWrapper">
-        {relatedItems.map((item) => <RelatedItemCard item = {item}/>)}
+        {relatedItems.map((item) => <RelatedItemCard item = {item} key = {useId()}/>)}
       </div>
       <h2>Your Outfit</h2>
       <Outfit />
