@@ -13,15 +13,15 @@ app.use(express.json());
 app.use('/api', auth);
 
 app.get('/products', auth, (req, res) => {
-  console.log('GETTING ALL PRODUCTS');
+  // console.log('GETTING ALL PRODUCTS');
 });
 
 app.get('/products/:id', auth, (req, res) => {
-  console.log('GETTING PRODUCT ID: ', req.params.id);
+  // console.log('GETTING PRODUCT ID: ', req.params.id);
 });
 
 app.get('/products/:id/styles', auth, (req, res) => {
-  console.log('GETTING STYLES: ', req.params.id);
+  // console.log('GETTING STYLES: ', req.params.id);
 });
 
 app.listen(3000, () => {

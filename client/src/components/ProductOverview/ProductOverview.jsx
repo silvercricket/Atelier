@@ -11,28 +11,39 @@ import './ProductOverview.css';
 
 const ProductOverview = () => {
   const dispatch = useDispatch();
-  // TO DO --> id state
-  // const [id, SetId] = useState()
-  // const id = 40347;
+  const status = useSelector(state => state.products?.status);
+
 
   useEffect(() => {
-    dispatch(getProducts());
-    dispatch(getProductDetails());
-    dispatch(getProductStyles());
-  }, [dispatch]);
+    const fetchData = async () => {
+      try {
+        await dispatch(getProducts());
+        await dispatch(getProductDetails());
+        await dispatch(getProductStyles());
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
 
-  return (
-    <div className='product-container'>
-      <div className='left-column'>
-        <ImageGallery />
-      </div>
-      <div className='right-column'>
-        <ProductDetails />
-        <StyleSelector />
-        <AddToCart />
-      </div>
+    if (status === 'idle') fetchData();
+  }, [dispatch, status]);
+
+
+  if (status === 'loading') return <div>Loading...</div>;
+  if (status === 'failed') return <div>Error: {error}</div>;
+
+return (
+  <div className='product-container'>
+    <div className='left-column'>
+      <ImageGallery />
     </div>
-  )
+    <div className='right-column'>
+      <ProductDetails />
+      <StyleSelector />
+      <AddToCart />
+    </div>
+  </div>
+)
 }
 
 export default ProductOverview;

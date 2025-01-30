@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 const ImageGallery = () => {
-  // const [selectedImage, setSelectedImage] = useState();
-  const id = 40344;
-  const productDetails = useSelector(state => state.products?.productDetails[id]);
-  const productStyle = useSelector(state => state.products?.productStyles.results);
+  const [selectedImage, setSelectedImage] = useState();
+  const [expanded, setExpanded] = useState(false);
+  const [zoom, setZoom] = useState(false);
 
-  console.log(productStyle, '***')
+  const id = useSelector(state => state.products.currentProduct) || 40347;
+  const details = useSelector(state => state.products.productDetails?.[id]);
+  const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
+
+  // console.log('PRODUCT DETAILS', details)
+  // console.log(productStyles)
 
   return (
     <div className='image-gallery'>
-      {/* <div className='thumbnail-images'> */}
+      <div className='thumbnail-images'>
+
       {/* // TO DO -- map through images here, set selected image */}
-      {/* </div> */}
+      </div>
       <div className='main-image'>
         <img src='https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' />
 
@@ -22,7 +27,7 @@ const ImageGallery = () => {
       </div>
       <div>
         <p>
-          {productDetails?.description}
+          {details?.description}
         </p>
       </div>
     </div>
