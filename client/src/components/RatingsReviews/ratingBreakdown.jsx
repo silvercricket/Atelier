@@ -5,7 +5,7 @@ const RatingBreakdown = () => {
   const dispatch = useDispatch();
 
   const reviews = useSelector((state) => {
-    return state.reviews.reviews;
+    return state.reviews.reviews || [];
   })
 
   const avgRating = () => {
