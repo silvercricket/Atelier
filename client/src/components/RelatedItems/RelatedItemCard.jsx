@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ComparisonCard from './ComparisonCard.jsx';
 import { showPreviousCard, showNextCard, addToOutfit } from '../../store/relatedItemsSlice.js';
 
+
 const RelatedItemCard = ( {item} ) => {
 
   const dispatch = useDispatch();
@@ -10,7 +11,9 @@ const RelatedItemCard = ( {item} ) => {
   const [comparisonCard, setComparisonCard] = useState(false);
 
   const handleDetailClick = (event) => {
-    setComparisonCard(!comparisonCard);
+    // setComparisonCard(!comparisonCard);
+
+    //instead of showing comparison card, will update state for product overview to be id for that specific item
   }
 
   const handleAddToOutfit = (event) => {
