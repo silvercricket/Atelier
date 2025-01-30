@@ -101,11 +101,11 @@ const RatingBreakdown = () => {
         </div>
         <div className="starBars">
           <p>{percentRec()}% of reviews reccomend this product</p>
-          <p>5 stars</p><progress value="0" max="100"></progress>
-          <p>4 stars</p><progress value="0" max="100"></progress>
-          <p>3 stars</p><progress value="0" max="100"></progress>
-          <p>2 stars</p><progress value="0" max="100"></progress>
-          <p>1 stars</p><progress value="0" max="100"></progress>
+          <span>5 stars</span><progress className="ratingCounter" value="0" max="100"></progress>
+          <span>4 stars</span><progress className="ratingCounter" value="0" max="100"></progress>
+          <span>3 stars</span><progress className="ratingCounter" value="0" max="100"></progress>
+          <span>2 stars</span><progress className="ratingCounter" value="0" max="100"></progress>
+          <span>1 stars</span><progress className="ratingCounter" value="0" max="100"></progress>
         </div>
     </div>
     );
@@ -126,11 +126,11 @@ const RatingBreakdown = () => {
         </div>
         <div className="starBars">
           <p>{percentRec()}% of reviews reccomend this product</p>
-          <p>5 stars</p><progress value={fiveStar()} max="100"></progress>
-          <p>4 stars</p><progress value={fourStar()} max="100"></progress>
-          <p>3 stars</p><progress value={threeStar()} max="100"></progress>
-          <p>2 stars</p><progress value={twoStar()} max="100"></progress>
-          <p>1 stars</p><progress value={oneStar()} max="100"></progress>
+          <p>5 stars</p><progress className="ratingCounter" value={fiveStar()} max="100"></progress>
+          <p>4 stars</p><progress className="ratingCounter" value={fourStar()} max="100"></progress>
+          <p>3 stars</p><progress className="ratingCounter" value={threeStar()} max="100"></progress>
+          <p>2 stars</p><progress className="ratingCounter" value={twoStar()} max="100"></progress>
+          <p>1 stars</p><progress className="ratingCounter" value={oneStar()} max="100"></progress>
         </div>
     </div>
 

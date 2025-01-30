@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { format } from 'date-fns';
 
@@ -9,17 +9,37 @@ const ReviewTile = ({review}) => {
     full: <i className="fa-solid fa-star"></i>
   }
 
+  const [ imageModal, setImageModal ] = useState(false);
+  const [ imageURL, setImageURL ] = useState('');
+  const [ hasRated, setHasRated ] = useState(false);
+
+  const handleClick = (url) => {
+    setImageURL(url)
+    setImageModal(true);
+  }
+
+  const handleRate= (isHelpful) => {
+    if (isHelpful) {
+      // add 1 to heplful
+    } else {
+      // add 1 to unhepful
+    }
+    setHasRated(true);
+  }
+
   const date = format(new Date(review.date), 'MMMM dd, yyyy');
 
   let photos = [];
   if (review.photos.length) {
     photos = review.photos.map((photo) => {
-      return <img key={photo.id} src={photo.url.replace(/v\d+/, 'c_fill,w_90,h_60')}/>
+      return <img key={photo.id} src={photo.url.replace(/v\d+/, 'c_fill,w_90,h_60')} onClick={() => handleClick(photo.url)}/>
     })
   }
 
+
   return (
     <div className="reviewTile">
+      <span className="reviewDate">{date}</span>
       <h3 className="reviewerName">{review.reviewer_name}</h3>
       <div>
         {review.rating >= 1 ? stars.full : review.rating >= 0.5 ? stars.half : stars.empty}
@@ -28,19 +48,20 @@ const ReviewTile = ({review}) => {
         {review.rating >= 4 ? stars.full : review.rating >= 3.5 ? stars.half : stars.empty}
         {review.rating >= 5 ? stars.full : review.rating >= 4.5 ? stars.half : stars.empty}
       </div>
-      <p>{date}</p>
-      <strong>{review.summary}</strong>
+      <h3>{review.summary}</h3>
       <p>{review.body}</p>
+      { imageModal ? <ReviewImageModal photo={imageURL} setImageModal={setImageModal} setImageURL={setImageURL}/> : null}
       {photos.length ? photos : null}
       {review.recommend ? <p>I recommend this product  ✅ </p> : null}
-      <p>seller response here eventually</p>
+      {review.response ? <p className="sellerResponse">review.response</p> : null}
       <p>Was this review helpful?</p>
-      <button>Yes - not functional</button><button>No - not functional</button>
+      { hasRated ? <p>You have already rated this review</p> : <div><button onClick={() => handleRate(true)}>Yes</button><button onClick={() => handleRate(false)}>No</button></div>}
       <p>{review.helpfulness} customers found this review helpful</p>
-
+      <span>0 customers found this review unhelpful</span>
     </div>
   );
 
 }
 
+import ReviewImageModal from './ReviewImageModal.jsx';
 export default ReviewTile;
