@@ -231,7 +231,6 @@ textarea:not([rows]) {
   padding: 5px;
 }
 
-<<<<<<< HEAD
 .actionButton {
   float: right;
   top: 10px;
@@ -253,7 +252,7 @@ textarea:not([rows]) {
   display: flex;
   gap: 5px;
   scroll-snap-type: mandatory;
-=======
+}
 /* QUESTIONS & ANSWERS */
 .qa p, .qa h4 {
   margin: 0;
@@ -363,7 +362,6 @@ textarea:not([rows]) {
 
 .qa-form-notice {
   margin: 0;
->>>>>>> main
 }
 
 .qa-photo-uploader-thumbnails-container {
