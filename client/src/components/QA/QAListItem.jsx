@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { fetchQuestions, showAddAnswerModal } from '../../store/qaSlice.js';
+import { fetchQuestions, showNewAnswerModal } from '../../store/qaSlice.js';
 
 import QAAnswersList from './QAAnswersList.jsx';
 
@@ -37,7 +37,7 @@ const QAListItem = ({ question }) => {
         </div>
         <div className="qa-question-info-container">
           <div>Helpful? <button className="link-button" onClick={handleHelpfulClick}>Yes</button> ({question.question_helpfulness})</div>
-          <div><button className="link-button" onClick={() => dispatch(showAddAnswerModal({questionBody: question.question_body, questionId: question.question_id}))}>Add Answer</button></div>
+          <div><button className="link-button" onClick={() => dispatch(showNewAnswerModal({questionBody: question.question_body, questionId: question.question_id}))}>Add Answer</button></div>
         </div>
       </div>
 
