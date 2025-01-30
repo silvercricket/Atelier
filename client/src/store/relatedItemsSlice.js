@@ -171,9 +171,11 @@ export const relatedItemsSlice = createSlice({
     },
     addToOutfit: (state, action) => {
       if (!state.outfit.includes(action.payload)) {
-        console.log(action.payload)
         state.outfit = [...state.outfit, action.payload]
       }
+    },
+    changeCurrentItem: (state, action) => {
+
     }
   },
   extraReducers: (builder) => {

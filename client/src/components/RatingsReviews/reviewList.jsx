@@ -14,12 +14,12 @@ const ReviewList = () => {
 
   // STATE that holds list of all reviews
   const reviews = useSelector((state) => {
-    return state.reviews.reviews;
+    return state.reviews.reviews || [];
   });
 
   // STATE that holds only rendered reviews, starts with 2, add 2 whenever click 'more reviews'
   const renderedReviews = useSelector((state) => {
-    return state.reviews.renderedReviews;
+    return state.reviews.renderedReviews || [];
   })
 
   // will make this its own component eventually

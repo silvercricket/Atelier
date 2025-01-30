@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
 
 // attach auth key to all routes
-app.use('/*', auth);
+app.use('/api', auth);
 
 app.get('/products', auth, (req, res) => {
   console.log('GETTING ALL PRODUCTS');

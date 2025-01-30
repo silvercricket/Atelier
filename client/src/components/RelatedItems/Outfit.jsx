@@ -7,10 +7,6 @@ const Outfit = () => {
 
   const dispatch = useDispatch();
 
-  const itemCard = useSelector((state) => {
-    return state.relatedItems.relatedItems[state.relatedItems.currentCardIndex]
-  })
-
   const outfit = useSelector((state) => {
     return state.relatedItems.outfit;
   })

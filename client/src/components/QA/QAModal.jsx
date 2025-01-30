@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { hideAddQuestionModal } from '../../store/qaSlice.js';
-
 const QAModal = ({ children, closeModalHandler }) => {
 
   return (
