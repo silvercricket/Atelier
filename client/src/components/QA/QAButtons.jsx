@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { showAddQuestionModal } from '../../store/qaSlice.js';
+import { showNewQuestionModal } from '../../store/qaSlice.js';
 
 const QAButtons = () => {
   const questions = useSelector((state) => state.qa.questions);
@@ -10,7 +10,7 @@ const QAButtons = () => {
   return (
     <div>
       { questions.length > 4 && <button>More Answered Questions</button> }
-      <button onClick={() => dispatch(showAddQuestionModal())}>Add a Question</button>
+      <button onClick={() => dispatch(showNewQuestionModal())}>Add a Question</button>
     </div>
   )
 }

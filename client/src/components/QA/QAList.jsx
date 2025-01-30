@@ -1,5 +1,5 @@
 import React from 'react';
-import { memo, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -36,4 +36,4 @@ const QAList = () => {
   )
 };
 
-export default memo(QAList);
+export default QAList;
