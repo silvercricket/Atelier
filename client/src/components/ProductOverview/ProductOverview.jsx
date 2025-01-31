@@ -11,8 +11,17 @@ import './ProductOverview.css';
 
 const ProductOverview = () => {
   const dispatch = useDispatch();
+
+  const id = useSelector(state => state.products.currentProduct) || 40347;
+  const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
   const status = useSelector(state => state.products?.status);
 
+  const [selectedStyle, setSelectedStyle] = useState(styles?.[0]);
+
+
+  useEffect(() => {
+    if (styles?.length) setSelectedStyle(styles?.[0]);
+  }, [styles]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,18 +41,18 @@ const ProductOverview = () => {
   if (status === 'loading') return <div>Loading...</div>;
   if (status === 'failed') return <div>Error: {error}</div>;
 
-return (
-  <div className='product-container'>
-    <div className='left-column'>
-      <ImageGallery />
+  return (
+    <div className='product-container'>
+      <div className='left-column'>
+        <ImageGallery />
+      </div>
+      <div className='right-column'>
+        <ProductDetails />
+        <StyleSelector selectedStyle={selectedStyle} setSelectedStyle={setSelectedStyle} />
+        <AddToCart selectedStyle={selectedStyle} setSelectedStyle={setSelectedStyle} />
+      </div>
     </div>
-    <div className='right-column'>
-      <ProductDetails />
-      <StyleSelector />
-      <AddToCart />
-    </div>
-  </div>
-)
+  )
 }
 
 export default ProductOverview;

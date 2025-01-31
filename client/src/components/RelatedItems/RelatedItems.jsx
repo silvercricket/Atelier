@@ -36,10 +36,7 @@ const RelatedItems = () => {
     <div className="relatedItems">
       <h2>Related Items</h2>
       <div className="relatedItemsWrapper">
-        {/*_____________________________________________________________________FIX ME _____________________________________________________________________ */}
-        {/* {relatedItems.map((item, index) => <RelatedItemCard item = {item} key = {useId()}/>)} */}
-        {relatedItems.map((item, index) => <RelatedItemCard item={item} key={index} />)}
-        {/*_____________________________________________________________________FIX ME _____________________________________________________________________ */}
+        {relatedItems.map((item, index) => <RelatedItemCard item = {item} key = {useId()}/>)}
       </div>
       <h2>Your Outfit</h2>
       <Outfit />
