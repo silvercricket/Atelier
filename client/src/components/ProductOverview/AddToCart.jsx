@@ -12,10 +12,12 @@ const AddToCart = ({ selectedStyle, setSelectedStyle }) => {
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
 
+  console.log('CART: ', cart)
+
 
   const handleGetCart = () => {
     dispatch(getCart());
-  }
+  };
 
   const skus = selectedStyle?.skus ?
     Object.entries(selectedStyle.skus).map(([skuId, data]) => ({
@@ -26,11 +28,16 @@ const AddToCart = ({ selectedStyle, setSelectedStyle }) => {
     : [];
 
   const selectedSku = skus.find(sku => sku.size === selectedSize);
+  console.log('SELECTED SKU', selectedSku)
   const maxQuantity = selectedSku ? Math.min(selectedSku.quantity, 15) : 0;
 
   const quantityOptions = [];
   for (let i = 1; i <= maxQuantity; i++) {
     quantityOptions.push(i);
+  };
+
+  const handleClick = () => {
+    if (selectedSku?.id) dispatch(postCart({ sku_id: selectedSku?.id }));
   };
 
   return (
@@ -39,25 +46,24 @@ const AddToCart = ({ selectedStyle, setSelectedStyle }) => {
         <select
           className="size-selection"
           value={selectedSize}
+          disabled={!skus.length}
           onChange={(e) => {
             setSelectedSize(e.target.value);
             setQuantity(1);
           }}
         >
-          <option value="">Select Size</option>
+          <option value="">{!skus.length ? "OUT OF STOCK" : 'Select Size'}</option>
           {skus.map(data => (
             <option key={data.id} value={data.size}>
               {data.size}
             </option>
           ))}
         </select>
-      </div>
-      <div>
         <select
           className="quantity-selection"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
-          disabled={!selectedSize}
+          disabled={!selectedSize || !skus.length}
         >
           {selectedSize ? (
             quantityOptions.map(num => (
@@ -71,7 +77,11 @@ const AddToCart = ({ selectedStyle, setSelectedStyle }) => {
         </select>
       </div>
       <div className="add-to-bag">
-        <button className="add-to-bag-button">
+        <button
+          className="add-to-bag-button"
+          disabled={!skus.length}
+          onClick={handleClick}
+        >
           ADD TO BAG
           <span>+</span>
         </button>
