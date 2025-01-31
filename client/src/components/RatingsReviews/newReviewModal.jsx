@@ -6,12 +6,21 @@ const NewReviewModal = () => {
   const dispatch = useDispatch();
   const { useState } = React;
 
+  // state
   const [ rating, setRating ] = useState(0);
   const [ summary, setSummary ] = useState('');
   const [ body, setBody ] = useState('');
   const [ reviewer, setReviewer ] = useState('');
   const [ recommend, setRecommend ] = useState(null);
   const [ email, setEmail ] = useState('');
+
+  // table state
+  const [ size, setSize ] = useState(null);
+  const [ width, setWidth ] = useState(null);
+  const [ comfort, setComfort ] = useState(null);
+  const [ quality, setQuality ] = useState(null);
+  const [ prodLength, setProdLength ] = useState(null);
+  const [ fit, setFit ] = useState(null);
 
 
   // Toggle Modal Window
@@ -89,7 +98,7 @@ const NewReviewModal = () => {
             <label>No</label>
           </div>
           {/* characteristics go here */}
-          <CharacteristicsTable />
+          <CharacteristicsTable setSize={setSize} setWidth={setWidth} setComfort={setComfort} setQuality={setQuality} setProdLength={setProdLength} setFit={setFit}/>
           {/* Summary */}
           <div>
             <p>Summary</p>
