@@ -9,9 +9,9 @@ const initialState = {
 };
 
 export const fetchReviews = createAsyncThunk('reviews/fetchReviews', async (_, thunkAPI) => {
-  // const product_id = thunkAPI.getState().products.currentProduct
+  const product_id = thunkAPI.getState().products.currentProduct
   return axios
-    .get(`/api/reviews/?product_id=40347`)
+    .get(`/api/reviews/?product_id=${product_id}`)
     .then((response) => {
       return response.data.results;
     })

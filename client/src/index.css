@@ -89,8 +89,8 @@ textarea:not([rows]) {
 .reviewList {
   flex-basis: 600px;
   float: right;
-  margin-left: 30px;
-  margin-right: 10px;
+  margin-left: 50px;
+  margin-right: 200px;
   flex-grow: 8;
 }
 
@@ -99,16 +99,39 @@ textarea:not([rows]) {
   flex-direction: column;
 }
 
+progress.ratingCounter {
+  width: 250px;
+  height: 15px;
+  border: 1px solid lightgray;
+}
+
+progress.ratingCounter::-webkit-progress-bar {
+  background-color: lightgray; /* Bar background */
+}
+
+progress.ratingCounter::-webkit-progress-value {
+  background-color: grey; /* Progress value (fill) */
+}
+
+progress.ratingCounter::-moz-progress-bar {
+  background-color: grey; /* Firefox support */
+}
+
 /* ReviewTiles */
 .reviewTile {
   margin-top: 5px;
   margin-bottom: 5px;
-  border-bottom-width: 2px;
-  border-bottom-style: groove;
   padding: 15px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .reviewerName {
+  float: right;
+  margin-top: 0px;
+  padding-right: 5px;
+}
+
+.reviewDate {
   float: right;
   margin-top: 0px;
   padding-right: 15px;
@@ -118,6 +141,10 @@ textarea:not([rows]) {
   clear: left;
   margin-top: 10px;
   padding: 5px;
+}
+
+.sellerResponse {
+  background-color: lightgray;
 }
 
 .ratingBreakdown {
@@ -131,11 +158,15 @@ textarea:not([rows]) {
   text-align: center;
 }
 
+.charRadio {
+  float: right;
+}
+
 .colHead {
   border: 1px solid black;
   border-collapse: collapse;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 60px;
+  padding-right: 60px;
   padding-top: 8px;
   padding-bottom: 8px;
 }
