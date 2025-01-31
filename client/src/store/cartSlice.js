@@ -19,18 +19,19 @@ export const getCart = createAsyncThunk('cart/getCart', async (_, { rejectWithVa
   }
 })
 
-export const postCart = createAsyncThunk('cart/postCart', async ({ sku_id, count }, { rejectWithValue }) => {
+export const postCart = createAsyncThunk('cart/postCart', async ({ sku_id }, { rejectWithValue }) => {
   try {
-    const response = await axios.post('/api/cart', { sku_id, count })
-    return response.data;
+    const response = await axios.post('/api/cart', { sku_id })
+    console.log("RESPONSE.DATA", sku_id)
+    return { response: response.data, sku_id: sku_id };
   } catch (err) {
     return rejectWithValue(err.message);
   }
 })
 
-export const putCart = createAsyncThunk('cart/putCart', async ({ sku_id, count }, { rejectWithValue }) => {
+export const putCart = createAsyncThunk('cart/putCart', async ({ sku_id }, { rejectWithValue }) => {
   try {
-    const response = await axios.put('/api/cart', { sku_id, count })
+    const response = await axios.put('/api/cart', { sku_id })
     return response.data;
   } catch (err) {
     return rejectWithValue(err.message);
@@ -59,14 +60,18 @@ const cartSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(postCart.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        console.log('action.payload', action.payload)
         const { sku_id, count } = action.payload;
-        const item = state.find(item => item.sku_id === sku_id);
+        const item = state.cart.find(item => item.sku_id === sku_id);
+        console.log('SKU', sku_id)
         if (item) item.count++;
-        else state.push({ sku_id, count });
+        else state.cart.push({ sku_id });
       })
       .addCase(putCart.fulfilled, (state, action) => {
+        state.status = 'succeeded';
         const { sku_id, count } = action.payload;
-        const item = state.find(item => item.sku_id === sku_id);
+        const item = state.cart.find(item => item.sku_id === sku_id);
         if (item) {
           item.count--;
           if (item.count <= 0) {

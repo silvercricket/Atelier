@@ -24,27 +24,27 @@ const RelatedItems = () => {
   useEffect(() => {
     if (status === 'idle') {
       dispatch(getRelatedItems(40347))
-      .then((results) => {
-        results.payload.forEach((productId) => {
-          dispatch(getRelatedItemDetails(productId))
+        .then((results) => {
+          results.payload.forEach((productId) => {
+            dispatch(getRelatedItemDetails(productId))
+          })
         })
-      })
     }
   }, [])
 
   return (
-    <div className = "relatedItems">
+    <div className="relatedItems">
       <h2>Related Items</h2>
-      <div className = "relatedItemsWrapper">
-        {relatedItems.map((item) => <RelatedItemCard item = {item} key = {useId()}/>)}
+      <div className="relatedItemsWrapper">
+        {relatedItems.map((item, index) => <RelatedItemCard item={item} key={useId()} />)}
       </div>
       <h2>Your Outfit</h2>
       <Outfit />
       <br />
       <br />
       <div>
-          <button onClick = {() => {dispatch(showPreviousCard())}}>Show Previous Item</button>
-          <button onClick = {() => {dispatch(showNextCard())}}>Show Next Item</button>
+        <button onClick={() => { dispatch(showPreviousCard()) }}>Show Previous Item</button>
+        <button onClick={() => { dispatch(showNextCard()) }}>Show Next Item</button>
       </div>
     </div>
   )
