@@ -1,29 +1,48 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-const ImageGallery = () => {
-  const [selectedImage, setSelectedImage] = useState();
+const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImage, setSelectedImage }) => {
+
   const [expanded, setExpanded] = useState(false);
   const [zoom, setZoom] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const id = useSelector(state => state.products.currentProduct) || 40347;
   const details = useSelector(state => state.products.productDetails?.[id]);
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
 
-  // console.log('PRODUCT DETAILS', details)
-  // console.log(productStyles)
+  const handlePrevious = (selectedImage) => {
+    if (selectedImage > 0) setSelectedImage(selectedImage - 1);
+  };
+
+  const handleNext = (selectedImage) => {
+    if (selectedImage < selectedStyle?.photos.length - 1) setSelectedImage(selectedImage + 1);
+  };
+
+  console.log('PRODUCT STYLES', selectedStyle);
+  console.log("PHOTOS: ", selectedImage)
 
   return (
     <div className='image-gallery'>
       <div className='thumbnail-images'>
-
-        {/* // TO DO -- map through images here, set selected image */}
+        {selectedStyle?.photos.length && selectedStyle?.photos.map((photo, index) => (
+          <div
+            key={index}
+            className={`thumbnail ${selectedImage === index ? 'selected' : ''}`}
+            onClick={() => setSelectedImage(index)}
+          >
+            <img src={photo?.thumbnail_url} alt='style-photo' />
+          </div>
+        ))}
       </div>
       <div className='main-image'>
-        <img src='https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' />
-
-        {/* <button className='previous-button' onClick={() => }></button> */}
-        {/* <button className='next-button' onClick={() => }></button> */}
+        <img src={selectedStyle?.photos?.[selectedImage].url} alt='style-photo-main' />
+        {selectedImage > 0 && (
+          <button className='previous-button' onClick={() => handlePrevious(selectedImage)}><span><i className="fa-solid fa-arrow-left"></i></span></button>
+        )}
+        {selectedImage < selectedStyle?.photos.length - 1 && (
+          <button className='next-button' onClick={() => handleNext(selectedImage)}><span><i className="fa-solid fa-arrow-right"></i></span></button>
+        )}
       </div>
       <div>
         <strong>
@@ -35,7 +54,7 @@ const ImageGallery = () => {
           {details?.description}
         </p>
       </div>
-    </div>
+    </div >
   )
 };
 

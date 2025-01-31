@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-const StyleSelector = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedSize, quantity, setQuantity }) => {
+const StyleSelector = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedSize, quantity, setQuantity, selectedImage, setSelectedImage }) => {
 
   const id = useSelector(state => state.products.currentProduct) || 40347;
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
@@ -9,13 +9,6 @@ const StyleSelector = ({ selectedStyle, setSelectedStyle, selectedSize, setSelec
 
 
   if (status === 'loading') return <div>Loading styles...</div>;
-  // if (!styles) return <div>No styles available</div>;
-
-
-  // console.log('STYLES', styles)
-  // console.log('SELECTED STYLE', selectedStyle);
-
-
 
   return (
     <div className='style-section'>
@@ -29,11 +22,12 @@ const StyleSelector = ({ selectedStyle, setSelectedStyle, selectedSize, setSelec
             className={`style-option ${selectedStyle?.style_id === style?.style_id ? 'selected' : ''}`}
             onClick={(() => {
               setSelectedStyle(style);
-              setSelectedSize('')
+              setSelectedSize('');
               setQuantity(1);
+              setSelectedImage(0);
             })}
           >
-            {selectedStyle?.style_id === style.style_id && <span className="checkmark">✓</span>}
+            {selectedStyle?.style_id === style.style_id && <span className="checkmark"><i class="fa-solid fa-check"></i></span>}
             <img
               src={style?.photos[0]?.thumbnail_url}
               alt={style?.name}

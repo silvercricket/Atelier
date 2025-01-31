@@ -29,7 +29,7 @@ const ProductDetails = () => {
           <p>{details?.category}</p>
           <h1>{details?.name}</h1>
           <p>{price}</p>
-          {/* TO DO: ADD SOCIAL MEDIA ICONS */}
+          {/* // TO DO: ADD SOCIAL MEDIA ICONS */}
         </div>
       ) : (
         <p>Loading product details...</p>

@@ -19,6 +19,7 @@ const ProductOverview = () => {
   const [selectedStyle, setSelectedStyle] = useState(styles?.[0]);
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
 
 
   useEffect(() => {
@@ -46,7 +47,12 @@ const ProductOverview = () => {
   return (
     <div className='product-container'>
       <div className='left-column'>
-        <ImageGallery />
+        <ImageGallery
+          selectedStyle={selectedStyle}
+          setSelectedStyle={setSelectedStyle}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
       </div>
       <div className='right-column'>
         <ProductDetails />
