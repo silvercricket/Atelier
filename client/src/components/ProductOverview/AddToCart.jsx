@@ -12,7 +12,7 @@ const AddToCart = ({ selectedStyle, setSelectedStyle }) => {
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
 
-  console.log('CART: ', cart)
+  // console.log('CART: ', cart)
 
 
   const handleGetCart = () => {
@@ -28,7 +28,7 @@ const AddToCart = ({ selectedStyle, setSelectedStyle }) => {
     : [];
 
   const selectedSku = skus.find(sku => sku.size === selectedSize);
-  console.log('SELECTED SKU', selectedSku)
+  // console.log('SELECTED SKU', selectedSku);
   const maxQuantity = selectedSku ? Math.min(selectedSku.quantity, 15) : 0;
 
   const quantityOptions = [];
