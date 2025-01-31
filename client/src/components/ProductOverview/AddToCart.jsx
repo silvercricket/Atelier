@@ -12,10 +12,9 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
 
   // console.log('CART: ', cart)
 
-
-  const handleGetCart = () => {
-    dispatch(getCart());
-  };
+  // const handleGetCart = () => {
+  //   dispatch(getCart());
+  // };
 
   const skus = selectedStyle?.skus ?
     Object.entries(selectedStyle.skus).map(([skuId, data]) => ({
