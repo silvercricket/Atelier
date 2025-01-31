@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useId } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RelatedItemCard from './RelatedItemCard.jsx'
 import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails } from '../../store/relatedItemsSlice.js';
@@ -9,17 +9,25 @@ const RelatedItems = () => {
 
   const dispatch = useDispatch();
 
+  const currentIndex = useSelector((state) => {
+    return state.relatedItems.currentCardIndex
+  })
+
   const status = useSelector((state) => {
-    return state.relatedItems.status || true
+    return state.relatedItems.status
   })
 
   const error = useSelector((state) => {
-    return state.relatedItems.error || null
+    return state.relatedItems.error
   })
 
   const relatedItems = useSelector((state) => {
-    return state.relatedItems.relatedItems || []
+    return state.relatedItems.relatedItems
   })
+
+  const carouselStyle = {
+    transform: `translateX(-${currentIndex * 60}%)`
+  }
 
   useEffect(() => {
     if (status === 'idle') {
@@ -35,17 +43,13 @@ const RelatedItems = () => {
   return (
     <div className = "relatedItems">
       <h2>Related Items</h2>
-      <div className = "relatedItemsWrapper">
-        {relatedItems.map((item) => <RelatedItemCard item = {item} key = {useId()}/>)}
+      <div className = "relatedItemsWrapper" >
+        {relatedItems.map((item, index) => <RelatedItemCard item = {item} key = {index} style = {carouselStyle}/>)}
+        {currentIndex === 0 ? null : <button className = "leftButton button" onClick = {() => dispatch(showPreviousCard())}>ᐸ</button>}
+        {currentIndex === relatedItems.length - 1 ? null : <button className = "rightButton button" onClick = {() => dispatch(showNextCard())}>ᐳ</button>}
       </div>
       <h2>Your Outfit</h2>
       <Outfit />
-      <br />
-      <br />
-      <div>
-          <button onClick = {() => {dispatch(showPreviousCard())}}>Show Previous Item</button>
-          <button onClick = {() => {dispatch(showNextCard())}}>Show Next Item</button>
-      </div>
     </div>
   )
 }
