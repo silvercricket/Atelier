@@ -160,16 +160,6 @@ textarea:not([rows]) {
   margin-bottom: 24px;
 }
 
-.relatedItemCard {
-  border-width: 2px;
-  border-style: groove;
-  float: left;
-  width: 30%;
-  padding: 5px;
-  flex-shrink: 0;
-
-}
-
 /* PRODUCT BREAKDOWN */
 
 .productBreakdown {
@@ -211,16 +201,63 @@ textarea:not([rows]) {
 
 /* RELATED ITEMS */
 .relatedItems {
-  overflow-x: scroll;
+  overflow-x: hidden;
+  /* overflow-y: visible; */
 }
+
+.relatedItemsWrapper {
+  /* overflow-x: hidden; */
+  overflow-y: visible;
+  flex-wrap: nowrap;
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  margin: auto;
+  align-items: center;
+  height: 500px;
+}
+
+.relatedItemCard {
+  border-width: 2px;
+  overflow-y: visible;
+  border-style: groove;
+  float: left;
+  width: 33%;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* .relatedItemCard {
+  border-width: 2px;
+  border-style: groove;
+  float: left;
+  width: 30%;
+  padding: 5px;
+  flex-shrink: 0;
+} */
 
 .comparisonCard {
   position: absolute;
+  top: 100px;
   border-width: 2px;
   border-style: groove;
   padding: 5px;
   background-color: white;
-  z-index: 2;
+  z-index: 10;
+}
+
+.comparisonTable {
+  border-spacing: 1rem;
+  align-items: center;
+}
+
+.currentOutfitCard {
+  border-width: 2px;
+  border-style: groove;
+  width: 33%;
+
 }
 
 .outfitItemCard {
@@ -229,6 +266,9 @@ textarea:not([rows]) {
   float: left;
   width: 33%;
   padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .actionButton {
@@ -245,14 +285,20 @@ textarea:not([rows]) {
   transform: scale(1.5, 1.5)
 }
 
-.relatedItemsWrapper {
-  overflow-x: scroll;
-  flex-wrap: nowrap;
-  flex-flow: nowrap;
-  display: flex;
-  gap: 5px;
-  scroll-snap-type: mandatory;
+.leftButton {
+  border-color: pink;
+  left: 1rem;
 }
+
+.rightButton {
+  border-color: pink;
+  right: 1rem;
+}
+
+.button {
+  position: absolute;
+}
+
 /* QUESTIONS & ANSWERS */
   .qa p, .qa h4 {
     margin: 0;

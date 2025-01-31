@@ -16,6 +16,7 @@ const Outfit = () => {
   }
   return (
     <div>
+      <div className = "currentOutfitCard">Add to Outfit</div>
       {outfit.map((item) => <OutfitItemCard item = {item}/>)}
     </div>
   )
