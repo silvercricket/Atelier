@@ -10,8 +10,6 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
 
 
-  // console.log('CART: ', cart)
-
   // const handleGetCart = () => {
   //   dispatch(getCart());
   // };
@@ -25,7 +23,6 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
     : [];
 
   const selectedSku = skus.find(sku => sku.size === selectedSize);
-  // console.log('SELECTED SKU', selectedSku);
   const maxQuantity = selectedSku ? Math.min(selectedSku.quantity, 15) : 0;
 
   const quantityOptions = [];

@@ -19,7 +19,7 @@ const ProductOverview = () => {
   const [selectedStyle, setSelectedStyle] = useState(styles?.[0]);
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
 
   useEffect(() => {
@@ -50,8 +50,8 @@ const ProductOverview = () => {
         <ImageGallery
           selectedStyle={selectedStyle}
           setSelectedStyle={setSelectedStyle}
-          selectedImage={selectedImage}
-          setSelectedImage={setSelectedImage}
+          selectedImageIndex={selectedImageIndex}
+          setSelectedImageIndex={setSelectedImageIndex}
         />
       </div>
       <div className='right-column'>
@@ -63,6 +63,8 @@ const ProductOverview = () => {
           setSelectedSize={setSelectedSize}
           quantity={quantity}
           setQuantity={setQuantity}
+          selectedImageIndex={selectedImageIndex}
+          setSelectedImageIndex={setSelectedImageIndex}
         />
         <AddToCart
           selectedStyle={selectedStyle}
