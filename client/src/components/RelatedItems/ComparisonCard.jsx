@@ -26,13 +26,25 @@ const ComparisonCard = ({ item, price }) => {
   return (
     <div className = "comparisonCard">
       <small>Comparing</small>
-      <h3>Current Item:</h3>
+      <table className = "comparisonTable">
+        <tr>
+          <th>{testInitialItem.name}</th>
+          <th>&nbsp;</th>
+          <th>{item}</th>
+        </tr>
+        <tr>
+          <td>{testInitialItem.default_price}</td>
+          <td>Feature</td>
+          <td>{price}</td>
+        </tr>
+      </table>
+      {/* <h3>Current Item:</h3>
       <p>{testInitialItem.name}</p>
       <p>{testInitialItem.default_price}</p>
       <p></p>
       <h3>Related Item:</h3>
       <p>{item}</p>
-      <p>{price}</p>
+      <p>{price}</p> */}
     </div>
   )
 }

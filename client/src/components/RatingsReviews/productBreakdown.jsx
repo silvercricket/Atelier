@@ -17,12 +17,11 @@ const ProductBreakdown = () => {
     return <div>LOADING...</div>
   }
 
-  const breakdowns = Object.keys(characteristics).map((char) => {
+  const breakdowns = Object.keys(characteristics).map((char, index) => {
     const rating = Math.round(characteristics[char].value * 10) / 10;
     const position = Math.round((rating / 5) * 100) + '%';
-    console.log('rating: ', rating, 'position: ', position);
     return (
-      <div className="rating-container">
+      <div key={index} className="rating-container">
         <span>{char}: {rating}/5</span>
         <div className="slider">
           <div className="slider-track">

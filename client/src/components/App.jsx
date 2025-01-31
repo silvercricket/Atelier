@@ -35,7 +35,6 @@ var App = (props) => {
             }
           />
         </Routes>
-        <p>hello world</p>
       </div>
     </Router>
   );
