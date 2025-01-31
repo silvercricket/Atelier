@@ -13,7 +13,7 @@ const StyleSelector = ({ selectedStyle, setSelectedStyle }) => {
 
 
   // console.log('STYLES', styles)
-  console.log('SELECTED STYLE', selectedStyle);
+  // console.log('SELECTED STYLE', selectedStyle);
 
 
 
