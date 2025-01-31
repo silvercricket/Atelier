@@ -1,15 +1,28 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
 import QAAnswer from './QAAnswer.jsx';
+import QANotification from './QANotification.jsx';
 
 const QAAnswersList = ({ question }) => {
-  const [showAllAnswers, setShowAllAnswers] = useState(false);
   const [answers, setAnswers] = useState([]);
+  const [showAllAnswers, setShowAllAnswers] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const answersCount = Object.keys(question.answers).length;
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios.get(`/api/qa/questions/${question.question_id}/answers?page=1&count=100`)
+    .then((response) => {
+      setAnswers(response.data.results);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsLoading(false);
+    });
+  }, []);
 
   let answersToDisplay;
   if (showAllAnswers) {
@@ -18,17 +31,6 @@ const QAAnswersList = ({ question }) => {
     answersToDisplay = answers.slice(0, 2);
   }
 
-  useEffect(() => {
-    const count = showAllAnswers ? 100 : 2;
-    axios.get(`/api/qa/questions/${question.question_id}/answers?page=1&count=${count}`)
-    .then((response) => {
-      setAnswers(response.data.results);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }, [question, showAllAnswers]);
-
   const handleLoadAnswersClick = () => {
     setShowAllAnswers((prev) => !prev);
   }
@@ -36,30 +38,37 @@ const QAAnswersList = ({ question }) => {
 
   return (
     <div className="qa-answers-list-container">
-      <div className="qa-a">A:</div>
-      <div>
-        {
+      {
+        isLoading ?
+        <QANotification type="loading" msg="Loading answers..." /> : (
           answers.length > 0 && (
-            <div className="qa-answers-list">
-              {
-                answersToDisplay.map((answer) => {
-                  return (
-                    <QAAnswer answer={answer} key={uuidv4()} />
-                  )
-                })
-              }
-            </div>
-          )
-        }
+            <>
+              <div className="qa-a">A:</div>
+              <div>
 
-        {
-          answersCount > 2 && (
-            <div>
-              <button onClick={handleLoadAnswersClick}>{showAllAnswers ? 'Collapse answers' : 'Load more answers'}</button>
-            </div>
+                <div className="qa-answers-list">
+                  {
+                    answersToDisplay.map((answer) => {
+                      return (
+                        <QAAnswer answer={answer} key={answer.answer_id} />
+                      )
+                    })
+                  }
+
+                  {
+                    answers.length > 2 && (
+                      <div>
+                        <button onClick={handleLoadAnswersClick}>{showAllAnswers ? 'Collapse answers' : 'Load more answers'}</button>
+                      </div>
+                    )
+                  }
+                </div>
+
+              </div>
+            </>
           )
-        }
-      </div>
+        )
+      }
     </div>
   )
 };

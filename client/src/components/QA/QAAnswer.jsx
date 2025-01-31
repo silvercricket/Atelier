@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { format } from 'date-fns';
 
@@ -11,8 +10,7 @@ import QAAnswerPhotos from './QAAnswerPhotos.jsx';
 const QAAnswer = ({ answer }) => {
   const [helpfulTouched, setHelpfulTouched] = useState(false);
   const [reportTouched, setReportTouched] = useState(false);
-
-  const dispatch = useDispatch();
+  const [isLoadingHelpful, setIsLoadingHelpful] = useState(false);
 
   const date = format(new Date(answer.date), 'MMMM dd, yyyy');
 
@@ -20,13 +18,15 @@ const QAAnswer = ({ answer }) => {
     if (helpfulTouched) {
       return;
     }
+    setIsLoadingHelpful(true);
     setHelpfulTouched(true);
     axios.put(`/api/qa/answers/${answer.answer_id}/helpful`)
     .then((_response) => {
-      dispatch(fetchQuestions());
+      setIsLoadingHelpful(false);
     })
     .catch((err) => {
       console.log(err);
+      setIsLoadingHelpful(false);
     })
   };
 
@@ -49,7 +49,7 @@ const QAAnswer = ({ answer }) => {
       {answer.photos.length > 0 && <QAAnswerPhotos photos={answer.photos} />}
       <div className="qa-answer-info-container">
         <div>by {answer.answerer_name}, {date}</div>
-        <div>Helpful? <button className="link-button" onClick={handleHelpfulClick}>Yes</button> ({answer.helpfulness})</div>
+        <div>Helpful? <button className="link-button" onClick={handleHelpfulClick}>Yes</button> ({isLoadingHelpful ? 'Updating...' : helpfulTouched ? answer.helpfulness + 1 : answer.helpfulness})</div>
         <div>
           {
             reportTouched ? (

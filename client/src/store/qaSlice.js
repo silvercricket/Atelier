@@ -7,6 +7,7 @@ export const fetchQuestions = createAsyncThunk(
   async (_, thunkAPI) => {
     const productId = thunkAPI.getState().qa.productId;
     try {
+      // TODO: TESTING MODE - change /testing/ to /api/
       const response = await axios.get(`/api/qa/questions?product_id=${productId}`);
       return response.data;
     } catch(err) {
