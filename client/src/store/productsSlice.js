@@ -33,7 +33,6 @@ export const getProductDetails = createAsyncThunk('products/getProductDetails', 
 export const getProductStyles = createAsyncThunk('products/getProductStyles', async (_, { rejectWithValue, getState }) => {
   try {
     const productId = getState().products.currentProduct;
-    console.log('ID', productId)
     const response = await axios.get(`/products/${productId}/styles`)
     return response.data;
   } catch (err) {
@@ -68,9 +67,8 @@ export const productsSlice = createSlice({
       })
       .addCase(getProductDetails.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        const { id, ...productDetails } = action.payload;
-        state.currentProduct = id;
-        state.productDetails[id] = productDetails;
+        state.currentProduct = action.payload.id || state.currentProduct;
+        state.productDetails[state.currentProduct] = action.payload;
       })
       .addCase(getProductDetails.rejected, (state, action) => {
         state.status = 'failed';
@@ -81,9 +79,8 @@ export const productsSlice = createSlice({
       })
       .addCase(getProductStyles.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        const { productId, ...productStyles } = action.payload;
-        state.currentProduct = productId;
-        state.productStyles = productStyles;
+        state.currentProduct = action.payload.product_id || state.currentProduct;
+        state.productStyles[state.currentProduct] = action.payload;
       })
       .addCase(getProductStyles.rejected, (state, action) => {
         state.status = 'failed';

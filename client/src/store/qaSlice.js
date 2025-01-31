@@ -38,7 +38,7 @@ export const addQuestion = createAsyncThunk(
 export const addAnswer = createAsyncThunk(
   'qa/addAnswer',
   async (formData, thunkAPI) => {
-    const questionId = thunkAPI.getState().qa.addAnswerModal.questionId;
+    const questionId = thunkAPI.getState().qa.newAnswerForm.questionId;
     const answer = {
       body: formData.answer,
       name: formData.nickname,
@@ -59,23 +59,22 @@ const initialState = {
   // TODO: For testing only
   productId: 40347,
   productName: 'Great Product Name',
-  // Array of questions sorted by helpfulness
   questions: [],
-  // addQuestionModal status can be: 'form', 'error', 'success'
-  addQuestionModal: {
+  newQuestionModal: {
     show: false,
-    status: 'form',
-    successMsg: '',
-    errorMsg: ''
   },
-  // addAnswerModal status can be: 'form', 'error', 'success'
-  addAnswerModal: {
+  newAnswerModal: {
     show: false,
-    status: 'form',
+  },
+  newQuestionForm: {
+    // active, loading, success, error
+    status: 'active'
+  },
+  newAnswerForm: {
+    // active, loading, success, error
+    status: 'active',
     question: '',
-    questionId: null,
-    successMsg: '',
-    errorMsg: '',
+    questionId: null
   }
 }
 
@@ -83,53 +82,60 @@ export const qaSlice = createSlice({
   name: 'qa',
   initialState,
   reducers: {
-    // Add Question Modal
-    showAddQuestionModal: (state) => {
-      state.addQuestionModal.show = true;
+    // Modals:
+    showNewQuestionModal: (state) => {
+      state.newQuestionModal.show = true;
     },
-    hideAddQuestionModal: (state) => {
-      state.addQuestionModal = initialState.addQuestionModal;
+    hideNewQuestionModal: (state) => {
+      state.newQuestionModal.show = false;
+      state.newQuestionForm.status = 'active';
     },
-    showAddAnswerModal: (state, action) => {
-      state.addAnswerModal.question = action.payload.questionBody;
-      state.addAnswerModal.questionId = action.payload.questionId;
-      state.addAnswerModal.show = true;
+    showNewAnswerModal: (state, action) => {
+      state.newAnswerModal.show = true;
+      state.newAnswerForm.question = action.payload.questionBody;
+      state.newAnswerForm.questionId = action.payload.questionId;
     },
-    hideAddAnswerModal: (state) => {
-      state.addAnswerModal = initialState.addAnswerModal;
+    hideNewAnswerModal: (state) => {
+      state.newAnswerModal.show = false;
+      state.newAnswerForm.status = 'active';
     }
   },
   extraReducers: (builder) => {
     // Fetch Questions
     builder.addCase(fetchQuestions.fulfilled, (state, action) => {
+      // TODO: Possibly no need to sort
       state.questions = action.payload.results.sort((a, b) => b.question_helpfulness - a.question_helpfulness);
     });
     builder.addCase(fetchQuestions.rejected, (state, action) => {
       console.log('Failed to fetch questions.', action.payload);
     });
+
     // Add a Question
-    builder.addCase(addQuestion.fulfilled, (state, action) => {
-      state.addQuestionModal.successMsg = 'Thank you for adding your question!';
-      state.addQuestionModal.status = 'success';
+    builder.addCase(addQuestion.pending, (state) => {
+      state.newQuestionForm.status = 'loading';
+    });
+    builder.addCase(addQuestion.fulfilled, (state) => {
+      state.newQuestionForm.status = 'success';
     });
     builder.addCase(addQuestion.rejected, (state, action) => {
       console.log('Failed to add a question.', action.payload);
-      state.addQuestionModal.errorMsg = 'Failed to add your question. Please try again.';
-      state.addQuestionModal.status = 'error';
+      state.newQuestionForm.status = 'error';
     });
+
     // Add an Answer
-    builder.addCase(addAnswer.fulfilled, (state, action) => {
-      state.addAnswerModal.successMsg = 'Thank you for submitting your answer!';
-      state.addAnswerModal.status = 'success';
+    builder.addCase(addAnswer.pending, (state) => {
+      state.newAnswerForm.status = 'loading';
+    });
+    builder.addCase(addAnswer.fulfilled, (state) => {
+      state.newAnswerForm.status = 'success';
     });
     builder.addCase(addAnswer.rejected, (state, action) => {
       console.log('Failed to submit an answer.', action.payload);
-      state.addAnswerModal.errorMsg = 'Failed to submit your answer. Please try again.';
-      state.addAnswerModal.status = 'error';
+      state.newAnswerForm.status = 'error';
     });
   }
 })
 
-export const { showAddQuestionModal, hideAddQuestionModal, showAddAnswerModal, hideAddAnswerModal } = qaSlice.actions;
+export const { showNewQuestionModal, hideNewQuestionModal, showNewAnswerModal, hideNewAnswerModal } = qaSlice.actions;
 
 export default qaSlice.reducer;

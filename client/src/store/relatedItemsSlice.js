@@ -162,18 +162,23 @@ export const relatedItemsSlice = createSlice({
     showNextCard: (state) => {
       if (state.currentCardIndex !== state.relatedItems.length - 1) {
         state.currentCardIndex += 1;
+        // state.currentCardIndex = ((prevIndex) => (prevIndex + 1) % state.relatedItems.length)
       }
     },
     showPreviousCard: (state) => {
       if (state.currentCardIndex !== 0) {
         state.currentCardIndex -= 1;
+        // state.currentCardIndex = ((prevIndex) => (prevIndex - 1 + state.relatedItems.length) % state.relatedItems.length);
+
       }
     },
     addToOutfit: (state, action) => {
       if (!state.outfit.includes(action.payload)) {
-        console.log(action.payload)
         state.outfit = [...state.outfit, action.payload]
       }
+    },
+    changeCurrentItem: (state, action) => {
+
     }
   },
   extraReducers: (builder) => {

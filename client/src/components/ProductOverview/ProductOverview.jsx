@@ -11,15 +11,35 @@ import './ProductOverview.css';
 
 const ProductOverview = () => {
   const dispatch = useDispatch();
-  // TO DO --> id state
-  // const [id, SetId] = useState()
-  // const id = 40347;
+
+  const id = useSelector(state => state.products.currentProduct) || 40347;
+  const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
+  const status = useSelector(state => state.products?.status);
+
+  const [selectedStyle, setSelectedStyle] = useState(styles?.[0]);
+
 
   useEffect(() => {
-    dispatch(getProducts());
-    dispatch(getProductDetails());
-    dispatch(getProductStyles());
-  }, [dispatch]);
+    if (styles?.length) setSelectedStyle(styles?.[0]);
+  }, [styles]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(getProducts());
+        await dispatch(getProductDetails());
+        await dispatch(getProductStyles());
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+
+    if (status === 'idle') fetchData();
+  }, [dispatch, status]);
+
+
+  if (status === 'loading') return <div>Loading...</div>;
+  if (status === 'failed') return <div>Error: {error}</div>;
 
   return (
     <div className='product-container'>
@@ -28,8 +48,8 @@ const ProductOverview = () => {
       </div>
       <div className='right-column'>
         <ProductDetails />
-        <StyleSelector />
-        <AddToCart />
+        <StyleSelector selectedStyle={selectedStyle} setSelectedStyle={setSelectedStyle} />
+        <AddToCart selectedStyle={selectedStyle} setSelectedStyle={setSelectedStyle} />
       </div>
     </div>
   )

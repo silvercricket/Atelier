@@ -7,10 +7,6 @@ const Outfit = () => {
 
   const dispatch = useDispatch();
 
-  const itemCard = useSelector((state) => {
-    return state.relatedItems.relatedItems[state.relatedItems.currentCardIndex]
-  })
-
   const outfit = useSelector((state) => {
     return state.relatedItems.outfit;
   })
@@ -20,6 +16,7 @@ const Outfit = () => {
   }
   return (
     <div>
+      <div className = "currentOutfitCard">Add to Outfit</div>
       {outfit.map((item) => <OutfitItemCard item = {item}/>)}
     </div>
   )
