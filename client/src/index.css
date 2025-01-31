@@ -158,11 +158,15 @@ progress.ratingCounter::-moz-progress-bar {
   text-align: center;
 }
 
+.charRadio {
+  float: right;
+}
+
 .colHead {
   border: 1px solid black;
   border-collapse: collapse;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 60px;
+  padding-right: 60px;
   padding-top: 8px;
   padding-bottom: 8px;
 }

@@ -10,25 +10,57 @@ const NewReviewModal = () => {
   const [ summary, setSummary ] = useState('');
   const [ body, setBody ] = useState('');
   const [ reviewer, setReviewer ] = useState('');
-  const [ recommend, setRecommend ] = useState(false);
+  const [ recommend, setRecommend ] = useState(null);
+  const [ email, setEmail ] = useState('');
+
 
   // Toggle Modal Window
   const isOpen = useSelector((state) => {
     return state.newReviewForm.formOpen;
   })
 
+
+  // Handlers for form data setting state
   const handleRating = (e) => {
+    e.preventDefault();
     setRating(e.target.value);
-    console.log(rating);
   }
+
+  const handleRec = (isRecommended) => {
+    if (isRecommended) {
+      setRecommend(true);
+    } else {
+      setRecommend(false);
+    }
+  }
+
+  const handleSummary = (e) => {
+    e.preventDefault();
+    setSummary(e.target.value);
+  }
+
+  const handleBody = (e) => {
+    e.preventDefault();
+    setBody(e.target.value);
+  }
+
+  const handleReviewer = (e) => {
+    e.preventDefault();
+    setReviewer(e.target.value);
+  }
+
+  const handleEmail = (e) => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  }
+
+
 
   const stars = {
     empty: <i className="fa-regular fa-star"></i>,
     half: <i className="fa-regular fa-star-half-stroke"></i>,
     full: <i className="fa-solid fa-star"></i>
   }
-
-
 
   if (!isOpen) return null;
 
@@ -50,69 +82,35 @@ const NewReviewModal = () => {
           </div>
           {/* recommend */}
           <p>Would you recommend this product?</p>
-          <input type="radio" value="yes"/>
-          <label for="yes">Yes</label>
-          <input type="radio" value="no"/>
-          <label for="no">No</label>
+          <div>
+            <input type="radio" name="recRadio" value={recommend} onClick={() => handleRec(true)}/>
+            <label>Yes</label>
+            <input type="radio" name="recRadio" value={recommend} onClick={() => handleRec(false)}/>
+            <label>No</label>
+          </div>
           {/* characteristics go here */}
-          <table className="charTable">
-            <caption>
-              Product Characteristics
-            </caption>
-            <tbody>
-              <tr className="charTable">
-                <th scope="col" className="charTable, colHead"></th>
-                <th scope="col" className="charTable, colHead">1</th>
-                <th scope="col" className="charTable, colHead">2</th>
-                <th scope="col" className="charTable, colHead">3</th>
-                <th scope="col" className="charTable, colHead">4</th>
-                <th scope="col" className="charTable, colHead">5</th>
-              </tr>
-              <tr className="charTable">
-                <th scope="row" className="charTable">Size</th>
-                <td className="charTable">size too small</td>
-                <td className="charTable">slightly small</td>
-                <td className="charTable">just right</td>
-                <td className="charTable">slightly big</td>
-                <td className="charTable">size too big</td>
-              </tr>
-              <tr className="charTable">
-                <th scope="row" className="charTable">Width</th>
-              </tr>
-              <tr className="charTable">
-                <th scope="row" className="charTable">Comfort</th>
-              </tr>
-              <tr className="charTable">
-                <th scope="row" className="charTable">Quality</th>
-              </tr>
-              <tr className="charTable">
-                <th scope="row" className="charTable">Length</th>
-              </tr>
-              <tr className="charTable">
-                <th scope="row" className="charTable">Fit</th>
-              </tr>
-            </tbody>
-
-          </table><br></br>
+          <CharacteristicsTable />
           {/* Summary */}
-          <label>Summary
-            <textarea id="newSummary" rows="2" cols="30" maxLength="60" placeholder="Example: Best purchase ever!"/>
-          </label>
-          <label>Review:
-            <textarea id="newBody" rows="5" cols="75" maxLength="1000" minLength="50"/>
-          </label><br></br>
+          <div>
+            <p>Summary</p>
+            <textarea id="newSummary" rows="2" cols="30" maxLength="60" value={summary} onChange={handleSummary} placeholder="Example: Best purchase ever!"/>
+          </div>
+          <div>
+            <p>Review</p>
+              <textarea id="newBody" rows="5" cols="75" maxLength="1000" value={body} onChange={handleBody} minLength="50"/>
+          </div>
           {/* Photo Upload */}
           <label>Upload photos of this product
             <input id="uploadPic" type="file" accept="image/*"/>
           </label><br></br>
           {/* Nickname */}
           <label>Enter your nickname:
-            <input type="text" maxLength="60" placeholder="Example: Jackson11!"/>
+            <input type="text" maxLength="60" placeholder="Example: Jackson11!" value={reviewer} onChange={handleReviewer}/>
           </label>
           <p>For privacy reasons, do not enter your full name or email address</p>
           {/* email */}
           <label>Email:
-            <input id="email" type="text" placeholder="Example: jackson11@email.com"/>
+            <input id="email" type="text" placeholder="Example: jackson11@email.com" value={email} onChange={handleEmail}/>
           </label>
           <p>For authentication reasons, you will not be emailed</p>
           <button>Submit Review -Not Functional-</button>
@@ -123,4 +121,5 @@ const NewReviewModal = () => {
   );
 }
 
+import CharacteristicsTable from './CharacteristicsTable.jsx';
 export default NewReviewModal;
