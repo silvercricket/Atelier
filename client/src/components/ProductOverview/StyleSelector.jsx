@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-const StyleSelector = ({ selectedStyle, setSelectedStyle }) => {
+const StyleSelector = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedSize, quantity, setQuantity }) => {
 
   const id = useSelector(state => state.products.currentProduct) || 40347;
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
@@ -27,7 +27,11 @@ const StyleSelector = ({ selectedStyle, setSelectedStyle }) => {
           <div
             key={style?.style_id}
             className={`style-option ${selectedStyle?.style_id === style?.style_id ? 'selected' : ''}`}
-            onClick={(() => setSelectedStyle(style))}
+            onClick={(() => {
+              setSelectedStyle(style);
+              setSelectedSize('')
+              setQuantity(1);
+            })}
           >
             {selectedStyle?.style_id === style.style_id && <span className="checkmark">✓</span>}
             <img

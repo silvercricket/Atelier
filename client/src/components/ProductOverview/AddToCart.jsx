@@ -3,14 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCart, postCart, putCart } from '../../store/cartSlice.js';
 
 
-const AddToCart = ({ selectedStyle, setSelectedStyle }) => {
+const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedSize, quantity, setQuantity }) => {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const id = useSelector(state => state.products.currentProduct) || 40347;
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
 
-  const [selectedSize, setSelectedSize] = useState('');
-  const [quantity, setQuantity] = useState(1);
 
   // console.log('CART: ', cart)
 

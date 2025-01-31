@@ -17,6 +17,8 @@ const ProductOverview = () => {
   const status = useSelector(state => state.products?.status);
 
   const [selectedStyle, setSelectedStyle] = useState(styles?.[0]);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [quantity, setQuantity] = useState(1);
 
 
   useEffect(() => {
@@ -48,8 +50,22 @@ const ProductOverview = () => {
       </div>
       <div className='right-column'>
         <ProductDetails />
-        <StyleSelector selectedStyle={selectedStyle} setSelectedStyle={setSelectedStyle} />
-        <AddToCart selectedStyle={selectedStyle} setSelectedStyle={setSelectedStyle} />
+        <StyleSelector
+          selectedStyle={selectedStyle}
+          setSelectedStyle={setSelectedStyle}
+          selectedSize={selectedSize}
+          setSelectedSize={setSelectedSize}
+          quantity={quantity}
+          setQuantity={setQuantity}
+        />
+        <AddToCart
+          selectedStyle={selectedStyle}
+          setSelectedStyle={setSelectedStyle}
+          selectedSize={selectedSize}
+          setSelectedSize={setSelectedSize}
+          quantity={quantity}
+          setQuantity={setQuantity}
+        />
       </div>
     </div>
   )
