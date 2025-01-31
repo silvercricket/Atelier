@@ -9,7 +9,7 @@ const ProductDetails = () => {
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
   const status = useSelector(state => state.products.status);
 
-  console.log('DETAILS', details)
+  // console.log('DETAILS', details)
 
   // if (!details || !styles) return <div>Loading product details...</div>;
 
