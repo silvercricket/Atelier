@@ -253,29 +253,23 @@ textarea:not([rows]) {
   align-items: center;
 }
 
-.currentOutfitCard {
-  border-width: 2px;
-  border-style: groove;
-  width: 33%;
-
-}
-
 .outfitItemCard {
   border-width: 2px;
   border-style: groove;
-  float: left;
   width: 33%;
+  float: left;
+  height: 300px;
   padding: 5px;
-  display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .actionButton {
   float: right;
-  top: 10px;
-  right: 10px;
-  transform: scale(1.2, 1.2)
+  position: relative;
+  top: 5px;
+  right: 5px;
+  transform: scale(1.5, 1.5)
 }
 
 .actionButtonOutfit {
@@ -286,12 +280,12 @@ textarea:not([rows]) {
 }
 
 .leftButton {
-  border-color: pink;
+  transform: scale(1.25, 1.25);
   left: 1rem;
 }
 
 .rightButton {
-  border-color: pink;
+  transform: scale(1.25, 1.25);
   right: 1rem;
 }
 

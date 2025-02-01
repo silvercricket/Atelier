@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ComparisonCard from './ComparisonCard.jsx';
 import { showPreviousCard, showNextCard, addToOutfit } from '../../store/relatedItemsSlice.js';
-
+import { getProducts, getProductDetails, getProductStyles } from '../../store/productsSlice.js';
 
 const RelatedItemCard = ( {item} ) => {
 
   const dispatch = useDispatch();
+
+  const unit = {item};
+
+  const id = unit['item']['id'];
 
   const [comparisonCard, setComparisonCard] = useState(false);
 
@@ -33,9 +37,14 @@ const RelatedItemCard = ( {item} ) => {
     dispatch(addToOutfit(outfit))
   }
 
+  const url = useSelector((state) => {
+    return state.products.productStyles
+  })
+
   return (
     <div className = "relatedItemCard" style = {carouselStyle} onClick = {handleDetailClick}>
-      <span className = "actionButton" onClick ={handleDetailClick}>&#9733;</span>
+      <span className = "actionButton"><i class="fa-regular fa-star"></i></span>
+      <img src = ""></img>
       <img onClick = {handleDetailClick} src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVceWgOp0vbYOrWbYXhMOxiEUv76XWGB_7OA&s"></img>
       <div >
         <p>{item.category}</p>

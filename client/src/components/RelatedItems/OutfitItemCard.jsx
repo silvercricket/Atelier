@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 const OutfitItemCard = ({item}) => {
 
   return (
-    <div className = "outfitItemCard">
+    <span className = "outfitItemCard">
       <span className = "actionButtonOutfit">&times;</span>
       <div>{item.category}</div>
       <div>{item.name}</div>
       <div>{item.price}</div>
-    </div>
+    </span>
   )
 }
 
