@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import brokenImage from '../../images/placeholder.jpeg';
 
 const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, setSelectedImageIndex }) => {
 
@@ -31,12 +32,18 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
             className={`thumbnail ${selectedImageIndex === index ? 'selected' : ''}`}
             onClick={() => setSelectedImageIndex(index)}
           >
-            <img src={photo?.thumbnail_url} alt='style-photo' />
+            <img
+              src={photo?.thumbnail_url || brokenImage}
+              alt='style-photo'
+            />
           </div>
         ))}
       </div>
       <div className='main-image'>
-        <img src={selectedStyle?.photos?.[selectedImageIndex].url} alt='style-photo-main' />
+        <img
+          src={selectedStyle?.photos?.[selectedImageIndex].url || brokenImage}
+          alt='style-photo-main'
+        />
         {selectedImageIndex > 0 && (
           <button className='previous-button' onClick={() => handlePrevious(selectedImageIndex)}><span><i className="fa-solid fa-arrow-left"></i></span></button>
         )}

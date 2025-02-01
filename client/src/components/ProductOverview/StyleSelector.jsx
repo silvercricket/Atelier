@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import brokenImage from '../../images/placeholder.jpeg';
 
 const StyleSelector = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedSize, quantity, setQuantity, selectedImageIndex, setSelectedImageIndex }) => {
 
@@ -29,8 +30,9 @@ const StyleSelector = ({ selectedStyle, setSelectedStyle, selectedSize, setSelec
           >
             {selectedStyle?.style_id === style.style_id && <span className="checkmark"><i className="fa-solid fa-check"></i></span>}
             <img
-              src={style?.photos[0]?.thumbnail_url}
+              src={style?.photos[0]?.thumbnail_url || brokenImage}
               alt={style?.name}
+
             />
           </div>
         ))}
