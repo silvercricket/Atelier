@@ -11,6 +11,10 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   const id = useSelector(state => state.products.currentProduct) || 40347;
   const details = useSelector(state => state.products.productDetails?.[id]);
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
+  const status = useSelector(state => state.products?.status);
+
+  if (status === 'loading') return <div>Loading...</div>;
+  if (status === 'failed') return <div>Error: {error}</div>;
 
   const handlePrevious = (selectedImageIndex) => {
     if (selectedImageIndex > 0) setSelectedImageIndex(selectedImageIndex - 1);
