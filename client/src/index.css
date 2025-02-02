@@ -331,7 +331,12 @@ progress.ratingCounter::-moz-progress-bar {
 }
 
 /* QUESTIONS & ANSWERS */
-  .qa p, .qa h4 {
+.qa {
+  max-width: 1200px;
+  margin: 0 auto 0 auto;
+}
+
+.qa p, .qa h4 {
     margin: 0;
   }
 
@@ -341,10 +346,16 @@ progress.ratingCounter::-moz-progress-bar {
 
 .qa-search {
   width: 100%;
+  margin: 1.2rem 0 1.2rem 0;
+  padding: 1rem 0.8rem 1rem 0.8rem;
 }
 
 .qa-search::placeholder {
   text-transform: uppercase;
+}
+.qa-questions-list {
+  max-height: 80vh;
+  overflow-y: scroll;
 }
 
 .qa-question-container {
@@ -367,6 +378,7 @@ progress.ratingCounter::-moz-progress-bar {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  font-size: 0.8rem;
 }
 
 .link-button {
@@ -463,4 +475,8 @@ progress.ratingCounter::-moz-progress-bar {
   position: absolute;
   top: 1rem;
   right: 1rem;
+}
+
+.qa-search-match {
+  background-color: #FEF08A;
 }

@@ -1,33 +1,23 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
+
+import { selectSearchQuery } from './qaSelectors.js';
 
 import QAAnswer from './QAAnswer.jsx';
-import QANotification from './QANotification.jsx';
 
 const QAAnswersList = ({ question }) => {
-  const [answers, setAnswers] = useState([]);
   const [showAllAnswers, setShowAllAnswers] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const query = useSelector(selectSearchQuery);
+  const answers = Object.keys(question.answers).map((answerId) => question.answers[answerId]).sort((a, b) => b.helpfulness - a.helpfulness);
 
+  let answersToDisplay = answers;
 
-  useEffect(() => {
-    setIsLoading(true);
-    axios.get(`/api/qa/questions/${question.question_id}/answers?page=1&count=100`)
-    .then((response) => {
-      setAnswers(response.data.results);
-      setIsLoading(false);
+  if (query.length > 2) {
+    answersToDisplay = answers.filter((answer) => {
+      return answer.body.toLowerCase().includes(query.toLowerCase());
     })
-    .catch((err) => {
-      console.log(err);
-      setIsLoading(false);
-    });
-  }, []);
-
-  let answersToDisplay;
-  if (showAllAnswers) {
-    answersToDisplay = answers;
-  } else {
+  } else if (!showAllAnswers) {
     answersToDisplay = answers.slice(0, 2);
   }
 
@@ -35,12 +25,9 @@ const QAAnswersList = ({ question }) => {
     setShowAllAnswers((prev) => !prev);
   }
 
-
   return (
     <div className="qa-answers-list-container">
       {
-        isLoading ?
-        <QANotification type="loading" msg="Loading answers..." /> : (
           answers.length > 0 && (
             <>
               <div className="qa-a">A:</div>
@@ -50,13 +37,13 @@ const QAAnswersList = ({ question }) => {
                   {
                     answersToDisplay.map((answer) => {
                       return (
-                        <QAAnswer answer={answer} key={answer.answer_id} />
+                        <QAAnswer answer={answer} key={answer.id} />
                       )
                     })
                   }
 
                   {
-                    answers.length > 2 && (
+                    answers.length > 2 && query.length < 3 && (
                       <div>
                         <button onClick={handleLoadAnswersClick}>{showAllAnswers ? 'Collapse answers' : 'Load more answers'}</button>
                       </div>
@@ -67,7 +54,6 @@ const QAAnswersList = ({ question }) => {
               </div>
             </>
           )
-        )
       }
     </div>
   )

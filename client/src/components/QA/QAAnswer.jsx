@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { fetchQuestions } from '../../store/qaSlice.js';
 
 import QAAnswerPhotos from './QAAnswerPhotos.jsx';
+import QAHighlightedText from './QAHighlightedText.jsx';
 
 const QAAnswer = ({ answer }) => {
   const [helpfulTouched, setHelpfulTouched] = useState(false);
@@ -20,7 +21,7 @@ const QAAnswer = ({ answer }) => {
     }
     setIsLoadingHelpful(true);
     setHelpfulTouched(true);
-    axios.put(`/api/qa/answers/${answer.answer_id}/helpful`)
+    axios.put(`/api/qa/answers/${answer.id}/helpful`)
     .then((_response) => {
       setIsLoadingHelpful(false);
     })
@@ -35,7 +36,7 @@ const QAAnswer = ({ answer }) => {
       return;
     }
     setReportTouched(true);
-    axios.put(`/api/qa/answers/${answer.answer_id}/report`)
+    axios.put(`/api/qa/answers/${answer.id}/report`)
     .then((_response) => {
     })
     .catch((err) => {
@@ -45,7 +46,7 @@ const QAAnswer = ({ answer }) => {
 
   return (
     <div className="qa-answer-container">
-      <p className="qa-answer">{answer.body}</p>
+      <p className="qa-answer">{ <QAHighlightedText text={answer.body} /> }</p>
       {answer.photos.length > 0 && <QAAnswerPhotos photos={answer.photos} />}
       <div className="qa-answer-info-container">
         <div>by {answer.answerer_name}, {date}</div>

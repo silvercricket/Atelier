@@ -2,14 +2,17 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import highlightMatches from './lib/highlightMatches.js';
 
 import { fetchQuestions, showNewAnswerModal } from '../../store/qaSlice.js';
 
 import QAAnswersList from './QAAnswersList.jsx';
+import QAHighlightedText from './QAHighlightedText.jsx';
 
 
 const QAListItem = ({ question }) => {
   const [helpfulTouched, setHelpfulTouched] = useState(false);
+  const [isLoadingHelpful, setIsLoadingHelpful] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -17,13 +20,15 @@ const QAListItem = ({ question }) => {
     if (helpfulTouched) {
       return;
     }
+    setIsLoadingHelpful(true);
     setHelpfulTouched(true);
     axios.put(`/api/qa/questions/${question.question_id}/helpful`)
     .then((_response) => {
-      dispatch(fetchQuestions());
+      setIsLoadingHelpful(false);
     })
     .catch((err) => {
       console.log(err);
+      setIsLoadingHelpful(false);
     })
   };
 
@@ -33,10 +38,11 @@ const QAListItem = ({ question }) => {
       <div className="qa-question-container">
         <div className="qa-question">
           <div>Q:</div>
-          <h4>{question.question_body}</h4>
+          <h4>{ <QAHighlightedText text={question.question_body} /> }</h4>
+
         </div>
         <div className="qa-question-info-container">
-          <div>Helpful? <button className="link-button" onClick={handleHelpfulClick}>Yes</button> ({question.question_helpfulness})</div>
+          <div>Helpful? <button className="link-button" onClick={handleHelpfulClick}>Yes</button> ({isLoadingHelpful ? 'Updating...' : helpfulTouched ? question.question_helpfulness + 1 : question.question_helpfulness})</div>
           <div><button className="link-button" onClick={() => dispatch(showNewAnswerModal({questionBody: question.question_body, questionId: question.question_id}))}>Add Answer</button></div>
         </div>
       </div>

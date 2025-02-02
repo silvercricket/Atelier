@@ -1,20 +1,38 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectQuestions = (state) => {
-  return state.qa.questions;
+export const selectQuestions = (state) => {
+  return state.qa.questions.list;
 }
 
-export const selectHasMoreThanTwoQuestions = createSelector(
-  [selectQuestions],
-  (questions) => questions.length > 2
+export const selectShowAllQuestions = (state) => {
+  return state.qa.questions.showAllQuestions;
+}
+
+export const selectSearchQuery = (state) => {
+  return state.qa.searchQuery.query;
+}
+
+export const selectQuestionsToDisplay= createSelector(
+  [selectQuestions, selectShowAllQuestions, selectSearchQuery],
+  (questions, showAll, query) => {
+    if (query.length > 2) {
+      return questions.filter((question) => {
+        const answerBodies = Object.values(question.answers).map((answer) => answer.body);
+
+        return (
+          question.question_body.toLowerCase().includes(query.toLowerCase()) ||
+          answerBodies.some((answerBody) => answerBody.toLowerCase().includes(query.toLowerCase()))
+        )
+
+      })
+    }
+    return showAll ? questions : questions.slice(0, 4);
+  }
 )
 
-export const selectFirstTwoQuestions = createSelector(
-  [selectQuestions],
-  (questions) => questions.slice(0, 2)
-)
-
-export const selectAllQuestions = createSelector(
-  [selectQuestions],
-  (questions) => questions
+export const selectDisplayShowMoreQuestionsBtn = createSelector(
+  [selectQuestionsToDisplay, selectSearchQuery],
+  (questions, query) => {
+  return (query.length < 3 || questions.length > 4) ? true : false;
+  }
 )

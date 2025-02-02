@@ -15,11 +15,11 @@ const QAPhoto = ({ photo }) => {
       {
         expandPhoto && (
           <QAModal closeModalHandler={() => setExpandPhoto(false)}>
-            <img className="qa-answer-thumbnail" src={photo.url} />
+            <img className="qa-answer-thumbnail" src={photo} />
           </QAModal>
         )
       }
-      <img className="qa-answer-thumbnail" src={photo.url.replace(/v\d+/, 'c_fill,w_90,h_60')} onClick={handlePhotoClick} />
+      <img className="qa-answer-thumbnail" src={photo.replace(/v\d+/, 'c_fill,w_90,h_60')} onClick={handlePhotoClick} />
     </div>
   )
 }
