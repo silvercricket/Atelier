@@ -45,7 +45,7 @@ const QAAnswersList = ({ question }) => {
                   {
                     answers.length > 2 && query.length < 3 && (
                       <div>
-                        <button onClick={handleLoadAnswersClick}>{showAllAnswers ? 'Collapse answers' : 'Load more answers'}</button>
+                        <button className="qa-more-answers-btn" onClick={handleLoadAnswersClick}>{showAllAnswers ? 'Collapse answers' : 'Load more answers'}</button>
                       </div>
                     )
                   }

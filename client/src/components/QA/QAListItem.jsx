@@ -42,8 +42,8 @@ const QAListItem = ({ question }) => {
 
         </div>
         <div className="qa-question-info-container">
-          <div>Helpful? <button className="link-button" onClick={handleHelpfulClick}>Yes</button> ({isLoadingHelpful ? 'Updating...' : helpfulTouched ? question.question_helpfulness + 1 : question.question_helpfulness})</div>
-          <div><button className="link-button" onClick={() => dispatch(showNewAnswerModal({questionBody: question.question_body, questionId: question.question_id}))}>Add Answer</button></div>
+          <div className="qa-question-info-item">Helpful? <button className="link-button" onClick={handleHelpfulClick}>Yes</button> ({isLoadingHelpful ? 'Updating...' : helpfulTouched ? question.question_helpfulness + 1 : question.question_helpfulness})</div>
+          <div className="qa-question-info-item"><button className="link-button" onClick={() => dispatch(showNewAnswerModal({questionBody: question.question_body, questionId: question.question_id}))}>Add Answer</button></div>
         </div>
       </div>
 

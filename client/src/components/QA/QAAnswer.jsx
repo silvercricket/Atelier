@@ -49,9 +49,9 @@ const QAAnswer = ({ answer }) => {
       <p className="qa-answer">{ <QAHighlightedText text={answer.body} /> }</p>
       {answer.photos.length > 0 && <QAAnswerPhotos photos={answer.photos} />}
       <div className="qa-answer-info-container">
-        <div>by {answer.answerer_name}, {date}</div>
-        <div>Helpful? <button className="link-button" onClick={handleHelpfulClick}>Yes</button> ({isLoadingHelpful ? 'Updating...' : helpfulTouched ? answer.helpfulness + 1 : answer.helpfulness})</div>
-        <div>
+        <div className="qa-answer-info-item">by {answer.answerer_name}, {date}</div>
+        <div className="qa-answer-info-item">Helpful? <button className="link-button" onClick={handleHelpfulClick}>Yes</button> ({isLoadingHelpful ? 'Updating...' : helpfulTouched ? answer.helpfulness + 1 : answer.helpfulness})</div>
+        <div className="qa-answer-info-item">
           {
             reportTouched ? (
               <span>Reported</span>
