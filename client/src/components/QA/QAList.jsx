@@ -10,15 +10,12 @@ import QAListItem from './QAListItem.jsx';
 import QANotification from './QANotification.jsx';
 
 const QAList = () => {
-  console.log('QA LIST RENDERED');
-
   const productId = useSelector((state) => state.qa.currentProduct);
   const questionsStatus = useSelector((state) => state.qa.questions.status);
   const showAllQuestions = useSelector(selectShowAllQuestions); // A Boolean
   const questionsToDisplay = useSelector(selectQuestionsToDisplay);
   const displayShowMoreQuestionsBtn = useSelector(selectDisplayShowMoreQuestionsBtn);
   const query = useSelector(selectSearchQuery);
-  console.log(questionsToDisplay);
 
   const dispatch = useDispatch();
 
