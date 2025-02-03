@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchReviews } from '../../store/ratingsReviews/reviewsSlice.js';
 import { format } from 'date-fns';
 import axios from 'axios';
+import ReviewImageModal from './ReviewImageModal.jsx';
 
 const ReviewTile = ({review}) => {
   const dispatch = useDispatch();
@@ -77,5 +78,4 @@ const ReviewTile = ({review}) => {
 
 }
 
-import ReviewImageModal from './ReviewImageModal.jsx';
 export default ReviewTile;

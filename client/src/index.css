@@ -237,7 +237,7 @@ progress.ratingCounter::-moz-progress-bar {
   /* overflow-y: visible; */
 }
 
-.relatedItemsWrapper {
+.relatedItemsWrapper, .outfitWrapper {
   /* overflow-x: hidden; */
   overflow-y: visible;
   flex-wrap: nowrap;
@@ -246,16 +246,17 @@ progress.ratingCounter::-moz-progress-bar {
   width: 100%;
   margin: auto;
   align-items: center;
-  height: 500px;
+  height: 100%;
 }
 
-.relatedItemCard {
+.relatedItemCard, .outfitItemCard {
   border-width: 2px;
   overflow-y: visible;
   border-style: groove;
   float: left;
   width: 33%;
-  padding: 5px;
+  height: 50%;
+  margin: 5px;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
@@ -269,6 +270,14 @@ progress.ratingCounter::-moz-progress-bar {
   padding: 5px;
   flex-shrink: 0;
 } */
+
+.relatedItemImage {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  object-fit: cover;
+  vertical-align: top;
+}
 
 .comparisonCard {
   position: absolute;
@@ -285,29 +294,25 @@ progress.ratingCounter::-moz-progress-bar {
   align-items: center;
 }
 
-.currentOutfitCard {
-  border-width: 2px;
-  border-style: groove;
-  width: 33%;
-
-}
-
 .outfitItemCard {
   border-width: 2px;
   border-style: groove;
-  float: left;
   width: 33%;
+  float: left;
+  height: 400px;
   padding: 5px;
-  display: flex;
   align-items: center;
   justify-content: center;
+  text-align: left;
 }
 
 .actionButton {
   float: right;
+  position: absolute;
   top: 10px;
   right: 10px;
-  transform: scale(1.2, 1.2)
+  transform: scale(1.5, 1.5);
+  z-index: 2;
 }
 
 .actionButtonOutfit {
@@ -318,12 +323,12 @@ progress.ratingCounter::-moz-progress-bar {
 }
 
 .leftButton {
-  border-color: pink;
+  transform: scale(1.25, 1.25);
   left: 1rem;
 }
 
 .rightButton {
-  border-color: pink;
+  transform: scale(1.25, 1.25);
   right: 1rem;
 }
 

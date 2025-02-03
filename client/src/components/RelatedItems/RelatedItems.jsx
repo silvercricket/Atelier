@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RelatedItemCard from './RelatedItemCard.jsx'
-import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails } from '../../store/relatedItemsSlice.js';
+import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs } from '../../store/relatedItemsSlice.js';
+import { getProducts, getProductDetails, getProductStyles } from '../../store/productsSlice.js';
 import Outfit from './Outfit.jsx'
 import axios from 'axios';
 
 const RelatedItems = () => {
 
   const dispatch = useDispatch();
+
+  const currentProduct = useSelector((state) => {
+    return state.products.currentProduct
+  })
 
   const currentIndex = useSelector((state) => {
     return state.relatedItems.currentCardIndex
@@ -25,13 +30,21 @@ const RelatedItems = () => {
     return state.relatedItems.relatedItems
   })
 
+  const relatedItemIds = useSelector((state) => {
+    return state.relatedItems.relatedItemIds
+  })
+
+  const url = useSelector((state) => {
+    return state.relatedItems.relatedItemURLs
+  })
+
   const carouselStyle = {
-    transform: `translateX(-${currentIndex * 60}%)`
+    transform: `translateX(-${currentIndex * 100}%)`
   }
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(getRelatedItems(40347))
+      dispatch(getRelatedItems(currentProduct))
         .then((results) => {
           results.payload.forEach((productId) => {
             dispatch(getRelatedItemDetails(productId))
@@ -50,12 +63,6 @@ const RelatedItems = () => {
       </div>
       <h2>Your Outfit</h2>
       <Outfit />
-      <br />
-      <br />
-      <div>
-          <button onClick = {() => {dispatch(showPreviousCard())}}>Show Previous Item</button>
-          <button onClick = {() => {dispatch(showNextCard())}}>Show Next Item</button>
-      </div>
     </div>
   )
 }
