@@ -1,29 +1,71 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import brokenImage from '../../images/placeholder.jpeg';
 
-const ImageGallery = () => {
-  const [selectedImage, setSelectedImage] = useState();
+const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, setSelectedImageIndex }) => {
+
   const [expanded, setExpanded] = useState(false);
   const [zoom, setZoom] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const id = useSelector(state => state.products.currentProduct) || 40347;
   const details = useSelector(state => state.products.productDetails?.[id]);
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
+  const status = useSelector(state => state.products?.status);
 
-  // console.log('PRODUCT DETAILS', details)
-  // console.log(productStyles)
+  if (status === 'loading') return <div>Loading...</div>;
+  if (status === 'failed') return <div>Error: {error}</div>;
+
+  const handleImageClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const handlePrevious = (selectedImageIndex) => {
+    if (selectedImageIndex > 0) setSelectedImageIndex(selectedImageIndex - 1);
+  };
+
+  const handleNext = (selectedImageIndex) => {
+    if (selectedImageIndex < selectedStyle?.photos.length - 1) setSelectedImageIndex(selectedImageIndex + 1);
+  };
+
+  // console.log('PRODUCT STYLES', styles);
+  // console.log("PHOTOS: ", selectedStyle?.photos)
 
   return (
-    <div className='image-gallery'>
+    <div className={`image-gallery ${expanded ? 'expanded' : ''}`}>
       <div className='thumbnail-images'>
-
-        {/* // TO DO -- map through images here, set selected image */}
+        {selectedStyle?.photos.length && selectedStyle?.photos.map((photo, index) => (
+          <div
+            key={index}
+            className={`thumbnail ${selectedImageIndex === index ? 'selected' : ''}`}
+            onClick={() => setSelectedImageIndex(index)}
+          >
+            <img
+              src={photo?.thumbnail_url || brokenImage}
+              alt='style-photo'
+            />
+          </div>
+        ))}
       </div>
-      <div className='main-image'>
-        <img src='https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' />
-
-        {/* <button className='previous-button' onClick={() => }></button> */}
-        {/* <button className='next-button' onClick={() => }></button> */}
+      <div className={`main-image ${expanded ? expanded : ''}`}>
+        <img
+          src={selectedStyle?.photos?.[selectedImageIndex].url || brokenImage}
+          alt='style-photo-main'
+          onClick={handleImageClick}
+          className='main-image-photo'
+        />
+        {selectedImageIndex > 0 && (
+          <button
+          className='previous-button'
+          onClick={() => handlePrevious(selectedImageIndex)}>
+            <span><i className="fa-solid fa-arrow-left"></i></span></button>
+        )}
+        {selectedImageIndex < selectedStyle?.photos.length - 1 && (
+          <button
+          className='next-button'
+          onClick={() => handleNext(selectedImageIndex)}>
+            <span><i className="fa-solid fa-arrow-right"></i></span></button>
+        )}
       </div>
       <div>
         <strong>
@@ -35,7 +77,7 @@ const ImageGallery = () => {
           {details?.description}
         </p>
       </div>
-    </div>
+    </div >
   )
 };
 
