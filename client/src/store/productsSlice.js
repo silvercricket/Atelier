@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, thunkAPI } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  currentProduct: 40347,
+  currentProduct: 40348,
   productList: [],
   productDetails: {},
   productStyles: {},
@@ -48,6 +48,10 @@ export const productsSlice = createSlice({
     loadProducts(state, action) {
       state.list = action.payload;
     },
+    //adding a reducer here to handle clicking on related item card - bonnie
+    setCurrentProduct(state, action) {
+      state.currentProduct = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -89,6 +93,8 @@ export const productsSlice = createSlice({
   }
 });
 
-export const { loadProducts } = productsSlice.actions;
+//adding a reducer here to handle clicking on related item card - bonnie
+
+export const { loadProducts, setCurrentProduct } = productsSlice.actions;
 
 export default productsSlice.reducer;

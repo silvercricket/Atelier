@@ -11,16 +11,20 @@ const QAPhoto = ({ photo }) => {
   }
 
   return (
-    <div className="qa-answer-thumbnail-container">
+    <>
       {
         expandPhoto && (
           <QAModal closeModalHandler={() => setExpandPhoto(false)}>
-            <img className="qa-answer-thumbnail" src={photo.url} />
+          <div className="qa-fullsize-img-container">
+          <img className="qa-fullsize-img" src={photo} />
+          </div>
           </QAModal>
         )
       }
-      <img className="qa-answer-thumbnail" src={photo.url.replace(/v\d+/, 'c_fill,w_90,h_60')} onClick={handlePhotoClick} />
-    </div>
+      <div className="qa-answer-thumbnail-container">
+        <img className="qa-answer-thumbnail" src={photo.replace(/v\d+/, 'c_fill,w_90,h_60')} onClick={handlePhotoClick} />
+      </div>
+    </>
   )
 }
 

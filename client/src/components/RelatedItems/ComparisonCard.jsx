@@ -27,6 +27,7 @@ const ComparisonCard = ({ item, price }) => {
     <div className = "comparisonCard">
       <small>Comparing</small>
       <table className = "comparisonTable">
+        <tbody>
         <tr>
           <th>{testInitialItem.name}</th>
           <th>&nbsp;</th>
@@ -37,6 +38,7 @@ const ComparisonCard = ({ item, price }) => {
           <td>Feature</td>
           <td>{price}</td>
         </tr>
+        </tbody>
       </table>
       {/* <h3>Current Item:</h3>
       <p>{testInitialItem.name}</p>

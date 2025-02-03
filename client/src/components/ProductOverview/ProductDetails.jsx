@@ -9,8 +9,6 @@ const ProductDetails = () => {
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
   const status = useSelector(state => state.products.status);
 
-  // console.log('DETAILS', details)
-
   // if (!details || !styles) return <div>Loading product details...</div>;
 
   const price = details?.sale_price ?
@@ -31,7 +29,7 @@ const ProductDetails = () => {
           <p>{details?.category}</p>
           <h1>{details?.name}</h1>
           <p>{price}</p>
-          {/* TO DO: ADD SOCIAL MEDIA ICONS */}
+          {/* // TO DO: ADD SOCIAL MEDIA ICONS */}
         </div>
       ) : (
         <p>Loading product details...</p>

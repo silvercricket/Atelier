@@ -22,7 +22,6 @@ export const getCart = createAsyncThunk('cart/getCart', async (_, { rejectWithVa
 export const postCart = createAsyncThunk('cart/postCart', async ({ sku_id }, { rejectWithValue }) => {
   try {
     const response = await axios.post('/api/cart', { sku_id })
-    console.log("RESPONSE.DATA", sku_id)
     return { response: response.data, sku_id: sku_id };
   } catch (err) {
     return rejectWithValue(err.message);
@@ -61,10 +60,8 @@ const cartSlice = createSlice({
       })
       .addCase(postCart.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        console.log('action.payload', action.payload)
         const { sku_id, count } = action.payload;
         const item = state.cart.find(item => item.sku_id === sku_id);
-        console.log('SKU', sku_id)
         if (item) item.count++;
         else state.cart.push({ sku_id });
       })
