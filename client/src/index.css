@@ -155,6 +155,10 @@ progress.ratingCounter::-moz-progress-bar {
   padding: 5px;
 }
 
+.reviewImageModal {
+  position: relative;
+}
+
 .sellerResponse {
   background-color: lightgray;
 }
@@ -162,6 +166,19 @@ progress.ratingCounter::-moz-progress-bar {
 .ratingBreakdown {
   float: left;
   margin-left: 15px;
+}
+
+#resetReviews {
+  text-decoration: underline;
+}
+
+#resetReviews:hover {
+  text-decoration-color: blueviolet;
+  color: blueviolet;
+}
+
+.rating-filter {
+  font-size: small;
 }
 
 .charTable {

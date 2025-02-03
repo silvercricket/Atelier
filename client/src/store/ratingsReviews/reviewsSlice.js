@@ -28,6 +28,9 @@ const reviewsSlice = createSlice({
     },
     filterReviews: (state, action) => {
       state.filteredReviews = state.filteredReviews.concat(action.payload);
+    },
+    resetFilter: (state) => {
+      state.filteredReviews = [];
     }
   },
   extraReducers: (builder) => {
@@ -51,7 +54,7 @@ const reviewsSlice = createSlice({
   }
 })
 
-export const { moreReviews, filterReviews } = reviewsSlice.actions;
+export const { moreReviews, filterReviews, resetFilter } = reviewsSlice.actions;
 
 export default reviewsSlice.reducer;
 
