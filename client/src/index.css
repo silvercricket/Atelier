@@ -104,6 +104,12 @@ textarea:not([rows]) {
   flex-direction: column;
 }
 
+
+.ratingHover:hover {
+  background-color: grey;
+}
+
+
 progress.ratingCounter {
   width: 250px;
   height: 15px;

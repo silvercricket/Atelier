@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { filterReviews } from '../../store/ratingsReviews/reviewsSlice.js';
 
 const RatingBreakdown = () => {
   const dispatch = useDispatch();
 
   const reviews = useSelector((state) => {
     return state.reviews.reviews || [];
+  })
+
+  const filteredReviews = useSelector((state) => {
+    return state.reviews.filteredReviews;
   })
 
   const avgRating = () => {
@@ -86,6 +91,18 @@ const RatingBreakdown = () => {
     full: <i className="fa-solid fa-star"></i>
   }
 
+  const handleFilter = (stars) => {
+    for (let review of filteredReviews) {
+      if (review.rating === stars) {
+        return;
+      }
+    }
+    let reviewsToAdd = reviews.filter((review) => {
+      return review.rating === stars;
+    })
+    dispatch(filterReviews(reviewsToAdd));
+  }
+
 
   // handle async http requests or empty reviews
   if (!reviews.length) {
@@ -126,11 +143,11 @@ const RatingBreakdown = () => {
         </div>
         <div className="starBars">
           <p>{percentRec()}% of reviews reccomend this product</p>
-          <p>5 stars</p><progress className="ratingCounter" value={fiveStar()} max="100"></progress>
-          <p>4 stars</p><progress className="ratingCounter" value={fourStar()} max="100"></progress>
-          <p>3 stars</p><progress className="ratingCounter" value={threeStar()} max="100"></progress>
-          <p>2 stars</p><progress className="ratingCounter" value={twoStar()} max="100"></progress>
-          <p>1 stars</p><progress className="ratingCounter" value={oneStar()} max="100"></progress>
+          <div className="ratingHover" onClick={() => handleFilter(5)}><p>5 stars</p><progress className="ratingCounter" value={fiveStar()} max="100"></progress></div>
+          <div className="ratingHover" onClick={() => handleFilter(4)}><p>4 stars</p><progress className="ratingCounter" value={fourStar()} max="100"></progress></div>
+          <div className="ratingHover" onClick={() => handleFilter(3)}><p>3 stars</p><progress className="ratingCounter" value={threeStar()} max="100"></progress></div>
+          <div className="ratingHover" onClick={() => handleFilter(2)}><p>2 stars</p><progress className="ratingCounter" value={twoStar()} max="100"></progress></div>
+          <div className="ratingHover" onClick={() => handleFilter(1)}><p>1 stars</p><progress className="ratingCounter" value={oneStar()} max="100"></progress></div>
         </div>
     </div>
 
