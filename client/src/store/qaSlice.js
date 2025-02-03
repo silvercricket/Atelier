@@ -18,13 +18,14 @@ export const fetchQuestions = createAsyncThunk(
 export const addQuestion = createAsyncThunk(
   'qa/addQuestion',
   async (formData, thunkAPI) => {
-    const productId = thunkAPI.getState().qa.productId;
+    const productId = Number(thunkAPI.getState().products.currentProduct);
     const question = {
       body: formData.question,
       name: formData.nickname,
       email: formData.email,
       product_id: productId
     }
+    console.log(question);
     try {
       const response = await axios.post('/api/qa/questions', question);
       return response.data;
