@@ -54,7 +54,7 @@ const QAList = () => {
             displayShowMoreQuestionsBtn &&
             <button onClick={() => dispatch(toggleShowAllQuestions())}>{showAllQuestions ? 'Collapse Questions' : 'More Answered Questions'}</button>
             }
-            <button onClick={() => dispatch(showNewQuestionModal())}>Add a Question</button>
+            <button onClick={() => dispatch(showNewQuestionModal())}>Add a Question <i class="fa-solid fa-plus"></i></button>
           </div>
         </>
       }

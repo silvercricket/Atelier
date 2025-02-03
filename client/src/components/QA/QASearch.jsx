@@ -15,6 +15,7 @@ const QASearch = () => {
   return (
     <div className="qa-search-container">
       <input className="qa-search" placeholder="Have a question? Search for answers..." value={query} onChange={handleSearchInputChange} />
+      <i class="fa-solid fa-magnifying-glass"></i>
     </div>
   )
 };
