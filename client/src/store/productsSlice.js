@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, thunkAPI } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  currentProduct: 40348,
+  currentProduct: 40347,
   productList: [],
   productDetails: {},
   productStyles: {},
