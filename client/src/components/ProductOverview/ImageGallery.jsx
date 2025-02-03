@@ -47,7 +47,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
           </div>
         ))}
       </div>
-      <div className={`main-image ${expanded ? expanded : ''}`}>
+      <div className={`main-image ${expanded ? "expanded" : ''}`}>
         <img
           src={selectedStyle?.photos?.[selectedImageIndex].url || brokenImage}
           alt='style-photo-main'
