@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchReviews } from '../../store/ratingsReviews/reviewsSlice.js';
 import { format } from 'date-fns';
-import ReviewImageModal from './ReviewImageModal.jsx';
 import axios from 'axios';
+import ReviewImageModal from './ReviewImageModal.jsx';
 
 const ReviewTile = ({review}) => {
   const dispatch = useDispatch();
