@@ -5,9 +5,9 @@ import axios from 'axios';
 export const fetchQuestions = createAsyncThunk(
   'qa/fetchQuestions',
   async (_, thunkAPI) => {
-    const productId = thunkAPI.getState().qa.productId;
+    const productId = thunkAPI.getState().products.currentProduct;
     try {
-      const response = await axios.get(`/api/qa/questions?product_id=${productId}`);
+      const response = await axios.get(`/api/qa/questions?product_id=${productId}&page=1&count=500`);
       return response.data;
     } catch(err) {
       return thunkAPI.rejectWithValue(err.message);
@@ -56,10 +56,19 @@ export const addAnswer = createAsyncThunk(
 );
 
 const initialState = {
-  // TODO: For testing only
-  productId: 40347,
+  // TODO: FOR TESTING ONLY
+  currentProduct: 40347,
   productName: 'Great Product Name',
-  questions: [],
+  questions: {
+    productId: null,
+    list: [],
+    // idle, loading, success, error
+    status: 'idle',
+    showAllQuestions: false
+  },
+  searchQuery: {
+    query: ''
+  },
   newQuestionModal: {
     show: false,
   },
@@ -82,6 +91,17 @@ export const qaSlice = createSlice({
   name: 'qa',
   initialState,
   reducers: {
+    // Search:
+    setSearchQuery: (state, action) => {
+      state.searchQuery.query = action.payload;
+    },
+    // Questions:
+    setShowAllQuestions: (state, action) => {
+      state.questions.showAllQuestions = action.payload;
+    },
+    toggleShowAllQuestions: (state) => {
+      state.questions.showAllQuestions = !state.questions.showAllQuestions;
+    },
     // Modals:
     showNewQuestionModal: (state) => {
       state.newQuestionModal.show = true;
@@ -102,12 +122,17 @@ export const qaSlice = createSlice({
   },
   extraReducers: (builder) => {
     // Fetch Questions
+    builder.addCase(fetchQuestions.pending, (state) => {
+      state.questions.status = 'loading';
+    });
     builder.addCase(fetchQuestions.fulfilled, (state, action) => {
-      // TODO: Possibly no need to sort
-      state.questions = action.payload.results.sort((a, b) => b.question_helpfulness - a.question_helpfulness);
+      state.questions.list = action.payload.results;
+      state.questions.productId = action.payload.product_id;
+      state.questions.status = 'success';
     });
     builder.addCase(fetchQuestions.rejected, (state, action) => {
       console.log('Failed to fetch questions.', action.payload);
+      state.questions.status = 'error';
     });
 
     // Add a Question
@@ -136,6 +161,6 @@ export const qaSlice = createSlice({
   }
 })
 
-export const { showNewQuestionModal, hideNewQuestionModal, showNewAnswerModal, hideNewAnswerModal } = qaSlice.actions;
+export const { setSearchQuery, setShowAllQuestions, toggleShowAllQuestions, showNewQuestionModal, hideNewQuestionModal, showNewAnswerModal, hideNewAnswerModal } = qaSlice.actions;
 
 export default qaSlice.reducer;
