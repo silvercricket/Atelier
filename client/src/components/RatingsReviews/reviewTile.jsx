@@ -66,7 +66,7 @@ const ReviewTile = ({review}) => {
       <p>{review.body}</p>
       { imageModal ? <ReviewImageModal photo={imageURL} setImageModal={setImageModal} setImageURL={setImageURL}/> : null}
       {photos.length ? photos : null}
-      {review.recommend ? <p>I recommend this product  ✅ </p> : null}
+      {review.recommend ? <p>I recommend this product  <i class="fa-solid fa-check"></i></p> : null}
       {review.response ? <p className="sellerResponse">review.response</p> : null}
       <p>Was this review helpful?</p>
       { hasRated ? <p>You have already rated this review</p> : <div><button onClick={() => handleRate(true)}>Yes</button><button onClick={() => handleRate(false)}>No</button></div>}
