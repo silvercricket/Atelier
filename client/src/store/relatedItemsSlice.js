@@ -17,6 +17,7 @@ const initialState = {
 
 export const getRelatedItems = createAsyncThunk('products/related', async (productId, { rejectWithValue }) => {
   try {
+    // const productId = getState().products.currentProduct;
     const response = await axios.get(`/api/products/${productId}/related`)
     return response.data;
   } catch (err) {
@@ -26,6 +27,7 @@ export const getRelatedItems = createAsyncThunk('products/related', async (produ
 
 export const getRelatedItemDetails = createAsyncThunk('products/related/details', async (productId, { rejectWithValue }) => {
     try {
+      // const productId = getState().products.currentProduct;
       const response = await axios.get(`/api/products/${productId}`);
       return response.data;
     } catch (err) {
@@ -35,6 +37,7 @@ export const getRelatedItemDetails = createAsyncThunk('products/related/details'
 
 export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async (productId, { rejectWithValue }) => {
   try {
+    // const productId = getState().products.currentProduct;
     const response = await axios.get(`/api/products/${productId}/styles`);
     // console.log(response.data.results[0].photos[0].url)
     if (response.data.results[0].photos[0].url === null) {
@@ -58,15 +61,18 @@ export const relatedItemsSlice = createSlice({
   initialState,
   reducers: {
     showNextCard: (state) => {
-      if (state.currentCardIndex !== state.relatedItems.length - 1) {
-        state.currentCardIndex += 1;
-        // state.currentCardIndex = ((prevIndex) => (prevIndex + 1) % state.relatedItems.length)
+      if (state.currentCardIndex !== state.outfit.length - 1) {
+        // state.currentOutfitCardIndex += 1;
+        return {
+          ...state,
+          currentCardIndex: state.currentCardIndex + 1
+        }
       }
     },
     showPreviousCard: (state) => {
       if (state.currentCardIndex !== 0) {
         state.currentCardIndex -= 1;
-        // state.currentCardIndex = ((prevIndex) => (prevIndex - 1 + state.relatedItems.length) % state.relatedItems.length);
+
 
       }
     },
@@ -80,7 +86,11 @@ export const relatedItemsSlice = createSlice({
     },
     showNextOutfitCard: (state, action) => {
       if (state.currentOutfitCardIndex !== state.outfit.length - 1) {
-        state.currentOutfitCardIndex += 1;
+        // state.currentOutfitCardIndex += 1;
+        return {
+          ...state,
+          currentOutfitCardIndex: state.currentOutfitCardIndex + 1
+        }
         // state.currentCardIndex = ((prevIndex) => (prevIndex + 1) % state.relatedItems.length)
       }
     },
@@ -100,6 +110,7 @@ export const relatedItemsSlice = createSlice({
       .addCase(getRelatedItems.fulfilled, (state, action) => {
         state.status = 'fulfilled'
         state.relatedItemIds = action.payload;
+
       })
       .addCase(getRelatedItems.rejected, (state, action) => {
         state.status = 'failed';

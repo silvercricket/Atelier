@@ -51,7 +51,7 @@ const RelatedItems = () => {
           })
         })
     }
-  }, [])
+  }, [relatedItems])
 
   return (
     <div className="relatedItems">
