@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { filterReviews, resetFilter } from '../../store/ratingsReviews/reviewsSlice.js';
+import { filterReviews, resetFilter, resetRendered } from '../../store/ratingsReviews/reviewsSlice.js';
 
 const RatingBreakdown = () => {
   const dispatch = useDispatch();
@@ -132,26 +132,25 @@ const RatingBreakdown = () => {
   }
 
   const handleFilter = (stars) => {
-    if (!isFiltered) {
-      setIsFiltered(true);
-    }
     checkFilters(stars);
     for (let review of filteredReviews) {
       if (review.rating === stars) {
-        setIsFiltered(false);
-        setFilter5(false);
-        setFilter4(false);
-        setFilter3(false);
-        setFilter2(false);
-        setFilter1(false);
-        dispatch(resetFilter());
+        handleReset();
         return;
       }
     }
+    let tempArr = []
     let reviewsToAdd = reviews.filter((review) => {
+      if (review.rating === stars) {
+        tempArr.push(review);
+      }
       return review.rating === stars;
     })
     dispatch(filterReviews(reviewsToAdd));
+    if (!isFiltered) {
+      dispatch(resetRendered(tempArr.slice(0, 2)));
+      setIsFiltered(true);
+    }
   }
 
 
