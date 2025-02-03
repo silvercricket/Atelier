@@ -6,7 +6,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
 
   const [expanded, setExpanded] = useState(false);
   const [zoom, setZoom] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const id = useSelector(state => state.products.currentProduct) || 40347;
   const details = useSelector(state => state.products.productDetails?.[id]);
@@ -20,6 +20,8 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
     setExpanded(!expanded);
   };
 
+  console.log(details);
+
   const handlePrevious = (selectedImageIndex) => {
     if (selectedImageIndex > 0) setSelectedImageIndex(selectedImageIndex - 1);
   };
@@ -28,8 +30,6 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
     if (selectedImageIndex < selectedStyle?.photos.length - 1) setSelectedImageIndex(selectedImageIndex + 1);
   };
 
-  // console.log('PRODUCT STYLES', styles);
-  // console.log("PHOTOS: ", selectedStyle?.photos)
 
   return (
     <div className={`image-gallery ${expanded ? 'expanded' : ''}`}>
@@ -56,18 +56,18 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
         />
         {selectedImageIndex > 0 && (
           <button
-          className='previous-button'
-          onClick={() => handlePrevious(selectedImageIndex)}>
+            className='previous-button'
+            onClick={() => handlePrevious(selectedImageIndex)}>
             <span><i className="fa-solid fa-arrow-left"></i></span></button>
         )}
         {selectedImageIndex < selectedStyle?.photos.length - 1 && (
           <button
-          className='next-button'
-          onClick={() => handleNext(selectedImageIndex)}>
+            className='next-button'
+            onClick={() => handleNext(selectedImageIndex)}>
             <span><i className="fa-solid fa-arrow-right"></i></span></button>
         )}
       </div>
-      <div>
+      <div className='product-slogan-details'>
         <strong>
           <p>
             {details?.slogan}

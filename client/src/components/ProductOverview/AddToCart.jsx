@@ -25,7 +25,6 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   const selectedSku = skus.find(sku => sku.size === selectedSize);
   const maxQuantity = selectedSku ? Math.min(selectedSku.quantity, 15) : 0;
 
-  console.log(selectedSku)
   const quantityOptions = [];
   for (let i = 1; i <= maxQuantity; i++) {
     quantityOptions.push(i);
