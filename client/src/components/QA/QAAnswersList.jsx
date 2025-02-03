@@ -1,65 +1,60 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
+
+import { selectSearchQuery } from './qaSelectors.js';
 
 import QAAnswer from './QAAnswer.jsx';
 
 const QAAnswersList = ({ question }) => {
   const [showAllAnswers, setShowAllAnswers] = useState(false);
-  const [answers, setAnswers] = useState([]);
+  const query = useSelector(selectSearchQuery);
+  const answers = Object.keys(question.answers).map((answerId) => question.answers[answerId]).sort((a, b) => b.helpfulness - a.helpfulness);
 
-  const answersCount = Object.keys(question.answers).length;
+  let answersToDisplay = answers;
 
-  let answersToDisplay;
-  if (showAllAnswers) {
-    answersToDisplay = answers;
-  } else {
+  if (query.length > 2) {
+    answersToDisplay = answers.filter((answer) => {
+      return answer.body.toLowerCase().includes(query.toLowerCase());
+    })
+  } else if (!showAllAnswers) {
     answersToDisplay = answers.slice(0, 2);
   }
-
-  useEffect(() => {
-    const count = showAllAnswers ? 100 : 2;
-    axios.get(`/api/qa/questions/${question.question_id}/answers?page=1&count=${count}`)
-    .then((response) => {
-      setAnswers(response.data.results);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }, [question, showAllAnswers]);
 
   const handleLoadAnswersClick = () => {
     setShowAllAnswers((prev) => !prev);
   }
 
-
   return (
     <div className="qa-answers-list-container">
-      <div className="qa-a">A:</div>
-      <div>
-        {
+      {
           answers.length > 0 && (
-            <div className="qa-answers-list">
-              {
-                answersToDisplay.map((answer) => {
-                  return (
-                    <QAAnswer answer={answer} key={uuidv4()} />
-                  )
-                })
-              }
-            </div>
-          )
-        }
+            <>
+              <div className="qa-a">A:</div>
+              <div>
 
-        {
-          answersCount > 2 && (
-            <div>
-              <button onClick={handleLoadAnswersClick}>{showAllAnswers ? 'Collapse answers' : 'Load more answers'}</button>
-            </div>
+                <div className="qa-answers-list">
+                  {
+                    answersToDisplay.map((answer) => {
+                      return (
+                        <QAAnswer answer={answer} key={answer.id} />
+                      )
+                    })
+                  }
+
+                  {
+                    answers.length > 2 && query.length < 3 && (
+                      <div>
+                        <button className="qa-more-answers-btn" onClick={handleLoadAnswersClick}>{showAllAnswers ? 'Collapse answers' : 'Load more answers'}</button>
+                      </div>
+                    )
+                  }
+                </div>
+
+              </div>
+            </>
           )
-        }
-      </div>
+      }
     </div>
   )
 };
