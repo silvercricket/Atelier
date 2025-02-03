@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RelatedItemCard from './RelatedItemCard.jsx'
-import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails } from '../../store/relatedItemsSlice.js';
+import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs } from '../../store/relatedItemsSlice.js';
 import { getProducts, getProductDetails, getProductStyles } from '../../store/productsSlice.js';
 import Outfit from './Outfit.jsx'
 import axios from 'axios';
@@ -30,8 +30,16 @@ const RelatedItems = () => {
     return state.relatedItems.relatedItems
   })
 
+  const relatedItemIds = useSelector((state) => {
+    return state.relatedItems.relatedItemIds
+  })
+
+  const url = useSelector((state) => {
+    return state.relatedItems.relatedItemURLs
+  })
+
   const carouselStyle = {
-    transform: `translateX(-${currentIndex * 60}%)`
+    transform: `translateX(-${currentIndex * 100}%)`
   }
 
   useEffect(() => {
@@ -42,8 +50,6 @@ const RelatedItems = () => {
             dispatch(getRelatedItemDetails(productId))
           })
         })
-      dispatch(getProductStyles())
-      .then((results) => console.log(results))
     }
   }, [])
 
