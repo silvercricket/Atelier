@@ -23,8 +23,8 @@ module.exports = (req, res, next) => {
     // console.log('RESULTS.DATA IN AUTH: ', results.data);
     res.send(results.data);
     next();
-  }).catch(() => {
-    console.error('failed');
+  }).catch((err) => {
+    console.error(err);
     next();
   });
 }

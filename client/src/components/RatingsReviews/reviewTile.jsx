@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchReviews } from '../../store/ratingsReviews/reviewsSlice.js';
 import { format } from 'date-fns';
 import ReviewImageModal from './ReviewImageModal.jsx';
+import axios from 'axios';
 
 const ReviewTile = ({review}) => {
+  const dispatch = useDispatch();
+
   const stars = {
     empty: <i className="fa-regular fa-star"></i>,
     half: <i className="fa-regular fa-star-half-stroke"></i>,
@@ -19,13 +23,23 @@ const ReviewTile = ({review}) => {
     setImageModal(true);
   }
 
-  const handleRate= (isHelpful) => {
-    if (isHelpful) {
-      // add 1 to heplful
-    } else {
-      // add 1 to unhepful
-    }
+  const handleRate = (isHelpful) => {
     setHasRated(true);
+    if (isHelpful) {
+      return axios.put(`/api/reviews/${review.review_id}/helpful`)
+        .then(() => {
+          dispatch(fetchReviews());
+        })
+        .catch((err) => console.error(err));
+    }
+  }
+
+  const handleReport = () => {
+    return axios.put(`/api/reviews/${review.review_id}/report`)
+      .then(() => {
+        dispatch(fetchReviews());
+      })
+      .catch((err) => console.error(err));
   }
 
   const date = format(new Date(review.date), 'MMMM dd, yyyy');
@@ -53,12 +67,12 @@ const ReviewTile = ({review}) => {
       <p>{review.body}</p>
       { imageModal ? <ReviewImageModal photo={imageURL} setImageModal={setImageModal} setImageURL={setImageURL}/> : null}
       {photos.length ? photos : null}
-      {review.recommend ? <p>I recommend this product  ✅ </p> : null}
+      {review.recommend ? <p>I recommend this product  <i class="fa-solid fa-check"></i></p> : null}
       {review.response ? <p className="sellerResponse">review.response</p> : null}
       <p>Was this review helpful?</p>
       { hasRated ? <p>You have already rated this review</p> : <div><button onClick={() => handleRate(true)}>Yes</button><button onClick={() => handleRate(false)}>No</button></div>}
       <p>{review.helpfulness} customers found this review helpful</p>
-      <span>0 customers found this review unhelpful</span>
+      <button onClick={handleReport}>Report</button>
     </div>
   );
 
