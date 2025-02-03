@@ -1,11 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 import axios from 'axios';
 import QANotification from './QANotification.jsx';
 
-const QAPhotoUploader = ({ formData, setFormData }) => {
+const QAPhotoUploader = ({ formPhotos, formThumbnails, setFormData }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -23,7 +22,7 @@ const QAPhotoUploader = ({ formData, setFormData }) => {
         return {
           ...prev,
           photos: [...prev.photos, result.data.secure_url],
-          thumbnails: [...prev.thumbnails, `https://res.cloudinary.com/dmbs2shkd/image/upload/c_fill,w_100,h_100/${result.data.public_id}.jpg`]
+          thumbnails: [...prev.thumbnails, `https://res.cloudinary.com/dmbs2shkd/image/upload/c_fill,w_90,h_60/${result.data.public_id}.jpg`]
         }
       })
       setIsUploading(false);
@@ -43,7 +42,7 @@ const QAPhotoUploader = ({ formData, setFormData }) => {
         )
       }
 
-      { (!isUploading && formData.photos.length < 5) && (
+      { (!isUploading && formPhotos.length < 5) && (
           <label>Upload a photo <span>(You can attach up to 5 photos)</span>
             <input type="file" accept="image/*" onChange={handleFileInputChange} />
           </label>
@@ -51,7 +50,7 @@ const QAPhotoUploader = ({ formData, setFormData }) => {
       }
 
       {
-        formData.photos.length === 5 && (
+        formPhotos.length === 5 && (
           <QANotification type="notification" msg="You have attached maximum number of photos." />
         )
       }
@@ -63,9 +62,9 @@ const QAPhotoUploader = ({ formData, setFormData }) => {
       }
 
       {
-        formData.photos.length > 0 && (
+        formPhotos.length > 0 && (
         <div className="qa-photo-uploader-thumbnails-container">
-          { formData.thumbnails.map((thumbnailUrl) => <img src={thumbnailUrl} key={uuidv4()} />) }
+          { formThumbnails.map((thumbnailUrl, i) => <img src={thumbnailUrl} key={i} />) }
         </div>
         )
       }

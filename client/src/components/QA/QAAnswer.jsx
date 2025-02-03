@@ -54,7 +54,7 @@ const QAAnswer = ({ answer }) => {
         <div className="qa-answer-info-item">
           {
             reportTouched ? (
-              <span>Reported</span>
+              <span className="qa-reported">Reported</span>
             ) : (
               <button className="link-button" onClick={handleReportClick}>Report</button>
             )

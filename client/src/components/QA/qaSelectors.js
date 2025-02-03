@@ -26,13 +26,13 @@ export const selectQuestionsToDisplay= createSelector(
 
       })
     }
-    return showAll ? questions : questions.slice(0, 4);
+    return showAll ? questions : questions.slice(0, 2);
   }
 )
 
 export const selectDisplayShowMoreQuestionsBtn = createSelector(
   [selectQuestionsToDisplay, selectSearchQuery],
   (questions, query) => {
-  return (query.length < 3 || questions.length > 4) ? true : false;
+  return (query.length < 3 || questions.length > 2) ? true : false;
   }
 )

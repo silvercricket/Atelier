@@ -9,9 +9,8 @@ import QAFormInput from './QAFormInput.jsx';
 import QANotification from './QANotification.jsx';
 
 const QANewQuestionForm = () => {
-  // TODO: For testing only
-  const productName = useSelector((state) => state.qa.productName);
-
+  const productId = useSelector((state) => state.products.currentProduct);
+  const productName = useSelector((state) => state.products.productDetails[productId].name);
   const newQuestionFormStatus = useSelector((state) => state.qa.newQuestionForm.status);
 
   const initialFormState = {
@@ -48,7 +47,7 @@ const QANewQuestionForm = () => {
   }
 
   return (
-    <div>
+    <div className="qa-form-wrapper">
       {
         (newQuestionFormStatus === 'active' || newQuestionFormStatus === 'loading') && (
           <>
@@ -90,12 +89,12 @@ const QANewQuestionForm = () => {
               {
                 errMsg &&
                 <div className="qa-form-err-msg-container">
-                  <p>You must enter the following:</p>
-                  <div>{ errMsg.split('\n').map((msg) => <p className="qa-form-err-msg">{msg}</p>) }</div>
+                  <p className="qa-form-err-msg-title">You must enter the following:</p>
+                  <div>{ errMsg.split('\n').map((msg, i) => <p className="qa-form-err-msg" key={i}>{msg}</p>) }</div>
                 </div>
               }
 
-              <button disabled={newQuestionFormStatus === 'loading'}>{newQuestionFormStatus === 'loading' ? 'Submitting your question...' : 'Submit question'}</button>
+              <button className="qa-submit-btn" disabled={newQuestionFormStatus === 'loading'}>{newQuestionFormStatus === 'loading' ? 'Submitting your question...' : 'Submit question'}</button>
             </form>
           </>
         )
