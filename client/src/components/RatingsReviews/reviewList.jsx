@@ -58,7 +58,9 @@ const ReviewList = () => {
         <option value="helpful">Helpful</option>
         <option value="relevant">Relevant</option>
       </select>
-      {reviewCards}
+      <div id="review-container">
+        {reviewCards}
+      </div>
       {reviewCards.length < reviews.length ? <button onClick={handleMoreReviews}>MORE REVIEWS</button> : null}
       <button onClick={() => dispatch(isFormOpen())}>ADD A REVIEW +</button>
     </div>

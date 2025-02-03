@@ -54,7 +54,7 @@ const RelatedItemCard = ( {item} ) => {
    useEffect(() => {
     dispatch(getRelatedItemURLs(item.id))
       .then((results) => {
-        console.log(results)
+        // console.log(results)
         setURL(results.payload)
       })
     }, [])
