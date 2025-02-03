@@ -8,7 +8,7 @@ const ReviewImageModal = ({photo, setImageModal, setImageURL}) => {
   }
 
   return (
-    <dialog open>
+    <dialog className="reviewImageModal" open>
       <button onClick={handleClose}>Close Window</button>
       <img src={photo}/>
     </dialog>
