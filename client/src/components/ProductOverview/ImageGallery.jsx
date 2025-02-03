@@ -16,6 +16,10 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   if (status === 'loading') return <div>Loading...</div>;
   if (status === 'failed') return <div>Error: {error}</div>;
 
+  const handleImageClick = () => {
+    setExpanded(!expanded);
+  };
+
   const handlePrevious = (selectedImageIndex) => {
     if (selectedImageIndex > 0) setSelectedImageIndex(selectedImageIndex - 1);
   };
@@ -28,7 +32,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   // console.log("PHOTOS: ", selectedStyle?.photos)
 
   return (
-    <div className='image-gallery'>
+    <div className={`image-gallery ${expanded ? 'expanded' : ''}`}>
       <div className='thumbnail-images'>
         {selectedStyle?.photos.length && selectedStyle?.photos.map((photo, index) => (
           <div
@@ -43,16 +47,24 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
           </div>
         ))}
       </div>
-      <div className='main-image'>
+      <div className={`main-image ${expanded ? expanded : ''}`}>
         <img
           src={selectedStyle?.photos?.[selectedImageIndex].url || brokenImage}
           alt='style-photo-main'
+          onClick={handleImageClick}
+          className='main-image-photo'
         />
         {selectedImageIndex > 0 && (
-          <button className='previous-button' onClick={() => handlePrevious(selectedImageIndex)}><span><i className="fa-solid fa-arrow-left"></i></span></button>
+          <button
+          className='previous-button'
+          onClick={() => handlePrevious(selectedImageIndex)}>
+            <span><i className="fa-solid fa-arrow-left"></i></span></button>
         )}
         {selectedImageIndex < selectedStyle?.photos.length - 1 && (
-          <button className='next-button' onClick={() => handleNext(selectedImageIndex)}><span><i className="fa-solid fa-arrow-right"></i></span></button>
+          <button
+          className='next-button'
+          onClick={() => handleNext(selectedImageIndex)}>
+            <span><i className="fa-solid fa-arrow-right"></i></span></button>
         )}
       </div>
       <div>
