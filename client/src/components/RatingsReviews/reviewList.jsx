@@ -17,6 +17,10 @@ const ReviewList = () => {
     return state.reviews.reviews || [];
   });
 
+  const product_id = useSelector((state) => {
+      return state.products.currentProduct;
+    })
+
   // STATE that holds only rendered reviews, starts with 2, add 2 whenever click 'more reviews'
   const renderedReviews = useSelector((state) => {
     return state.reviews.renderedReviews || [];
@@ -37,12 +41,26 @@ const ReviewList = () => {
     dispatch(moreReviews(reviewsToAdd));
   }
 
+  // sorting requests
+  const handleSort = () => {
+    const sortOption = document.getElementById('sortBtn').value;
+    if (sortOption === '-- select a sort option --') {
+      return;
+    }
+    dispatch(fetchReviews(sortOption));
+  }
+
   return (
     <div className="reviewList">
-      <h3>{reviews.length} reviews, sorted by FIX_ME</h3>
+      <h3>{reviews.length} reviews, sorted by</h3><select  id="sortBtn" onChange={handleSort}>
+        <option>-- select a sort option --</option>
+        <option value="newest">Newest</option>
+        <option value="helpful">Helpful</option>
+        <option value="relevant">Relevant</option>
+      </select>
       {reviewCards}
       {reviewCards.length < reviews.length ? <button onClick={handleMoreReviews}>MORE REVIEWS</button> : null}
-      <button onClick={() => dispatch(isFormOpen())}>ADD A REVIEW + -TODO-</button>
+      <button onClick={() => dispatch(isFormOpen())}>ADD A REVIEW +</button>
     </div>
   );
 }

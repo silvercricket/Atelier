@@ -8,10 +8,12 @@ const initialState = {
   error: ''
 };
 
-export const fetchReviews = createAsyncThunk('reviews/fetchReviews', async (_, thunkAPI) => {
-  const product_id = thunkAPI.getState().products.currentProduct
+export const fetchReviews = createAsyncThunk('reviews/fetchReviews', async (sortOptions, thunkAPI) => {
+  const sortBy = sortOptions || 'newest';
+  console.log(sortBy);
+  const product_id = thunkAPI.getState().products.currentProduct;
   return axios
-    .get(`/api/reviews/?product_id=${product_id}`)
+    .get(`/api/reviews/?product_id=${product_id}&sort=${sortBy}`)
     .then((response) => {
       return response.data.results;
     })
