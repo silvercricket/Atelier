@@ -106,26 +106,26 @@ textarea:not([rows]) {
 
 
 .ratingHover:hover {
-  background-color: grey;
+  background-color: lightgrey;
 }
 
 
 progress.ratingCounter {
   width: 250px;
   height: 15px;
-  border: 1px solid lightgray;
+  border: 1px solid grey;
 }
 
 progress.ratingCounter::-webkit-progress-bar {
-  background-color: lightgray; /* Bar background */
+  background-color: grey; /* Bar background */
 }
 
 progress.ratingCounter::-webkit-progress-value {
-  background-color: grey; /* Progress value (fill) */
+  background-color: darkgreen; /* Progress value (fill) */
 }
 
 progress.ratingCounter::-moz-progress-bar {
-  background-color: grey; /* Firefox support */
+  background-color: darkgreen; /* Firefox support */
 }
 
 /* ReviewTiles */
@@ -237,7 +237,7 @@ progress.ratingCounter::-moz-progress-bar {
 .slider {
   width: 250px;
   height: 10px;
-  background: lightgrey;
+  background: grey;
   border-radius: 5px;
   position: relative;
 }
