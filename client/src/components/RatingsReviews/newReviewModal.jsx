@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { isFormOpen } from '../../store/ratingsReviews/newReviewFormSlice.js';
+import { fetchReviews } from '../../store/ratingsReviews/reviewsSlice.js';
+import axios from 'axios';
 
 const NewReviewModal = () => {
   const dispatch = useDispatch();
@@ -11,7 +13,7 @@ const NewReviewModal = () => {
   const [ summary, setSummary ] = useState('');
   const [ body, setBody ] = useState('');
   const [ reviewer, setReviewer ] = useState('');
-  const [ recommend, setRecommend ] = useState(null);
+  const [ recommend, setRecommend ] = useState(false);
   const [ email, setEmail ] = useState('');
 
   // table state
@@ -22,11 +24,59 @@ const NewReviewModal = () => {
   const [ prodLength, setProdLength ] = useState(null);
   const [ fit, setFit ] = useState(null);
 
+  const product_id = useSelector((state) => {
+    return state.products.currentProduct;
+  })
+
 
   // Toggle Modal Window
   const isOpen = useSelector((state) => {
     return state.newReviewForm.formOpen;
   })
+
+  // set charaacteristics object for submission of form
+  const checkChars = () => {
+    let postChars = {};
+
+    if (size) {
+      postChars['135232'] = size;
+    }
+    if (width) {
+      postChars['135233'] = width;
+    }
+    if (comfort) {
+      postChars['135230'] = comfort;
+    }
+    if (quality) {
+      postChars['135231'] = quality;
+    }
+    if (prodLength) {
+      postChars['135229'] = prodLength;
+    }
+    if (fit) {
+      postChars['135228'] = fit;
+    }
+    return postChars;
+  }
+
+  const handleSubmit = () => {
+    let chars = checkChars();
+    let reviewData = {
+      product_id: Number(product_id),
+      rating: Number(rating),
+      summary: summary,
+      recommend: recommend,
+      body: body,
+      name: reviewer,
+      email: email,
+      photos: [],
+      characteristics: chars
+    }
+    return axios.post(`/api/reviews`, reviewData)
+      .then(() => {
+        dispatch(fetchReviews());
+      })
+  }
 
 
   // Handlers for form data setting state
@@ -77,7 +127,7 @@ const NewReviewModal = () => {
     <dialog className="reviewModalContainer" open>
       <button onClick={() => dispatch(isFormOpen())}>Close Without Saving</button>
       <div className="reviewModal">
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* rating */}
           <label>Rate this product 1-5 stars!
             <input type="number" id="newReviewStars" min="0" max="5" value={rating} onChange={handleRating} required/>
@@ -122,7 +172,7 @@ const NewReviewModal = () => {
             <input id="email" type="text" placeholder="Example: jackson11@email.com" value={email} onChange={handleEmail}/>
           </label>
           <p>For authentication reasons, you will not be emailed</p>
-          <button>Submit Review -Not Functional-</button>
+          <input type="submit" value="Submit Review" />
         </form>
       </div>
     </dialog>

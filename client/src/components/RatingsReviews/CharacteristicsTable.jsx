@@ -26,7 +26,6 @@ const CharacteristicsTable = ({setSize, setWidth, setComfort, setQuality, setPro
 
 
   const chars = useSelector((state) => {
-    console.log(state.productBreakdown.characteristics);
     return state.productBreakdown.characteristics;
   })
 

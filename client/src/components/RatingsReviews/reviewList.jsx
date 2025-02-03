@@ -32,7 +32,6 @@ const ReviewList = () => {
 
   // add next 2 more reviews from total list to rendered list
   const handleMoreReviews = () => {
-    console.log('reviews: ', reviews);
     let start = renderedReviews.length;
     let reviewsToAdd = reviews.slice(start, start + 2);
     dispatch(moreReviews(reviewsToAdd));
