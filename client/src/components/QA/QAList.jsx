@@ -10,7 +10,7 @@ import QAListItem from './QAListItem.jsx';
 import QANotification from './QANotification.jsx';
 
 const QAList = () => {
-  const productId = useSelector((state) => state.qa.currentProduct);
+  const productId = useSelector((state) => state.products.currentProduct);
   const questionsStatus = useSelector((state) => state.qa.questions.status);
   const showAllQuestions = useSelector(selectShowAllQuestions); // A Boolean
   const questionsToDisplay = useSelector(selectQuestionsToDisplay);

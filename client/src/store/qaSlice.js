@@ -5,7 +5,7 @@ import axios from 'axios';
 export const fetchQuestions = createAsyncThunk(
   'qa/fetchQuestions',
   async (_, thunkAPI) => {
-    const productId = thunkAPI.getState().qa.currentProduct;
+    const productId = thunkAPI.getState().products.currentProduct;
     try {
       const response = await axios.get(`/api/qa/questions?product_id=${productId}&page=1&count=500`);
       return response.data;
