@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addToOutfit, showNextOutfitCard, showPreviousOutfitCard } from '../../store/relatedItemsSlice.js';
 import OutfitItemCard from './OutfitItemCard.jsx'
 
-const Outfit = ({ item }) => {
+const Outfit = () => {
 
   const dispatch = useDispatch();
 
@@ -27,20 +27,20 @@ const Outfit = ({ item }) => {
 
   const rightButtonShow = (outfit.length > 2) && (currentOutfitIndex < outfit.length - 1)
 
-  const handleAddOutfit = (event) => {
-    var outfit = {
-      category: item.category,
-      name: event.target.value,
-      price: item.default_price,
-      id: item.id
-    }
-    dispatch(addToOutfit(action.payload))
-  }
+  // const handleAddOutfit = (event) => {
+  //   var outfit = {
+  //     category: item.category,
+  //     name: event.target.value,
+  //     price: item.default_price,
+  //     id: item.id
+  //   }
+  //   dispatch(addToOutfit(action.payload))
+  // }
 
   return (
     <div>
       <div className = "outfitWrapper">
-        <span className = "addToOutfitCard" onClick = {handleAddOutfit} style = {carouselStyle}>
+        <span className = "addToOutfitCard" style = {carouselStyle}>
           <i class="fa-solid fa-plus"></i>
           Add Current Item to Outfit
         </span>

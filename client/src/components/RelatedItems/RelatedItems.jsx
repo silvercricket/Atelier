@@ -68,7 +68,7 @@ const RelatedItems = () => {
         {currentIndex === relatedItems.length - 1 ? null : <button className = "rightButton button" onClick = {() => dispatch(showNextCard())}>ᐳ</button>}
       </div>
       <h2>Your Outfit</h2>
-      <Outfit item = {}/>
+      <Outfit />
     </div>
   )
 }

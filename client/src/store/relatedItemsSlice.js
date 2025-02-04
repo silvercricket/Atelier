@@ -12,7 +12,7 @@ const initialState = {
   relatedItemDetails: [],
   relatedItemURLs: [],
   currentOutfitCardIndex: 0,
-  currentProductDetails: {};
+  currentProductDetails: {}
 
 }
 

@@ -17,8 +17,8 @@ var App = (props) => {
             element={
               <div>
                 <ProductOverview />
-                <QA />
                 <RelatedItems />
+                <QA />
                 <RatingsReviews />
               </div>
             }
@@ -28,8 +28,8 @@ var App = (props) => {
             element={
               <div>
                 <ProductOverview />
-                <QA />
                 <RelatedItems />
+                <QA />
                 <RatingsReviews />
               </div>
             }
