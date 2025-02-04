@@ -18,18 +18,17 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   if (status === 'failed') return <div>Error: {error}</div>;
 
   const handleImageClick = () => {
-    if (!expanded) setExpanded(true);
-    else if (expanded && !zoomed) {
-      setZoomed(true);
-      setZoomScale(2.5);
-    }
-    else {
-      setZoomed(false);
-      setZoomScale(1);
-    }
+    setExpanded(!expanded);
+    // if (!expanded) setExpanded(true);
+    // else if (expanded && !zoomed) {
+    //   setZoomed(true);
+    //   setZoomScale(2.5);
+    // }
+    // else {
+    //   setZoomed(false);
+    //   setZoomScale(1);
+    // }
   };
-
-  console.log('***', selectedStyle?.photos);
 
   const handlePrevious = (selectedImageIndex) => {
     if (selectedImageIndex > 0) setSelectedImageIndex(selectedImageIndex - 1);
@@ -38,8 +37,6 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   const handleNext = (selectedImageIndex) => {
     if (selectedImageIndex < selectedStyle?.photos.length - 1) setSelectedImageIndex(selectedImageIndex + 1);
   };
-
-  // console.log(details)
 
 
   return (

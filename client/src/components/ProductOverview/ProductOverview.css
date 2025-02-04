@@ -68,6 +68,22 @@
   padding: 15px;
   border: 1px solid #222;
   background: white;
+  cursor: pointer;
+}
+
+.size-selector {
+  padding-right: 30px;
+}
+
+.quantity-selector{
+  margin-right: 40px;
+}
+
+.selectors {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .button-row {
@@ -77,12 +93,21 @@
 
 .add-to-bag {
   flex-grow: 1;
-  padding: 15px;
-  border: 1px solid #222;
   background: white;
   display: flex;
   justify-content: normal;
   align-items: center;
+  padding-right: 40px;
+  justify-content: space-between;
+}
+
+.favorite-button {
+  padding: 20px;
+}
+
+.plus-icon {
+  padding-left: 90px;
+  font-weight: bolder;
 }
 
 .favorite {
@@ -239,7 +264,7 @@
   position: absolute;
   top: 40%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.7);
   border: none;
   padding: 8px;
   cursor: pointer;
@@ -262,6 +287,7 @@
 .previous-button:hover,
 .next-button:hover {
   background: rgba(255, 255, 255, 0.9);
+  color: black;
 }
 
 .product-slogan-details {
@@ -330,7 +356,7 @@
   right: 40px;
 }
 
-.image-indicator-div{
+.image-indicator-div {
   position: absolute;
   bottom: 20px;
   left: 50%;
