@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 
@@ -8,7 +8,7 @@ import { fetchQuestions } from '../../store/qaSlice.js';
 import QAAnswerPhotos from './QAAnswerPhotos.jsx';
 import QAHighlightedText from './QAHighlightedText.jsx';
 
-const QAAnswer = ({ answer }) => {
+const QAAnswer = memo(({ answer }) => {
   const [helpfulTouched, setHelpfulTouched] = useState(false);
   const [reportTouched, setReportTouched] = useState(false);
   const [isLoadingHelpful, setIsLoadingHelpful] = useState(false);
@@ -63,6 +63,6 @@ const QAAnswer = ({ answer }) => {
       </div>
     </div>
   )
-};
+});
 
 export default QAAnswer;
