@@ -409,7 +409,7 @@ progress.ratingCounter::-moz-progress-bar {
   border-style: groove;
   width: 33%;
   float: left;
-  height: 400px;
+  height: 450px;
   align-items: center;
   justify-content: center;
   text-align: left;
@@ -420,7 +420,7 @@ progress.ratingCounter::-moz-progress-bar {
   border-style: groove;
   width: 33%;
   float: left;
-  height: 400px;
+  height: 450px;
   padding: 5px;
   align-items: center;
   justify-content: center;
@@ -437,15 +437,31 @@ progress.ratingCounter::-moz-progress-bar {
   right: 10px;
   transform: scale(1.5, 1.5);
   z-index: 2;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: white;
+  vertical-align: middle;
+  text-align: center;
+  border: 1px black solid;
+
 }
 
 .actionButtonOutfit {
   float: right;
+  width: 24px;
+  height: 24px;
   position: absolute;
   top: 10px;
   right: 10px;
-  transform: scale(1.5, 1.5);
+  vertical-align: middle;
+  text-align: center;
+  transform: scale(1.25, 1.25);
+  border-radius: 50%;
+  background: white;
   z-index: 2;
+  border: 1px black solid;
+
 }
 
 .leftButton {
