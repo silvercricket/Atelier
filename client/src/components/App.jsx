@@ -9,6 +9,7 @@ import '../index.css';
 
 var App = (props) => {
   return (
+<<<<<<< HEAD
     <div>
       <ProductOverview />
       <QA />
@@ -37,6 +38,36 @@ var App = (props) => {
     //     </Routes>
     //   </div>
     // </Router>
+=======
+    <Router>
+      <div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                <ProductOverview />
+                <RelatedItems />
+                <QA />
+                <RatingsReviews />
+              </div>
+            }
+          />
+          <Route
+            path="/product/:id"
+            element={
+              <div>
+                <ProductOverview />
+                <RelatedItems />
+                <QA />
+                <RatingsReviews />
+              </div>
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
+>>>>>>> main
   );
 }
 

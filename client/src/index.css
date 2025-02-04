@@ -78,6 +78,7 @@ textarea:not([rows]) {
   --dark-gray: #292524;
   --gray: #78716C;
   --light-gray: #A8A29E;
+  --mid-light-gray: #D6D3D1;
   --light-light-gray: #F5F5F4;
   --red: #B91C1C;
   --light-red: #FEF2F2;
@@ -132,8 +133,18 @@ button {
 
 
 /* RATINGS AND REVIEWS */
+.ratings-reviews {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .rrHeader {
   margin-bottom: 25px;
+}
+
+.rr-button {
+  margin: 5px;
 }
 
 .ratingsReviews {
@@ -144,15 +155,13 @@ button {
 }
 
 .reviewList {
-  flex-basis: 600px;
   float: right;
   margin-left: 50px;
-  margin-right: 200px;
   flex-grow: 8;
 }
 
 #review-container {
-  height: 600px;
+  max-height: 1000px;
   overflow-y: auto;
 }
 
@@ -163,26 +172,26 @@ button {
 
 
 .ratingHover:hover {
-  background-color: grey;
+  background-color: var(--light-light-gray);
 }
 
 
 progress.ratingCounter {
   width: 250px;
   height: 15px;
-  border: 1px solid lightgray;
+  border: 1px solid var(--mid-light-gray);
 }
 
 progress.ratingCounter::-webkit-progress-bar {
-  background-color: lightgray; /* Bar background */
+  background-color: var(--mid-light-gray); /* Bar background */
 }
 
 progress.ratingCounter::-webkit-progress-value {
-  background-color: grey; /* Progress value (fill) */
+  background-color: var(--green); /* Progress value (fill) */
 }
 
 progress.ratingCounter::-moz-progress-bar {
-  background-color: grey; /* Firefox support */
+  background-color: var(--green); /* Firefox support */
 }
 
 /* ReviewTiles */
@@ -190,8 +199,9 @@ progress.ratingCounter::-moz-progress-bar {
   margin-top: 5px;
   margin-bottom: 10px;
   padding: 15px;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-color: lightgray;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--dark-dark-gray);
 }
 
 .reviewerName {
@@ -206,6 +216,12 @@ progress.ratingCounter::-moz-progress-bar {
   padding-right: 15px;
 }
 
+.review-thumbnail {
+  cursor: pointer;
+  width: 90px;
+  height: 60px;
+}
+
 .starBars {
   clear: left;
   margin-top: 10px;
@@ -217,7 +233,7 @@ progress.ratingCounter::-moz-progress-bar {
 }
 
 .sellerResponse {
-  background-color: lightgray;
+  background-color: var(--light-gray);
 }
 
 .ratingBreakdown {
@@ -239,7 +255,7 @@ progress.ratingCounter::-moz-progress-bar {
 }
 
 .charTable {
-  border: 1px solid black;
+  border: 1px solid var(--dark-dark-gray);
   border-collapse: collapse;
   text-align: center;
 }
@@ -249,7 +265,7 @@ progress.ratingCounter::-moz-progress-bar {
 }
 
 .colHead {
-  border: 1px solid black;
+  border: 1px solid var(--dark-dark-gray);
   border-collapse: collapse;
   padding-left: 60px;
   padding-right: 60px;
@@ -277,6 +293,16 @@ progress.ratingCounter::-moz-progress-bar {
   margin-bottom: 24px;
 }
 
+#submit-review {
+  text-transform: uppercase;
+  padding: 1rem 0.8rem 1rem 0.8rem;
+  cursor: pointer;
+  background-color: var(--dark-dark-gray);
+  border: none;
+  font-weight: 500;
+  color: #fff;
+}
+
 /* PRODUCT BREAKDOWN */
 
 .productBreakdown {
@@ -294,7 +320,7 @@ progress.ratingCounter::-moz-progress-bar {
 .slider {
   width: 250px;
   height: 10px;
-  background: lightgrey;
+  background: var(--mid-light-gray);
   border-radius: 5px;
   position: relative;
 }
@@ -307,7 +333,7 @@ progress.ratingCounter::-moz-progress-bar {
 
 .slider-thumb {
   position: absolute;
-  border-bottom: 10px solid #000000;
+  border-bottom: 10px solid var(--dark-dark-gray);
   border-left: 6px solid rgba(0, 0, 0, 0);
   border-right: 6px solid rgba(0, 0, 0, 0);
   content: "";
@@ -409,11 +435,25 @@ progress.ratingCounter::-moz-progress-bar {
   border-style: groove;
   width: 33%;
   float: left;
-  height: 400px;
-  padding: 5px;
+  height: 450px;
   align-items: center;
   justify-content: center;
   text-align: left;
+}
+
+.addToOutfitCard {
+  border-width: 2px;
+  border-style: groove;
+  width: 33%;
+  float: left;
+  height: 450px;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  flex-shrink: 0;
 }
 
 .actionButton {
@@ -423,13 +463,31 @@ progress.ratingCounter::-moz-progress-bar {
   right: 10px;
   transform: scale(1.5, 1.5);
   z-index: 2;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: white;
+  vertical-align: middle;
+  text-align: center;
+  border: 1px black solid;
+
 }
 
 .actionButtonOutfit {
   float: right;
+  width: 24px;
+  height: 24px;
+  position: absolute;
   top: 10px;
   right: 10px;
-  transform: scale(1.5, 1.5)
+  vertical-align: middle;
+  text-align: center;
+  transform: scale(1.25, 1.25);
+  border-radius: 50%;
+  background: white;
+  z-index: 2;
+  border: 1px black solid;
+
 }
 
 .leftButton {
