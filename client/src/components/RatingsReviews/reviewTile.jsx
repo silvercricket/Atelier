@@ -54,6 +54,7 @@ const ReviewTile = ({review}) => {
 
   return (
     <div className="reviewTile">
+      { imageModal ? <ReviewImageModal photo={imageURL} setImageModal={setImageModal} setImageURL={setImageURL}/> : null}
       <span className="reviewDate">{date}</span>
       <h3 className="reviewerName">{review.reviewer_name}</h3>
       <div>
@@ -64,8 +65,7 @@ const ReviewTile = ({review}) => {
         {review.rating >= 5 ? stars.full : review.rating >= 4.5 ? stars.half : stars.empty}
       </div>
       <h3>{review.summary}</h3>
-      <p>{review.body}</p>
-      { imageModal ? <ReviewImageModal photo={imageURL} setImageModal={setImageModal} setImageURL={setImageURL}/> : null}
+      <p className="reviewBody">{review.body}</p>
       {photos.length ? photos : null}
       {review.recommend ? <p>I recommend this product  <i class="fa-solid fa-check"></i></p> : null}
       {review.response ? <p className="sellerResponse">review.response</p> : null}
