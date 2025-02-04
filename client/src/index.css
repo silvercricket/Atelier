@@ -78,6 +78,7 @@ textarea:not([rows]) {
   --dark-gray: #292524;
   --gray: #78716C;
   --light-gray: #A8A29E;
+  --mid-light-gray: #D6D3D1;
   --light-light-gray: #F5F5F4;
   --red: #B91C1C;
   --light-red: #FEF2F2;
@@ -174,19 +175,19 @@ button {
 progress.ratingCounter {
   width: 250px;
   height: 15px;
-  border: 1px solid var(--light-gray);
+  border: 1px solid var(--mid-light-gray);
 }
 
 progress.ratingCounter::-webkit-progress-bar {
-  background-color: var(--light-gray); /* Bar background */
+  background-color: var(--mid-light-gray); /* Bar background */
 }
 
 progress.ratingCounter::-webkit-progress-value {
-  background-color: darkgreen; /* Progress value (fill) */
+  background-color: var(--green); /* Progress value (fill) */
 }
 
 progress.ratingCounter::-moz-progress-bar {
-  background-color: darkgreen; /* Firefox support */
+  background-color: var(--green); /* Firefox support */
 }
 
 /* ReviewTiles */
@@ -282,6 +283,16 @@ progress.ratingCounter::-moz-progress-bar {
   margin-bottom: 24px;
 }
 
+#submit-review {
+  text-transform: uppercase;
+  padding: 1rem 0.8rem 1rem 0.8rem;
+  cursor: pointer;
+  background-color: var(--dark-dark-gray);
+  border: none;
+  font-weight: 500;
+  color: #fff;
+}
+
 /* PRODUCT BREAKDOWN */
 
 .productBreakdown {
@@ -299,7 +310,7 @@ progress.ratingCounter::-moz-progress-bar {
 .slider {
   width: 250px;
   height: 10px;
-  background: var(--light-gray);
+  background: var(--mid-light-gray);
   border-radius: 5px;
   position: relative;
 }

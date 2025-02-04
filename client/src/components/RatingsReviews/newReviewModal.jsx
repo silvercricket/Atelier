@@ -183,7 +183,7 @@ const NewReviewModal = () => {
             <input id="email" type="text" placeholder="Example: jackson11@email.com" value={email} onChange={handleEmail}/>
           </label>
           <p>For authentication reasons, you will not be emailed</p>
-          <input type="submit" value="Submit Review" />
+          <input id="submit-review" type="submit" value="Submit Review" />
         </form>
       </div>
     </dialog>
