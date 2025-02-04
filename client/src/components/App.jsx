@@ -9,65 +9,12 @@ import '../index.css';
 
 var App = (props) => {
   return (
-<<<<<<< HEAD
     <div>
       <ProductOverview />
       <QA />
       <RelatedItems />
       <RatingsReviews />
     </div>
-    // <Router>
-    //   <div>
-    //     <Routes>
-    //       <Route
-    //         path="/"
-    //         element={
-    //         }
-    //       />
-    //       <Route
-    //         path="/product/:id"
-    //         element={
-    //           <div>
-    //             <ProductOverview />
-    //             <QA />
-    //             <RelatedItems />
-    //             <RatingsReviews />
-    //           </div>
-    //         }
-    //       />
-    //     </Routes>
-    //   </div>
-    // </Router>
-=======
-    <Router>
-      <div>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div>
-                <ProductOverview />
-                <RelatedItems />
-                <QA />
-                <RatingsReviews />
-              </div>
-            }
-          />
-          <Route
-            path="/product/:id"
-            element={
-              <div>
-                <ProductOverview />
-                <RelatedItems />
-                <QA />
-                <RatingsReviews />
-              </div>
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
->>>>>>> main
   );
 }
 

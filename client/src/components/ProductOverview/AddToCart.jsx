@@ -15,7 +15,6 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   //   dispatch(getCart());
   // };
 
-  console.log(details?.features)
 
   const skus = selectedStyle?.skus ?
     Object.entries(selectedStyle.skus).map(([skuId, data]) => ({
