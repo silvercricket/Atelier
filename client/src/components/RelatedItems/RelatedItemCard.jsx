@@ -61,10 +61,6 @@ const RelatedItemCard = ( {item} ) => {
       }
     };
 
-    // dispatch(getRelatedItems())
-    // dispatch(getRelatedItemDetails(item.id))
-    // dispatch(getRelatedItemURLs(item.id))
-
     fetchData();
 
   }
