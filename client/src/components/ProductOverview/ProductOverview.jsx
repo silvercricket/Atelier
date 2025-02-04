@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ImageGallery from './ImageGallery.jsx';
 import ProductDetails from './ProductDetails.jsx';

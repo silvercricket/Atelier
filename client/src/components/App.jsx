@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RelatedItems from './RelatedItems/RelatedItems.jsx';
 import ProductOverview from './ProductOverview/ProductOverview.jsx';

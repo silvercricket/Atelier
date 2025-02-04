@@ -5,7 +5,8 @@ import brokenImage from '../../images/placeholder.jpeg';
 const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, setSelectedImageIndex }) => {
 
   const [expanded, setExpanded] = useState(false);
-  const [zoom, setZoom] = useState(false);
+  const [zoomed, setZoomed] = useState(false);
+  const [zoomScale, setZoomScale] = useState(1);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const id = useSelector(state => state.products.currentProduct) || 40347;
@@ -18,6 +19,15 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
 
   const handleImageClick = () => {
     setExpanded(!expanded);
+    // if (!expanded) setExpanded(true);
+    // else if (expanded && !zoomed) {
+    //   setZoomed(true);
+    //   setZoomScale(2.5);
+    // }
+    // else {
+    //   setZoomed(false);
+    //   setZoomScale(1);
+    // }
   };
 
   const handlePrevious = (selectedImageIndex) => {
@@ -28,8 +38,6 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
     if (selectedImageIndex < selectedStyle?.photos.length - 1) setSelectedImageIndex(selectedImageIndex + 1);
   };
 
-  // console.log('PRODUCT STYLES', styles);
-  // console.log("PHOTOS: ", selectedStyle?.photos)
 
   return (
     <div className={`image-gallery ${expanded ? 'expanded' : ''}`}>
@@ -47,7 +55,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
           </div>
         ))}
       </div>
-      <div className={`main-image ${expanded ? expanded : ''}`}>
+      <div className={`main-image ${expanded ? "expanded" : ''}`}>
         <img
           src={selectedStyle?.photos?.[selectedImageIndex].url || brokenImage}
           alt='style-photo-main'
@@ -56,18 +64,29 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
         />
         {selectedImageIndex > 0 && (
           <button
-          className='previous-button'
-          onClick={() => handlePrevious(selectedImageIndex)}>
+            className='previous-button'
+            onClick={() => handlePrevious(selectedImageIndex)}>
             <span><i className="fa-solid fa-arrow-left"></i></span></button>
         )}
         {selectedImageIndex < selectedStyle?.photos.length - 1 && (
           <button
-          className='next-button'
-          onClick={() => handleNext(selectedImageIndex)}>
+            className='next-button'
+            onClick={() => handleNext(selectedImageIndex)}>
             <span><i className="fa-solid fa-arrow-right"></i></span></button>
         )}
+        {expanded && !zoomed && (
+          <div className="image-indicator-div">
+            {selectedStyle?.photos.map((element, index) => (
+              <div
+                key={index}
+                className={`image-indicator ${selectedImageIndex === index ? 'active' : ''}`}
+                onClick={() => setSelectedImageIndex(index)}
+              />
+            ))}
+          </div>
+        )}
       </div>
-      <div>
+      <div className='product-slogan-details'>
         <strong>
           <p>
             {details?.slogan}
@@ -76,6 +95,9 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
         <p>
           {details?.description}
         </p>
+        {/* <div>
+          {details?.features[0]}
+        </div> */}
       </div>
     </div >
   )
