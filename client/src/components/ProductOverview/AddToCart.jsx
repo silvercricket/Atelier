@@ -7,12 +7,15 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const id = useSelector(state => state.products.currentProduct) || 40347;
+  const details = useSelector(state => state.products.productDetails?.[id]);
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
 
 
   // const handleGetCart = () => {
   //   dispatch(getCart());
   // };
+
+  console.log(details?.features)
 
   const skus = selectedStyle?.skus ?
     Object.entries(selectedStyle.skus).map(([skuId, data]) => ({
@@ -85,6 +88,17 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
         </button>
         <button className="favorite-button">★</button>
       </div>
+      {details?.features && (
+        <div className="features-list">
+          {details.features.map((element, index) => (
+            <div key={index} className="feature-item">
+              <i className="checkmark-features fa-solid fa-check"></i>
+              <span className="feature-name">{element.feature}</span>:
+              <span className="feature-value"> {element.value}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

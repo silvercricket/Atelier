@@ -9,34 +9,34 @@ import '../index.css';
 
 var App = (props) => {
   return (
-    <Router>
-      <div>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div>
-                <ProductOverview />
-                <QA />
-                <RelatedItems />
-                <RatingsReviews />
-              </div>
-            }
-          />
-          <Route
-            path="/product/:id"
-            element={
-              <div>
-                <ProductOverview />
-                <QA />
-                <RelatedItems />
-                <RatingsReviews />
-              </div>
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
+    <div>
+      <ProductOverview />
+      <QA />
+      <RelatedItems />
+      <RatingsReviews />
+    </div>
+    // <Router>
+    //   <div>
+    //     <Routes>
+    //       <Route
+    //         path="/"
+    //         element={
+    //         }
+    //       />
+    //       <Route
+    //         path="/product/:id"
+    //         element={
+    //           <div>
+    //             <ProductOverview />
+    //             <QA />
+    //             <RelatedItems />
+    //             <RatingsReviews />
+    //           </div>
+    //         }
+    //       />
+    //     </Routes>
+    //   </div>
+    // </Router>
   );
 }
 
