@@ -6,7 +6,7 @@ const initialState = {
   relatedItems: [],
   relatedItemIds: [],
   currentCardIndex: 0,
-  status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+  status: 'idle',
   outfit: [],
   error: null,
   relatedItemDetails: [],
