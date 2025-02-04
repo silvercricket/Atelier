@@ -5,8 +5,9 @@ import brokenImage from '../../images/placeholder.jpeg';
 const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, setSelectedImageIndex }) => {
 
   const [expanded, setExpanded] = useState(false);
-  const [zoom, setZoom] = useState(false);
-  // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [zoomed, setZoomed] = useState(false);
+  const [zoomScale, setZoomScale] = useState(1);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const id = useSelector(state => state.products.currentProduct) || 40347;
   const details = useSelector(state => state.products.productDetails?.[id]);
@@ -17,10 +18,18 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   if (status === 'failed') return <div>Error: {error}</div>;
 
   const handleImageClick = () => {
-    setExpanded(!expanded);
+    if (!expanded) setExpanded(true);
+    else if (expanded && !zoomed) {
+      setZoomed(true);
+      setZoomScale(2.5);
+    }
+    else {
+      setZoomed(false);
+      setZoomScale(1);
+    }
   };
 
-  console.log(details);
+  console.log('***', selectedStyle?.photos);
 
   const handlePrevious = (selectedImageIndex) => {
     if (selectedImageIndex > 0) setSelectedImageIndex(selectedImageIndex - 1);
@@ -29,6 +38,8 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   const handleNext = (selectedImageIndex) => {
     if (selectedImageIndex < selectedStyle?.photos.length - 1) setSelectedImageIndex(selectedImageIndex + 1);
   };
+
+  // console.log(details)
 
 
   return (
@@ -66,6 +77,17 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
             onClick={() => handleNext(selectedImageIndex)}>
             <span><i className="fa-solid fa-arrow-right"></i></span></button>
         )}
+        {expanded && !zoomed && (
+          <div className="image-indicator-div">
+            {selectedStyle?.photos.map((element, index) => (
+              <div
+                key={index}
+                className={`image-indicator ${selectedImageIndex === index ? 'active' : ''}`}
+                onClick={() => setSelectedImageIndex(index)}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <div className='product-slogan-details'>
         <strong>
@@ -76,6 +98,9 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
         <p>
           {details?.description}
         </p>
+        {/* <div>
+          {details?.features[0]}
+        </div> */}
       </div>
     </div >
   )

@@ -249,10 +249,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* transition: all 0.2s ease; */
 }
 
-/* Remove the specific left/right positioning for non-expanded view */
 .previous-button {
   left: 80px;
 }
@@ -270,7 +268,6 @@
   position: relative;
   margin-left: 40px;
   padding: 20px 40px 20px 0;
-  /* Right padding for line space */
 }
 
 .product-slogan-details::after {
@@ -283,9 +280,7 @@
   background-color: #414141;
   display: block;
 }
-/* NEW */
 
-/* Add these new styles */
 .image-gallery.expanded .thumbnail-images {
   display: none;
 }
@@ -317,7 +312,6 @@
   display: none;
 }
 
-/* Update existing expanded styles */
 .image-gallery.expanded .main-image {
   height: 100vh;
   margin-top: 0;
@@ -334,4 +328,37 @@
 
 .image-gallery.expanded .next-button {
   right: 40px;
+}
+
+.image-indicator-div{
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 1001;
+}
+
+.image-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image-indicator.active {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.2);
+}
+
+.main-image.expanded img.zoomed {
+  transform: scale(2.5);
+  cursor: move;
+}
+
+.main-image.expanded.zoomed .image-indicator-div {
+  display: none;
 }
