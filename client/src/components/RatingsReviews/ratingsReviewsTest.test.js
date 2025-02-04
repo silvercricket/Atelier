@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
@@ -9,6 +9,8 @@ import MockAdapter from 'axios-mock-adapter';
 import RatingBreakdown from './ratingBreakdown.jsx';
 import ReviewList from './reviewList.jsx';
 import CharacteristicsTable from './CharacteristicsTable.jsx';
+import { fetchReviews } from '../../store/ratingsReviews/reviewsSlice.js';
+import axios from 'axios';
 
 const mockReviews = {
   reviews: [
@@ -77,7 +79,34 @@ const mockReviews = {
         "helpfulness": 0,
         "photos": []
     }
-  ]
+  ],
+  renderedReviews: [
+    {
+      "review_id": 1280449,
+      "rating": 5,
+      "summary": "I love it",
+      "recommend": false,
+      "response": null,
+      "body": "Nothing beats it!",
+      "date": "2023-08-22T00:00:00.000Z",
+      "reviewer_name": "John",
+      "helpfulness": 3,
+      "photos": []
+  },
+  {
+      "review_id": 1280776,
+      "rating": 1,
+      "summary": "HORRRIBLE",
+      "recommend": false,
+      "response": null,
+      "body": "dont waste your time or money...",
+      "date": "2023-11-30T00:00:00.000Z",
+      "reviewer_name": "CC",
+      "helpfulness": 1,
+      "photos": []
+  }
+  ],
+  filteredReviews: []
 };
 
 const mockChars = {
@@ -105,7 +134,7 @@ const mockChars = {
 
 const initialState = {
   reviews: mockReviews,
-  productBreakdown: mockChars
+  productBreakdown: mockChars,
 }
 
 const mockStore = configureStore({
