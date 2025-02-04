@@ -32,7 +32,7 @@ const ReviewList = () => {
   // will make this its own component eventually
   let reviewCards = renderedReviews.map((review) => {
     return (
-      <ReviewTile key={review.review_id} review={review}/>
+      <ReviewTile key={review.review_id} review={review} data-testid="review-tile"/>
     );
   })
 
@@ -66,9 +66,9 @@ const ReviewList = () => {
       <div id="review-container">
         {reviewCards}
       </div>
-      {filteredReviews.length && reviewCards.length < filteredReviews.length  ? <button onClick={handleMoreReviews}>MORE REVIEWS</button> : !filteredReviews.length && reviewCards.length < reviews.length  ? <button onClick={handleMoreReviews}>MORE REVIEWS</button> : null}
+      {filteredReviews.length && reviewCards.length < filteredReviews.length  ? <button className="rr-button" onClick={handleMoreReviews}>MORE REVIEWS</button> : !filteredReviews.length && reviewCards.length < reviews.length  ? <button className="rr-button" onClick={handleMoreReviews}>MORE REVIEWS</button> : null}
 
-      <button onClick={() => dispatch(isFormOpen())}>ADD A REVIEW +</button>
+      <button className="rr-button" onClick={() => dispatch(isFormOpen())}>ADD A REVIEW +</button>
     </div>
   );
 }
