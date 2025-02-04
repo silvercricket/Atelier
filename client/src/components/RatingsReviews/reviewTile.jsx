@@ -49,7 +49,7 @@ const ReviewTile = ({review}) => {
   let photos = [];
   if (review.photos.length) {
     photos = review.photos.map((photo) => {
-      return <img key={photo.id} src={photo.url.replace(/v\d+/, 'c_fill,w_90,h_60')} onClick={() => handleClick(photo.url)}/>
+      return <img className="review-thumbnail" key={photo.id} src={photo.url.replace(/v\d+/, 'c_fill,w_90,h_60')} onClick={() => handleClick(photo.url)}/>
     })
   }
 

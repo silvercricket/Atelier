@@ -133,6 +133,12 @@ button {
 
 
 /* RATINGS AND REVIEWS */
+.ratings-reviews {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .rrHeader {
   margin-bottom: 25px;
 }
@@ -149,15 +155,13 @@ button {
 }
 
 .reviewList {
-  flex-basis: 600px;
   float: right;
   margin-left: 50px;
-  margin-right: 200px;
   flex-grow: 8;
 }
 
 #review-container {
-  height: 600px;
+  max-height: 1000px;
   overflow-y: auto;
 }
 
@@ -210,6 +214,12 @@ progress.ratingCounter::-moz-progress-bar {
   float: right;
   margin-top: 0px;
   padding-right: 15px;
+}
+
+.review-thumbnail {
+  cursor: pointer;
+  width: 90px;
+  height: 60px;
 }
 
 .starBars {

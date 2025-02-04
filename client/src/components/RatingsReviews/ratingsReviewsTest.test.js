@@ -8,6 +8,7 @@ import { thunk } from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import RatingBreakdown from './ratingBreakdown.jsx';
 import ReviewList from './reviewList.jsx';
+import CharacteristicsTable from './CharacteristicsTable.jsx';
 
 const mockReviews = {
   reviews: [
@@ -77,10 +78,34 @@ const mockReviews = {
         "photos": []
     }
   ]
+};
+
+const mockChars = {
+    characteristics: {
+          "Fit": {
+              "id": 135228,
+              "value": "2.6790123456790123"
+          },
+          "Length": {
+              "id": 135229,
+              "value": "3.3086419753086420"
+          },
+          "Comfort": {
+              "id": 135230,
+              "value": "3.5617977528089888"
+          },
+          "Quality": {
+              "id": 135231,
+              "value": "3.7586206896551724"
+          }
+      }
 }
 
+
+
 const initialState = {
-  reviews: mockReviews
+  reviews: mockReviews,
+  productBreakdown: mockChars
 }
 
 const mockStore = configureStore({
@@ -117,3 +142,34 @@ describe('ProductOverview', () => {
     expect(screen.getByText('60% of reviews reccomend this product')).toBeInTheDocument();
   })
 });
+
+describe('Characteristic Table', () => {
+  let store;
+  let user;
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+    user = userEvent.setup();
+  })
+
+  test('renders correct characteristics in table', async () => {
+    render(
+      <Provider store={store}>
+        <CharacteristicsTable />
+      </Provider>
+    );
+
+    const table = screen.getByRole('table');
+    expect(table).toBeInTheDocument();
+
+    const fitRow = screen.getByRole('row', { name : /Fit/i });
+    const lengthRow = screen.getByRole('row', { name : /Length/i });
+    const comfortRow = screen.getByRole('row', { name : /Comfort/i });
+    const qualityRow = screen.getByRole('row', { name : /Quality/i });
+
+    expect(fitRow).toBeInTheDocument();
+    expect(lengthRow).toBeInTheDocument();
+    expect(comfortRow).toBeInTheDocument();
+    expect(qualityRow).toBeInTheDocument();
+  })
+})
