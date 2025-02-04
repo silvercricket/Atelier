@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ComparisonCard from './ComparisonCard.jsx';
-import { showPreviousCard, showNextCard, addToOutfit, getRelatedItemURLs } from '../../store/relatedItemsSlice.js';
+import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs } from '../../store/relatedItemsSlice.js';
 import { getProducts, getProductDetails, getProductStyles, setCurrentProduct } from '../../store/productsSlice.js';
 
 const RelatedItemCard = ( {item} ) => {
@@ -11,30 +11,44 @@ const RelatedItemCard = ( {item} ) => {
   const [comparisonCard, setComparisonCard] = useState(false);
   const [URL, setURL] = useState('');
 
-  const handleDetailClick = (event) => {
+  const comparisonFeatures = useSelector((state) => {
+    return state.relatedItems.comparisonFeatures
+  })
+
+  const getComparisonInfo = (currentId, comparisonId) => {
+    var comparisonInfo = [];
+
+  }
+
+  const handleDetailClick = () => {
     setComparisonCard(!comparisonCard);
 
-    //instead of showing comparison card, will update state for product overview to be id for that specific item
   }
+
+  const currentProduct = useSelector((state) => {
+    return state.products.currentProduct
+  })
 
   const currentIndex = useSelector((state) => {
     return state.relatedItems.currentCardIndex
   })
 
+  const outfit = useSelector((state) => {
+    return state.relatedItems.outfit
+  })
+
   const carouselStyle = {
-    transform: `translateX(-${currentIndex * 60}%)`
+    transform: `translateX(-${currentIndex * 100}%)`
   }
 
   const handleAddToOutfit = (event) => {
-    var outfit = {
-      category: item.category,
-      name: event.target.value,
-      price: item.default_price
+    if (!outfit.includes(item)) {
+      dispatch(addToOutfit(item))
     }
-    dispatch(addToOutfit(outfit))
   }
 
   const handleCardClick = () => {
+    console.log(item.id)
     dispatch(setCurrentProduct(item.id))
 
     const fetchData = async () => {
@@ -54,23 +68,23 @@ const RelatedItemCard = ( {item} ) => {
    useEffect(() => {
     dispatch(getRelatedItemURLs(item.id))
       .then((results) => {
-        // console.log(results)
         setURL(results.payload)
       })
     }, [])
 
   return (
     <div className = "relatedItemCard" style = {carouselStyle}>
-      <img className = "relatedItemImage" onClick = {handleCardClick} src = {URL}></img>
+      <img className = "relatedItemImage" onClick = {handleCardClick} src = {URL} ></img>
       <span className = "actionButton" onClick = {handleDetailClick}><i className="fa-regular fa-star"></i></span>
       <div onClick = {handleCardClick}>
         <p>{item.category}</p>
-        <div>{item.name}</div>
+        <h3>{item.name}</h3>
+        <div>&nbsp;</div>
         <div>{item.default_price}</div>
         <div>Rating</div>
       </div>
       <button value = {item.name} onClick = {handleAddToOutfit}>Add To Outfit</button>
-      {comparisonCard ? <ComparisonCard item = {item.name} price = {item.default_price}/> : null}
+      {comparisonCard ? <ComparisonCard item = {item}/> : null}
     </div>
   )
 }

@@ -4,6 +4,8 @@
   max-width: 1200px;
   margin: 0 auto;
   gap: 40px;
+  height: auto;
+  /* max-height: 4200px; */
 }
 
 .left-column {
@@ -18,14 +20,18 @@
 }
 
 .reviews-link {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+  text-decoration: underline;
+  color: #000000;
+  cursor: pointer;
 }
 
-.reviews-link a {
-  text-decoration: underline;
-  color: #666;
+.reviews-product-details {
+  display: flex;
+  flex-direction: row;
+}
+
+.rating {
+  padding-right: 10PX;
 }
 
 .category {
@@ -41,6 +47,18 @@
 
 .price {
   font-size: 20px;
+}
+
+.social-media-icons {
+  font-size: 20px;
+  padding-top: 20px;
+}
+
+.fa-facebook,
+.fa-twitter,
+.fa-pinterest {
+  padding-right: 10px;
+  cursor: pointer;
 }
 
 .style-selector {
@@ -66,6 +84,22 @@
   padding: 15px;
   border: 1px solid #222;
   background: white;
+  cursor: pointer;
+}
+
+.size-selector {
+  padding-right: 30px;
+}
+
+.quantity-selector {
+  margin-right: 40px;
+}
+
+.selectors {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .button-row {
@@ -75,12 +109,21 @@
 
 .add-to-bag {
   flex-grow: 1;
-  padding: 15px;
-  border: 1px solid #222;
   background: white;
   display: flex;
   justify-content: normal;
   align-items: center;
+  padding-right: 40px;
+  justify-content: space-between;
+}
+
+.favorite-button {
+  padding: 20px;
+}
+
+.plus-icon {
+  padding-left: 90px;
+  font-weight: bolder;
 }
 
 .favorite {
@@ -115,35 +158,42 @@
   top: 5px;
   right: 5px;
   background: white;
-  border-radius: 70%;
+  border-radius: 50%;
   padding: 2px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .image-gallery {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/3;
+  height: auto;
+  /* min-height: 500px; */
+  /* aspect-ratio: 4/3; */
   overflow: hidden;
 }
 
-/* .image-gallery.expanded { */
-  /* width: 100%; */
-  /* aspect-ratio: 4/3; */
-  /* overflow: hidden; */
-  /* position: fixed; */
-  /* top: 0; */
-  /* left: 0; */
-  /* width: 100vw; */
-  /* height: 100vh; */
-  /* z-index: 1000; */
-/* } */
+.image-gallery.expanded {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
 
 .thumbnail-images {
   position: absolute;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: calc(100% - 70px);
+  height: 450px;
   overflow-y: scroll;
   padding: 18px 0 18px 12px;
   width: 80px;
@@ -151,8 +201,8 @@
   scrollbar-width: none;
   mask-image: linear-gradient(to bottom,
       transparent 0%,
-      black 20%,
-      black 90%,
+      black 15%,
+      black 85%,
       transparent 100%);
 }
 
@@ -181,6 +231,9 @@
 .main-image {
   width: 100%;
   height: 500px;
+  margin-bottom: 20px;
+  /* height: 500px; */
+  /* margin-left: 80px; */
 }
 
 .main-image img {
@@ -188,7 +241,6 @@
   height: 100%;
   object-fit: contain;
   cursor: zoom-in;
-  transition: all 0.3s ease;
 }
 
 .main-image.expanded {
@@ -203,13 +255,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: zoom-out;
 }
 
 .main-image.expanded img {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
+  /* max-width: 90%; */
+  /* max-height: 90%; */
+  /* object-fit: contain; */
   cursor: zoom-out;
+  /* width: 100%; */
+  /* height: 100%; */
+  /* object-fit: contain; */
+  /* cursor: zoom-in; */
+  padding: 15px 0 15px 0;
+  /* background: black; */
 }
 
 .main-image button {
@@ -219,9 +278,9 @@
 .previous-button,
 .next-button {
   position: absolute;
-  top: 50%;
+  top: 40%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.7);
   border: none;
   padding: 8px;
   cursor: pointer;
@@ -230,7 +289,7 @@
   height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
 }
 
 .previous-button {
@@ -244,4 +303,104 @@
 .previous-button:hover,
 .next-button:hover {
   background: rgba(255, 255, 255, 0.9);
+  color: black;
+}
+
+.product-slogan-details {
+  position: relative;
+  margin-left: 40px;
+  padding: 20px 40px 20px 0;
+}
+
+.product-slogan-details::after {
+  content: '';
+  position: absolute;
+  right: 20px;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: #414141;
+  display: block;
+}
+
+.image-gallery.expanded .thumbnail-images {
+  display: none;
+}
+
+.image-gallery.expanded .image-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 1001;
+}
+
+.image-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.image-indicator.selected {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.2);
+}
+
+.image-gallery.expanded .product-slogan-details {
+  display: none;
+}
+
+.image-gallery.expanded .main-image {
+  height: 100vh;
+  margin-top: 0;
+}
+
+.image-gallery.expanded .previous-button,
+.image-gallery.expanded .next-button {
+  top: 50%;
+}
+
+.image-gallery.expanded .previous-button {
+  left: 20px;
+}
+
+.image-gallery.expanded .next-button {
+  right: 40px;
+}
+
+.image-indicator-div {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 1001;
+}
+
+.image-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image-indicator.active {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.2);
+}
+
+.main-image.expanded img.zoomed {
+  transform: scale(2.5);
+  cursor: move;
+}
+
+.main-image.expanded.zoomed .image-indicator-div {
+  display: none;
 }

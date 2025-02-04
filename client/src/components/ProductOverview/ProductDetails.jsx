@@ -8,33 +8,76 @@ const ProductDetails = () => {
   const details = useSelector(state => state.products.productDetails?.[id]);
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
   const status = useSelector(state => state.products.status);
+  const reviews = useSelector(state => state?.reviews.reviews) || [];
+
 
   // if (!details || !styles) return <div>Loading product details...</div>;
 
-  const price = details?.sale_price ?
-    (<>
+
+  const price = details?.sale_price ? (
+    <>
       <s>${details?.default_price}</s>
       <span>${details?.sale_price}</span>
-    </>)
-    : (<span>${details?.default_price}</span>)
+    </>
+  ) : (
+    <span>${details?.default_price}</span>
+  );
 
+  const avgRating = () => {
+    let sum = 0;
+    for (let review of reviews) {
+      sum += review.rating;
+    }
+    let avg = sum / reviews.length;
+    return Math.round(avg * 2) / 2;
+  };
+
+  const avgStar = avgRating();
+
+  const stars = {
+    empty: <i className="fa-regular fa-star"></i>,
+    half: <i className="fa-regular fa-star-half-stroke"></i>,
+    full: <i className="fa-solid fa-star"></i>
+  }
+
+  const handleReviewsScroll = () => {
+    document.querySelector('.ratingsReviews')?.scrollIntoView({
+      behavior: 'smooth'
+    });
+  };
 
   return (
     <div className='product-details'>
-      <div className='reviews-product-details'>
-        <span>Read All Reviews</span>
-      </div>
+      {reviews.length && (
+        <div className='reviews-product-details'>
+          <div className="rating">
+            {avgStar >= 1 ? stars.full : avgStar >= 0.5 ? stars.half : stars.empty}
+            {avgStar >= 2 ? stars.full : avgStar >= 1.5 ? stars.half : stars.empty}
+            {avgStar >= 3 ? stars.full : avgStar >= 2.5 ? stars.half : stars.empty}
+            {avgStar >= 4 ? stars.full : avgStar >= 3.5 ? stars.half : stars.empty}
+            {avgStar >= 5 ? stars.full : avgStar >= 4.5 ? stars.half : stars.empty}
+          </div>
+          <a onClick={handleReviewsScroll} className='reviews-link'>Read all {reviews.length} reviews</a>
+        </div>
+      )}
       {details ? (
         <div>
-          <p>{details?.category}</p>
-          <h1>{details?.name}</h1>
-          <p>{price}</p>
-          {/* // TO DO: ADD SOCIAL MEDIA ICONS */}
+          <div>
+            <p>{details?.category}</p>
+            <h1>{details?.name}</h1>
+            <p>{price}</p>
+          </div>
+          <div className='social-media-icons'>
+            <i className="fa-brands fa-facebook"></i>
+            <i className="fa-brands fa-twitter"></i>
+            <i className="fa-brands fa-pinterest"></i>
+          </div>
         </div>
       ) : (
         <p>Loading product details...</p>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 
