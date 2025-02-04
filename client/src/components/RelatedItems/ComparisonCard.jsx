@@ -1,52 +1,114 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-const ComparisonCard = ({ item, price }) => {
+const ComparisonCard = ({ item }) => {
 
-  const testInitialItem = {
-    "id": 40344,
-    "campus": "hr-rfp",
-    "name": "Camo Onesie",
-    "slogan": "Blend in to your crowd",
-    "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
-    "category": "Jackets",
-    "default_price": "140.00",
-    "created_at": "2021-08-13T14:38:44.509Z",
-    "updated_at": "2021-08-13T14:38:44.509Z"
-  };
+  var currentItemFeatures;
+  var comparisonItemFeatures;
 
-  const itemCard = useSelector((state) => {
-    return state.relatedItems.relatedItems[state.relatedItems.currentCardIndex]
+  const [featureData, setFeatureData]  = useState([]);
+
+  const currentItem = useSelector((state) => {
+    return state.relatedItems.currentProductDetails
   })
 
-  const detailView = useSelector((state) => {
-    return state.relatedItems.detailView;
+  const comparisonFeatures = useSelector((state) => {
+    return state.relatedItems.comparisonFeatures
   })
+
+  const handleClick = () => {
+    // var comparisonItem = item;
+    // var relevantItems = [];
+    // comparisonItemFeatures = (comparisonFeatures.find((item) => item.currentObjectId === comparisonItem.id)).currentObject
+    // currentItemFeatures = (comparisonFeatures.find((item) => item.currentObjectId === currentItem.id)).currentObject
+    // relevantItems.push(comparisonItemFeatures, currentItemFeatures)
+    // var features = new Set();
+    // relevantItems.forEach((item) => {
+    //   for(var i = 0; i < item.length; i++) {
+    //     features.add(item[i].feature)
+    //   }
+    // })
+    // var featuresObject = {};
+    // // console.log(features)
+    // // console.log(currentItemFeatures, comparisonItemFeatures)
+    // for (var value of features) {
+    //   for(var j = 0; j < currentItemFeatures.length; j++) {
+    //     if (currentItemFeatures[j].feature === value) {
+    //       featuresObject[value] = {value1: currentItemFeatures[j].value}
+    //     }
+    //   }
+    //   for(var k = 0; k < comparisonItemFeatures.length; k++) {
+    //     if (comparisonItemFeatures[k].feature === value) {
+    //       var value2 = {value2: comparisonItemFeatures[k].value}
+    //       featuresObject[value] = {...featuresObject[value], ...value2}
+    //     }
+    //   }
+    // }
+    // console.log(featuresObject)
+
+  }
+
+  const TableRow = ({value1, feature, value2}) => {
+
+    return (
+      <tr>
+        <td>{value1 === undefined ? null : value1}</td>
+        <td>{feature}</td>
+        <td>{value2 === undefined ? null : value2}</td>
+      </tr>
+    )
+  }
+
+  useEffect(() => {
+    var comparisonItem = item;
+    var relevantItems = [];
+    comparisonItemFeatures = (comparisonFeatures.find((item) => item.currentObjectId === comparisonItem.id)).currentObject
+    currentItemFeatures = (comparisonFeatures.find((item) => item.currentObjectId === currentItem.id)).currentObject
+    relevantItems.push(comparisonItemFeatures, currentItemFeatures)
+    var features = new Set();
+    relevantItems.forEach((item) => {
+      for(var i = 0; i < item.length; i++) {
+        features.add(item[i].feature)
+      }
+    })
+    var featuresArray = [];
+    var featuresObject = {};
+    // console.log(features)
+    // console.log(currentItemFeatures, comparisonItemFeatures)
+    for (var value of features) {
+      for(var j = 0; j < currentItemFeatures.length; j++) {
+        if (currentItemFeatures[j].feature === value) {
+          featuresObject[value] = {feature: value, value1: currentItemFeatures[j].value}
+        }
+      }
+      for(var k = 0; k < comparisonItemFeatures.length; k++) {
+        if (comparisonItemFeatures[k].feature === value) {
+          var value2 = {value2: comparisonItemFeatures[k].value}
+          var feature = {feature: value}
+          featuresObject[value] = {...feature, ...featuresObject[value], ...value2}
+        }
+      }
+    }
+    for (var key in featuresObject) {
+      featuresArray.push(featuresObject[key])
+    }
+    setFeatureData(featuresArray);
+    console.log(featuresArray)
+  }, [])
 
   return (
-    <div className = "comparisonCard">
+    <div className = "comparisonCard" onClick = {handleClick}>
       <small>Comparing</small>
       <table className = "comparisonTable">
         <tbody>
         <tr>
-          <th>{testInitialItem.name}</th>
+          <th>{currentItem.name}</th>
           <th>&nbsp;</th>
-          <th>{item}</th>
+          <th>{item.name}</th>
         </tr>
-        <tr>
-          <td>{testInitialItem.default_price}</td>
-          <td>Feature</td>
-          <td>{price}</td>
-        </tr>
+        {featureData.map((feature) => <TableRow value1 = {feature.value1} feature = {feature.feature} value2 = {feature.value2} />) }
         </tbody>
       </table>
-      {/* <h3>Current Item:</h3>
-      <p>{testInitialItem.name}</p>
-      <p>{testInitialItem.default_price}</p>
-      <p></p>
-      <h3>Related Item:</h3>
-      <p>{item}</p>
-      <p>{price}</p> */}
     </div>
   )
 }

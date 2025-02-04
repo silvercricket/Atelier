@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RelatedItemCard from './RelatedItemCard.jsx'
-import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs, clearRelatedItems } from '../../store/relatedItemsSlice.js';
+import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs, clearRelatedItems, clearIndex, getCurrentProductDetails } from '../../store/relatedItemsSlice.js';
 import { getProducts, getProductDetails, getProductStyles } from '../../store/productsSlice.js';
 import Outfit from './Outfit.jsx'
 import axios from 'axios';
@@ -15,7 +15,7 @@ const RelatedItems = () => {
   })
 
   const currentProductDetails =  useSelector((state) => {
-
+    return state.relatedItems.currentProductDetails
   })
 
   const currentIndex = useSelector((state) => {
@@ -50,7 +50,9 @@ const RelatedItems = () => {
     useEffect(() => {
       if (currentProduct) {
         dispatch(clearRelatedItems())
+        dispatch(clearIndex())
         dispatch(getRelatedItems())
+        dispatch(getCurrentProductDetails(currentProduct))
 
         relatedItemIds.forEach((productId) => {
           dispatch(getRelatedItemDetails(productId))
@@ -68,7 +70,7 @@ const RelatedItems = () => {
         {currentIndex === relatedItems.length - 1 ? null : <button className = "rightButton button" onClick = {() => dispatch(showNextCard())}>ᐳ</button>}
       </div>
       <h2>Your Outfit</h2>
-      <Outfit />
+      <Outfit currentProductDetails = {currentProductDetails}/>
     </div>
   )
 }
