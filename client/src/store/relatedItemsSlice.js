@@ -6,13 +6,14 @@ const initialState = {
   relatedItems: [],
   relatedItemIds: [],
   currentCardIndex: 0,
-  status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+  status: 'idle',
   outfit: [],
   error: null,
   relatedItemDetails: [],
   relatedItemURLs: [],
   currentOutfitCardIndex: 0,
-  currentProductDetails: {}
+  currentProductDetails: {},
+  comparisonFeatures: []
 
 }
 
@@ -38,7 +39,6 @@ export const getRelatedItemDetails = createAsyncThunk('products/related/details'
 export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async (productId, thunkAPI) => {
   try {
     const response = await axios.get(`/api/products/${productId}/styles`);
-    // console.log(response.data.results[0].photos[0].url)
     if (response.data.results[0].photos[0].url === null) {
       return 'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
     } else {
@@ -49,7 +49,7 @@ export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async
   }
 })
 
-export const getCurrentProductDetails = createAsyncThunk('products/related', async (_, thunkAPI) => {
+export const getCurrentProductDetails = createAsyncThunk('products/current', async (_, thunkAPI) => {
   try {
     const productId = thunkAPI.getState().products.currentProduct;
     const response = await axios.get(`/api/products/${productId}`)
@@ -58,19 +58,13 @@ export const getCurrentProductDetails = createAsyncThunk('products/related', asy
     return rejectWithValue(err.message);
   }
 })
-// export const fetchAPIData = createAsyncThunk('api/products', async () => {
-//   const response = await axios.get('/api/products')
-//   console.log(response)
-//   // return response.todos
-// })
 
 export const relatedItemsSlice = createSlice({
   name: 'relatedItem',
   initialState,
   reducers: {
     showNextCard: (state) => {
-      if (state.currentCardIndex !== state.outfit.length - 1) {
-        // state.currentOutfitCardIndex += 1;
+      if (state.currentCardIndex !== state.relatedItems.length - 1) {
         return {
           ...state,
           currentCardIndex: state.currentCardIndex + 1
@@ -90,30 +84,26 @@ export const relatedItemsSlice = createSlice({
       }
     },
     removeFromOutfit: (state, action) => {
-
+      var index = action.payload;
+      state.outfit.splice(index, 1)
     },
     showNextOutfitCard: (state, action) => {
       if (state.currentOutfitCardIndex !== state.outfit.length - 1) {
-        console.log(state.currentOutfitCardIndex)
         state.currentOutfitCardIndex += 1;
-        // return {
-        //   ...state,
-        //   currentOutfitCardIndex: state.currentOutfitCardIndex + 1
-        // }
-        // state.currentCardIndex = ((prevIndex) => (prevIndex + 1) % state.relatedItems.length)
       }
     },
     showPreviousOutfitCard: (state, action) => {
       if (state.currentOutfitCardIndex !== 0) {
-        console.log(state.currentOutfitCardIndex)
 
         state.currentOutfitCardIndex -= 1;
-        // state.currentCardIndex = ((prevIndex) => (prevIndex - 1 + state.relatedItems.length) % state.relatedItems.length);
 
       }
     },
     clearRelatedItems: (state, action) => {
       state.relatedItems = [];
+    },
+    clearIndex: (state, action) => {
+      state.currentCardIndex = 0;
     }
   },
   extraReducers: (builder) => {
@@ -135,10 +125,15 @@ export const relatedItemsSlice = createSlice({
       })
       .addCase(getRelatedItemDetails.fulfilled, (state, action) => {
         state.status = 'fulfilled'
+        var comparisonFeatures = action.payload.features
+        var comparisonObject = {
+          currentObject: comparisonFeatures,
+          currentObjectId: action.payload.id
+        }
+        state.comparisonFeatures = [...state.comparisonFeatures, comparisonObject]
         state.relatedItemDetails = [...state.relatedItemDetails, action.payload];
         state.relatedItems = [...state.relatedItems, action.payload];
-        // state.relatedItemDetails.push(action.payload);
-        // state.relatedItems.push(action.payload);
+
       })
       .addCase(getRelatedItemDetails.rejected, (state, action) => {
         state.status = 'failed';
@@ -155,9 +150,26 @@ export const relatedItemsSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
+      .addCase(getCurrentProductDetails.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(getCurrentProductDetails.fulfilled, (state, action) => {
+        state.status = 'fulfilled'
+        var comparisonFeatures = action.payload.features
+        var comparisonObject = {
+          currentObject: comparisonFeatures,
+          currentObjectId: action.payload.id
+        }
+        state.comparisonFeatures = [...state.comparisonFeatures, comparisonObject];
+        state.currentProductDetails = action.payload;
+      })
+      .addCase(getCurrentProductDetails.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
   }
 })
 
-export const { showNextCard, showPreviousCard, addToOutfit, clearRelatedItems, showPreviousOutfitCard, showNextOutfitCard, removeFromOutfit } = relatedItemsSlice.actions;
+export const { showNextCard, showPreviousCard, addToOutfit, clearRelatedItems, showPreviousOutfitCard, showNextOutfitCard, removeFromOutfit, clearIndex } = relatedItemsSlice.actions;
 
 export default relatedItemsSlice.reducer;

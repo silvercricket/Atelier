@@ -10,7 +10,9 @@ const OutfitItemCard = ({item}) => {
   const outfit = useSelector((state) => state.relatedItems.outfit)
 
   const handleOutfitAction = () => {
-
+    var comparisonItem = item;
+    var index = outfit.indexOf(comparisonItem)
+    dispatch(removeFromOutfit(index))
   }
 
   const [URL, setURL] = useState('')
@@ -26,7 +28,6 @@ const OutfitItemCard = ({item}) => {
   useEffect (() => {
     dispatch(getRelatedItemURLs(item.id))
     .then((results) => {
-      console.log(results.payload)
       setURL(results.payload)
     })
 
@@ -37,8 +38,9 @@ const OutfitItemCard = ({item}) => {
       <img className = "relatedItemImage" src = {URL}></img>
       <span className = "actionButtonOutfit" onClick = {handleOutfitAction}><i class="fa-solid fa-x"></i></span>
       <div>{item.category}</div>
-      <div>{item.name}</div>
-      <div>{item.price}</div>
+      <h3>{item.name}</h3>
+      <div>&nbsp;</div>
+      <div>{item.default_price}</div>
     </span>
   )
 }

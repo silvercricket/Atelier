@@ -7,12 +7,14 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const id = useSelector(state => state.products.currentProduct) || 40347;
+  const details = useSelector(state => state.products.productDetails?.[id]);
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
 
 
   // const handleGetCart = () => {
   //   dispatch(getCart());
   // };
+
 
   const skus = selectedStyle?.skus ?
     Object.entries(selectedStyle.skus).map(([skuId, data]) => ({
@@ -25,7 +27,6 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   const selectedSku = skus.find(sku => sku.size === selectedSize);
   const maxQuantity = selectedSku ? Math.min(selectedSku.quantity, 15) : 0;
 
-  console.log(selectedSku)
   const quantityOptions = [];
   for (let i = 1; i <= maxQuantity; i++) {
     quantityOptions.push(i);
@@ -35,14 +36,15 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
     if (selectedSku?.id) dispatch(postCart({ sku_id: selectedSku?.id }));
     setSelectedSize('');
     setQuantity(1);
-    window.alert(`Item: ${selectedSku?.id}, Size: ${selectedSku?.size}, Quantity: ${selectedSku?.quantity} added to cart`)
+    if (!selectedSku) window.alert('Pick a size and quantity to continue')
+    else window.alert(`Item: ${selectedSku?.id}, Size: ${selectedSku?.size}, Quantity: ${selectedSku?.quantity} added to cart`)
   };
 
   return (
     <div className="cart-container">
       <div className="selectors">
         <select
-          className="size-selection"
+          className="size-selector"
           value={selectedSize}
           disabled={!skus.length}
           onChange={(e) => {
@@ -58,7 +60,7 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
           ))}
         </select>
         <select
-          className="quantity-selection"
+          className="quantity-selector"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           disabled={!selectedSize || !skus.length}
@@ -81,10 +83,21 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
           onClick={handleClick}
         >
           ADD TO BAG
-          <span>+</span>
+          <span className='plus-icon'>+</span>
         </button>
         <button className="favorite-button">★</button>
       </div>
+      {details?.features && (
+        <div className="features-list">
+          {details.features.map((element, index) => (
+            <div key={index} className="feature-item">
+              <i className="checkmark-features fa-solid fa-check"></i>
+              <span className="feature-name">{element.feature}</span>:
+              <span className="feature-value"> {element.value}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

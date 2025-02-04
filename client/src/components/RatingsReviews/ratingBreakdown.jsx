@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { filterReviews, resetFilter, resetRendered } from '../../store/ratingsReviews/reviewsSlice.js';
 
-const RatingBreakdown = () => {
+const RatingBreakdown = ({ reviewsRef }) => {
   const dispatch = useDispatch();
 
-  const [ isFiltered, setIsFiltered ] = useState(false);
-  const [ filter5, setFilter5 ] = useState(false);
-  const [ filter4, setFilter4 ] = useState(false);
-  const [ filter3, setFilter3 ] = useState(false);
-  const [ filter2, setFilter2 ] = useState(false);
-  const [ filter1, setFilter1 ] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [filter5, setFilter5] = useState(false);
+  const [filter4, setFilter4] = useState(false);
+  const [filter3, setFilter3] = useState(false);
+  const [filter2, setFilter2] = useState(false);
+  const [filter1, setFilter1] = useState(false);
 
   const reviews = useSelector((state) => {
     return state.reviews.reviews || [];
@@ -105,7 +105,7 @@ const RatingBreakdown = () => {
     setFilter3(false);
     setFilter2(false);
     setFilter1(false);
-    dispatch(resetFilter());
+    dispatch(resetFilter(reviews.slice(0, 2)));
   }
 
   const checkFilters = (stars) => {
@@ -158,7 +158,7 @@ const RatingBreakdown = () => {
   if (!reviews.length) {
     return (
       <div className="ratingBreakdown">
-      <h1>No Ratings</h1>
+        <h1>No Ratings</h1>
         <div className="rating">
           {stars.empty}
           {stars.empty}
@@ -174,7 +174,7 @@ const RatingBreakdown = () => {
           <span>2 stars</span><progress className="ratingCounter" value="0" max="100"></progress>
           <span>1 stars</span><progress className="ratingCounter" value="0" max="100"></progress>
         </div>
-    </div>
+      </div>
     );
   }
 
@@ -185,33 +185,33 @@ const RatingBreakdown = () => {
     <div className="ratingBreakdown">
       <h1>{avgStar}</h1>
       <div>
-        { isFiltered ? <span id="resetReviews" onClick={handleReset}>Reset Review List</span> : null}
+        {isFiltered ? <span id="resetReviews" onClick={handleReset}>Reset Review List</span> : null}
       </div>
-        <div className="rating">
-          {avgStar >= 1 ? stars.full : avgStar >= 0.5 ? stars.half : stars.empty}
-          {avgStar >= 2 ? stars.full : avgStar >= 1.5 ? stars.half : stars.empty}
-          {avgStar >= 3 ? stars.full : avgStar >= 2.5 ? stars.half : stars.empty}
-          {avgStar >= 4 ? stars.full : avgStar >= 3.5 ? stars.half : stars.empty}
-          {avgStar >= 5 ? stars.full : avgStar >= 4.5 ? stars.half : stars.empty}
+      <div className="rating" ref={reviewsRef}>
+        {avgStar >= 1 ? stars.full : avgStar >= 0.5 ? stars.half : stars.empty}
+        {avgStar >= 2 ? stars.full : avgStar >= 1.5 ? stars.half : stars.empty}
+        {avgStar >= 3 ? stars.full : avgStar >= 2.5 ? stars.half : stars.empty}
+        {avgStar >= 4 ? stars.full : avgStar >= 3.5 ? stars.half : stars.empty}
+        {avgStar >= 5 ? stars.full : avgStar >= 4.5 ? stars.half : stars.empty}
+      </div>
+      <div className="starBars">
+        <p>{percentRec()}% of reviews reccomend this product</p>
+        <div className="ratingHover" onClick={() => handleFilter(5)}><p>5 stars</p><progress className="ratingCounter" value={fiveStar()} max="100"></progress>
+          {filter5 ? <p className="rating-filter">showing reviews with 5 star rating</p> : null}
         </div>
-        <div className="starBars">
-          <p>{percentRec()}% of reviews reccomend this product</p>
-          <div className="ratingHover" onClick={() => handleFilter(5)}><p>5 stars</p><progress className="ratingCounter" value={fiveStar()} max="100"></progress>
-            { filter5 ? <p className="rating-filter">showing reviews with 5 star rating</p> : null}
-          </div>
-          <div className="ratingHover" onClick={() => handleFilter(4)}><p>4 stars</p><progress className="ratingCounter" value={fourStar()} max="100"></progress>
-            { filter4 ? <p className="rating-filter">showing reviews with 4 star rating</p> : null}
-          </div>
-          <div className="ratingHover" onClick={() => handleFilter(3)}><p>3 stars</p><progress className="ratingCounter" value={threeStar()} max="100"></progress>
-            { filter3 ? <p className="rating-filter">showing reviews with 3 star rating</p> : null}
-          </div>
-          <div className="ratingHover" onClick={() => handleFilter(2)}><p>2 stars</p><progress className="ratingCounter" value={twoStar()} max="100"></progress>
-            { filter2 ? <p className="rating-filter">showing reviews with 2 star rating</p> : null}
-          </div>
-          <div className="ratingHover" onClick={() => handleFilter(1)}><p>1 stars</p><progress className="ratingCounter" value={oneStar()} max="100"></progress>
-            { filter1 ? <p className="rating-filter">showing reviews with 1 star rating</p> : null}
-          </div>
+        <div className="ratingHover" onClick={() => handleFilter(4)}><p>4 stars</p><progress className="ratingCounter" value={fourStar()} max="100"></progress>
+          {filter4 ? <p className="rating-filter">showing reviews with 4 star rating</p> : null}
         </div>
+        <div className="ratingHover" onClick={() => handleFilter(3)}><p>3 stars</p><progress className="ratingCounter" value={threeStar()} max="100"></progress>
+          {filter3 ? <p className="rating-filter">showing reviews with 3 star rating</p> : null}
+        </div>
+        <div className="ratingHover" onClick={() => handleFilter(2)}><p>2 stars</p><progress className="ratingCounter" value={twoStar()} max="100"></progress>
+          {filter2 ? <p className="rating-filter">showing reviews with 2 star rating</p> : null}
+        </div>
+        <div className="ratingHover" onClick={() => handleFilter(1)}><p>1 stars</p><progress className="ratingCounter" value={oneStar()} max="100"></progress>
+          {filter1 ? <p className="rating-filter">showing reviews with 1 star rating</p> : null}
+        </div>
+      </div>
     </div>
 
   );

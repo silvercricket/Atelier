@@ -1,13 +1,20 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
+import { fetchReviews } from '../../store/ratingsReviews/reviewsSlice.js';
+import axios from 'axios';
+
+// import components
 import RatingBreakdown from './ratingBreakdown.jsx';
 import ReviewList from './reviewList.jsx';
+import CharacteristicsTable from './CharacteristicsTable.jsx';
+import ReviewImageModal from './ReviewImageModal.jsx';
+import NewReviewModal from './newReviewModal.jsx';
 
 const mockReviews = {
   reviews: [
@@ -76,11 +83,64 @@ const mockReviews = {
         "helpfulness": 0,
         "photos": []
     }
-  ]
+  ],
+  renderedReviews: [
+    {
+      "review_id": 1280449,
+      "rating": 5,
+      "summary": "I love it",
+      "recommend": false,
+      "response": null,
+      "body": "Nothing beats it!",
+      "date": "2023-08-22T00:00:00.000Z",
+      "reviewer_name": "John",
+      "helpfulness": 3,
+      "photos": []
+  },
+  {
+      "review_id": 1280776,
+      "rating": 1,
+      "summary": "HORRRIBLE",
+      "recommend": false,
+      "response": null,
+      "body": "dont waste your time or money...",
+      "date": "2023-11-30T00:00:00.000Z",
+      "reviewer_name": "CC",
+      "helpfulness": 1,
+      "photos": []
+  }
+  ],
+  filteredReviews: []
+};
+
+const mockChars = {
+    characteristics: {
+          "Fit": {
+              "id": 135228,
+              "value": "2.6790123456790123"
+          },
+          "Length": {
+              "id": 135229,
+              "value": "3.3086419753086420"
+          },
+          "Comfort": {
+              "id": 135230,
+              "value": "3.5617977528089888"
+          },
+          "Quality": {
+              "id": 135231,
+              "value": "3.7586206896551724"
+          }
+      }
 }
 
+
+
 const initialState = {
-  reviews: mockReviews
+  reviews: mockReviews,
+  productBreakdown: mockChars,
+  products: { currentProduct: 40347 },
+  newReviewForm: { formOpen : true }
 }
 
 const mockStore = configureStore({
@@ -88,7 +148,7 @@ const mockStore = configureStore({
   middleware: [thunk]
 });
 
-describe('ProductOverview', () => {
+describe('Rating Breakdown', () => {
   let store;
   let user;
 
@@ -117,3 +177,78 @@ describe('ProductOverview', () => {
     expect(screen.getByText('60% of reviews reccomend this product')).toBeInTheDocument();
   })
 });
+
+describe('Characteristic Table', () => {
+  let store;
+  let user;
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+    user = userEvent.setup();
+  })
+
+  test('renders correct characteristics in table', async () => {
+    render(
+      <Provider store={store}>
+        <CharacteristicsTable />
+      </Provider>
+    );
+
+    const table = screen.getByRole('table');
+    expect(table).toBeInTheDocument();
+
+    const fitRow = screen.getByRole('row', { name : /Fit/i });
+    const lengthRow = screen.getByRole('row', { name : /Length/i });
+    const comfortRow = screen.getByRole('row', { name : /Comfort/i });
+    const qualityRow = screen.getByRole('row', { name : /Quality/i });
+
+    expect(fitRow).toBeInTheDocument();
+    expect(lengthRow).toBeInTheDocument();
+    expect(comfortRow).toBeInTheDocument();
+    expect(qualityRow).toBeInTheDocument();
+  })
+});
+
+describe('New Review Modal', () => {
+  let store;
+  let user;
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+    user = userEvent.setup();
+  })
+
+  test('renders modal when form is open', async () => {
+    render(
+      <Provider store={store}>
+        <NewReviewModal />
+      </Provider>
+    );
+
+    const modal = screen.getByRole('dialog');
+    expect(modal).toBeInTheDocument();
+  })
+});
+
+describe('Review Image Modal', () => {
+  let store;
+  let user;
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+    user = userEvent.setup();
+  })
+
+  test('renders modal for image when formOpen is true', async () => {
+    render(
+      <Provider store={store}>
+        <ReviewImageModal />
+      </Provider>
+    );
+
+    const modal = screen.getByRole('dialog');
+    expect(modal).toBeInTheDocument();
+  })
+});
+
+
