@@ -33,12 +33,14 @@ const RelatedItemCard = ( {item} ) => {
     var outfit = {
       category: item.category,
       name: event.target.value,
-      price: item.default_price
+      price: item.default_price,
+      id: item.id
     }
     dispatch(addToOutfit(outfit))
   }
 
   const handleCardClick = () => {
+    console.log(item.id)
     dispatch(setCurrentProduct(item.id))
 
     const fetchData = async () => {
@@ -51,9 +53,9 @@ const RelatedItemCard = ( {item} ) => {
       }
     };
 
-    dispatch(getRelatedItems(item.id))
-    dispatch(getRelatedItemDetails(item.id))
-    dispatch(getRelatedItemURLs(item.id))
+    // dispatch(getRelatedItems())
+    // dispatch(getRelatedItemDetails(item.id))
+    // dispatch(getRelatedItemURLs(item.id))
 
     fetchData();
 
