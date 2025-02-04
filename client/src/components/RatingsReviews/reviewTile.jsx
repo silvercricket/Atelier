@@ -17,6 +17,7 @@ const ReviewTile = ({review}) => {
   const [ imageModal, setImageModal ] = useState(false);
   const [ imageURL, setImageURL ] = useState('');
   const [ hasRated, setHasRated ] = useState(false);
+  const [ currentHelpful, setCurrentHelpful ] = useState(review.helpfulness)
 
   const handleClick = (url) => {
     setImageURL(url)
@@ -28,7 +29,8 @@ const ReviewTile = ({review}) => {
     if (isHelpful) {
       return axios.put(`/api/reviews/${review.review_id}/helpful`)
         .then(() => {
-          dispatch(fetchReviews());
+          setCurrentHelpful(currentHelpful + 1);
+          console.log('updated helpfulness');
         })
         .catch((err) => console.error(err));
     }
@@ -71,7 +73,7 @@ const ReviewTile = ({review}) => {
       {review.response ? <p className="sellerResponse">review.response</p> : null}
       <p>Was this review helpful?</p>
       { hasRated ? <p>You have already rated this review</p> : <div><button className="rr-button" onClick={() => handleRate(true)}>Yes</button><button className="rr-button" onClick={() => handleRate(false)}>No</button></div>}
-      <p>{review.helpfulness} customers found this review helpful</p>
+      <p>{currentHelpful} customers found this review helpful</p>
       <button className="rr-button" onClick={handleReport}>Report</button>
     </div>
   );
