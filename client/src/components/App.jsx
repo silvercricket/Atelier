@@ -16,6 +16,6 @@ var App = (props) => {
       <RatingsReviews />
     </div>
   );
-}
+};
 
 export default App;
