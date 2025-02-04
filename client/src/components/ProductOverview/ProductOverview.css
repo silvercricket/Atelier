@@ -5,7 +5,6 @@
   margin: 0 auto;
   gap: 40px;
   height: auto;
-  /* max-height: 4200px; */
 }
 
 .left-column {
@@ -184,7 +183,7 @@
   padding-right: 10px;
 }
 
-.features-list{
+.features-list {
   margin-top: 65px;
 }
 
@@ -220,6 +219,7 @@
   overflow-y: scroll;
   padding: 18px 0 18px 12px;
   width: 80px;
+  z-index: 2;
   -ms-overflow-style: none;
   scrollbar-width: none;
   mask-image: linear-gradient(to bottom,
@@ -227,6 +227,7 @@
       black 15%,
       black 85%,
       transparent 100%);
+
 }
 
 .thumbnail {
@@ -248,7 +249,7 @@
 }
 
 .thumbnail.selected {
-  border-bottom: 2px solid #000;
+  border: 2px solid #000;
 }
 
 .main-image {
@@ -262,6 +263,7 @@
   height: 100%;
   object-fit: contain;
   cursor: zoom-in;
+  transition: transform 0.3s ease-in-out;
 }
 
 .main-image.expanded {
@@ -281,11 +283,15 @@
 
 .main-image.expanded img {
   cursor: zoom-out;
-  padding: 15px 0 15px 0;
+  transform: scale(1);
 }
 
-.main-image button {
-  cursor: pointer;
+.main-image.expanded.zoomed img {
+  transform: scale(2.5);
+}
+
+.main-image img.zoomed {
+  transform: scale(2.5);
 }
 
 .previous-button,
@@ -409,11 +415,22 @@
   transform: scale(1.2);
 }
 
-.main-image.expanded img.zoomed {
-  transform: scale(2.5);
-  cursor: move;
-}
-
 .main-image.expanded.zoomed .image-indicator-div {
   display: none;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.click-away-button {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  z-index: 4;
 }
