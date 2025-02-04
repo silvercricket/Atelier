@@ -11,8 +11,8 @@ var App = (props) => {
   return (
     <div>
       <ProductOverview />
-      <QA />
       <RelatedItems />
+      <QA />
       <RatingsReviews />
     </div>
   );
