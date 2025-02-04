@@ -6,11 +6,15 @@ import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
+import { fetchReviews } from '../../store/ratingsReviews/reviewsSlice.js';
+import axios from 'axios';
+
+// import components
 import RatingBreakdown from './ratingBreakdown.jsx';
 import ReviewList from './reviewList.jsx';
 import CharacteristicsTable from './CharacteristicsTable.jsx';
-import { fetchReviews } from '../../store/ratingsReviews/reviewsSlice.js';
-import axios from 'axios';
+import ReviewImageModal from './ReviewImageModal.jsx';
+import NewReviewModal from './newReviewModal.jsx';
 
 const mockReviews = {
   reviews: [
@@ -135,6 +139,8 @@ const mockChars = {
 const initialState = {
   reviews: mockReviews,
   productBreakdown: mockChars,
+  products: { currentProduct: 40347 },
+  newReviewForm: { formOpen : true }
 }
 
 const mockStore = configureStore({
@@ -142,7 +148,7 @@ const mockStore = configureStore({
   middleware: [thunk]
 });
 
-describe('ProductOverview', () => {
+describe('Rating Breakdown', () => {
   let store;
   let user;
 
@@ -201,4 +207,48 @@ describe('Characteristic Table', () => {
     expect(comfortRow).toBeInTheDocument();
     expect(qualityRow).toBeInTheDocument();
   })
-})
+});
+
+describe('New Review Modal', () => {
+  let store;
+  let user;
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+    user = userEvent.setup();
+  })
+
+  test('renders modal when form is open', async () => {
+    render(
+      <Provider store={store}>
+        <NewReviewModal />
+      </Provider>
+    );
+
+    const modal = screen.getByRole('dialog');
+    expect(modal).toBeInTheDocument();
+  })
+});
+
+describe('Review Image Modal', () => {
+  let store;
+  let user;
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+    user = userEvent.setup();
+  })
+
+  test('renders modal for image when formOpen is true', async () => {
+    render(
+      <Provider store={store}>
+        <ReviewImageModal />
+      </Provider>
+    );
+
+    const modal = screen.getByRole('dialog');
+    expect(modal).toBeInTheDocument();
+  })
+});
+
+
