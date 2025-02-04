@@ -105,7 +105,7 @@ const RatingBreakdown = () => {
     setFilter3(false);
     setFilter2(false);
     setFilter1(false);
-    dispatch(resetFilter());
+    dispatch(resetFilter(reviews.slice(0, 2)));
   }
 
   const checkFilters = (stars) => {

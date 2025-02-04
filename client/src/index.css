@@ -136,6 +136,10 @@ button {
   margin-bottom: 25px;
 }
 
+.rr-button {
+  margin: 5px;
+}
+
 .ratingsReviews {
   display: flex;
   flex-direction: row;
@@ -163,18 +167,18 @@ button {
 
 
 .ratingHover:hover {
-  background-color: lightgrey;
+  background-color: var(--light-light-gray);
 }
 
 
 progress.ratingCounter {
   width: 250px;
   height: 15px;
-  border: 1px solid grey;
+  border: 1px solid var(--light-gray);
 }
 
 progress.ratingCounter::-webkit-progress-bar {
-  background-color: grey; /* Bar background */
+  background-color: var(--light-gray); /* Bar background */
 }
 
 progress.ratingCounter::-webkit-progress-value {
@@ -190,8 +194,9 @@ progress.ratingCounter::-moz-progress-bar {
   margin-top: 5px;
   margin-bottom: 10px;
   padding: 15px;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-color: lightgray;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--dark-dark-gray);
 }
 
 .reviewerName {
@@ -217,7 +222,7 @@ progress.ratingCounter::-moz-progress-bar {
 }
 
 .sellerResponse {
-  background-color: lightgray;
+  background-color: var(--light-gray);
 }
 
 .ratingBreakdown {
@@ -239,7 +244,7 @@ progress.ratingCounter::-moz-progress-bar {
 }
 
 .charTable {
-  border: 1px solid black;
+  border: 1px solid var(--dark-dark-gray);
   border-collapse: collapse;
   text-align: center;
 }
@@ -249,7 +254,7 @@ progress.ratingCounter::-moz-progress-bar {
 }
 
 .colHead {
-  border: 1px solid black;
+  border: 1px solid var(--dark-dark-gray);
   border-collapse: collapse;
   padding-left: 60px;
   padding-right: 60px;
@@ -294,7 +299,7 @@ progress.ratingCounter::-moz-progress-bar {
 .slider {
   width: 250px;
   height: 10px;
-  background: grey;
+  background: var(--light-gray);
   border-radius: 5px;
   position: relative;
 }
@@ -307,7 +312,7 @@ progress.ratingCounter::-moz-progress-bar {
 
 .slider-thumb {
   position: absolute;
-  border-bottom: 10px solid #000000;
+  border-bottom: 10px solid var(--dark-dark-gray);
   border-left: 6px solid rgba(0, 0, 0, 0);
   border-right: 6px solid rgba(0, 0, 0, 0);
   content: "";

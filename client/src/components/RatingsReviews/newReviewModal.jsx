@@ -125,7 +125,7 @@ const NewReviewModal = () => {
 
   return (
     <dialog className="reviewModalContainer" open>
-      <button onClick={() => dispatch(isFormOpen())}>Close Without Saving</button>
+      <button  className="rr-button" onClick={() => dispatch(isFormOpen())}>Close Without Saving</button>
       <div className="reviewModal">
         <form onSubmit={handleSubmit}>
           {/* rating */}

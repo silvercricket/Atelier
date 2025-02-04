@@ -70,9 +70,9 @@ const ReviewTile = ({review}) => {
       {review.recommend ? <p>I recommend this product  <i class="fa-solid fa-check"></i></p> : null}
       {review.response ? <p className="sellerResponse">review.response</p> : null}
       <p>Was this review helpful?</p>
-      { hasRated ? <p>You have already rated this review</p> : <div><button onClick={() => handleRate(true)}>Yes</button><button onClick={() => handleRate(false)}>No</button></div>}
+      { hasRated ? <p>You have already rated this review</p> : <div><button className="rr-button" onClick={() => handleRate(true)}>Yes</button><button className="rr-button" onClick={() => handleRate(false)}>No</button></div>}
       <p>{review.helpfulness} customers found this review helpful</p>
-      <button onClick={handleReport}>Report</button>
+      <button className="rr-button" onClick={handleReport}>Report</button>
     </div>
   );
 

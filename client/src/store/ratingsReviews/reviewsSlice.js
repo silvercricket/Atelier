@@ -29,13 +29,13 @@ const reviewsSlice = createSlice({
     filterReviews: (state, action) => {
       state.filteredReviews = state.filteredReviews.concat(action.payload);
     },
-    resetFilter: (state) => {
+    resetFilter: (state, action) => {
       state.filteredReviews = [];
+      state.renderedReviews = action.payload;
     },
     resetRendered: (state, action) => {
       state.renderedReviews = [];
       state.renderedReviews = state.renderedReviews.concat(action.payload);
-
     }
   },
   extraReducers: (builder) => {
