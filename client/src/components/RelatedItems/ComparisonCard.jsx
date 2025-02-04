@@ -16,38 +16,6 @@ const ComparisonCard = ({ item }) => {
     return state.relatedItems.comparisonFeatures
   })
 
-  const handleClick = () => {
-    // var comparisonItem = item;
-    // var relevantItems = [];
-    // comparisonItemFeatures = (comparisonFeatures.find((item) => item.currentObjectId === comparisonItem.id)).currentObject
-    // currentItemFeatures = (comparisonFeatures.find((item) => item.currentObjectId === currentItem.id)).currentObject
-    // relevantItems.push(comparisonItemFeatures, currentItemFeatures)
-    // var features = new Set();
-    // relevantItems.forEach((item) => {
-    //   for(var i = 0; i < item.length; i++) {
-    //     features.add(item[i].feature)
-    //   }
-    // })
-    // var featuresObject = {};
-    // // console.log(features)
-    // // console.log(currentItemFeatures, comparisonItemFeatures)
-    // for (var value of features) {
-    //   for(var j = 0; j < currentItemFeatures.length; j++) {
-    //     if (currentItemFeatures[j].feature === value) {
-    //       featuresObject[value] = {value1: currentItemFeatures[j].value}
-    //     }
-    //   }
-    //   for(var k = 0; k < comparisonItemFeatures.length; k++) {
-    //     if (comparisonItemFeatures[k].feature === value) {
-    //       var value2 = {value2: comparisonItemFeatures[k].value}
-    //       featuresObject[value] = {...featuresObject[value], ...value2}
-    //     }
-    //   }
-    // }
-    // console.log(featuresObject)
-
-  }
-
   const TableRow = ({value1, feature, value2}) => {
 
     return (
@@ -73,8 +41,6 @@ const ComparisonCard = ({ item }) => {
     })
     var featuresArray = [];
     var featuresObject = {};
-    // console.log(features)
-    // console.log(currentItemFeatures, comparisonItemFeatures)
     for (var value of features) {
       for(var j = 0; j < currentItemFeatures.length; j++) {
         if (currentItemFeatures[j].feature === value) {
@@ -93,11 +59,10 @@ const ComparisonCard = ({ item }) => {
       featuresArray.push(featuresObject[key])
     }
     setFeatureData(featuresArray);
-    console.log(featuresArray)
   }, [])
 
   return (
-    <div className = "comparisonCard" onClick = {handleClick}>
+    <div className = "comparisonCard">
       <small>Comparing</small>
       <table className = "comparisonTable">
         <tbody>
@@ -106,7 +71,7 @@ const ComparisonCard = ({ item }) => {
           <th>&nbsp;</th>
           <th>{item.name}</th>
         </tr>
-        {featureData.map((feature) => <TableRow value1 = {feature.value1} feature = {feature.feature} value2 = {feature.value2} />) }
+        {featureData.map((feature, index) => <TableRow value1 = {feature.value1} feature = {feature.feature} value2 = {feature.value2} key = {index}/>) }
         </tbody>
       </table>
     </div>

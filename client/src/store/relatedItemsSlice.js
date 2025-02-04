@@ -39,7 +39,6 @@ export const getRelatedItemDetails = createAsyncThunk('products/related/details'
 export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async (productId, thunkAPI) => {
   try {
     const response = await axios.get(`/api/products/${productId}/styles`);
-    // console.log(response.data.results[0].photos[0].url)
     if (response.data.results[0].photos[0].url === null) {
       return 'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
     } else {
@@ -59,11 +58,6 @@ export const getCurrentProductDetails = createAsyncThunk('products/current', asy
     return rejectWithValue(err.message);
   }
 })
-// export const fetchAPIData = createAsyncThunk('api/products', async () => {
-//   const response = await axios.get('/api/products')
-//   console.log(response)
-//   // return response.todos
-// })
 
 export const relatedItemsSlice = createSlice({
   name: 'relatedItem',
@@ -71,7 +65,6 @@ export const relatedItemsSlice = createSlice({
   reducers: {
     showNextCard: (state) => {
       if (state.currentCardIndex !== state.relatedItems.length - 1) {
-        // state.currentOutfitCardIndex += 1;
         return {
           ...state,
           currentCardIndex: state.currentCardIndex + 1
@@ -96,21 +89,13 @@ export const relatedItemsSlice = createSlice({
     },
     showNextOutfitCard: (state, action) => {
       if (state.currentOutfitCardIndex !== state.outfit.length - 1) {
-        console.log(state.currentOutfitCardIndex)
         state.currentOutfitCardIndex += 1;
-        // return {
-        //   ...state,
-        //   currentOutfitCardIndex: state.currentOutfitCardIndex + 1
-        // }
-        // state.currentCardIndex = ((prevIndex) => (prevIndex + 1) % state.relatedItems.length)
       }
     },
     showPreviousOutfitCard: (state, action) => {
       if (state.currentOutfitCardIndex !== 0) {
-        console.log(state.currentOutfitCardIndex)
 
         state.currentOutfitCardIndex -= 1;
-        // state.currentCardIndex = ((prevIndex) => (prevIndex - 1 + state.relatedItems.length) % state.relatedItems.length);
 
       }
     },
@@ -148,8 +133,7 @@ export const relatedItemsSlice = createSlice({
         state.comparisonFeatures = [...state.comparisonFeatures, comparisonObject]
         state.relatedItemDetails = [...state.relatedItemDetails, action.payload];
         state.relatedItems = [...state.relatedItems, action.payload];
-        // state.relatedItemDetails.push(action.payload);
-        // state.relatedItems.push(action.payload);
+
       })
       .addCase(getRelatedItemDetails.rejected, (state, action) => {
         state.status = 'failed';
