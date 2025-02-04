@@ -7,37 +7,95 @@ import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 
+import QAModals from '../QAModals.jsx';
 import QANewQuestionForm from '../QANewQuestionForm.jsx';
+import QANewAnswerForm from '../QANewAnswerForm.jsx';
 
 
 //state.qa.newAnswerForm.question
 const initialState = {
   qa: {
-    productName: 'Test Product',
+    questions: {
+      productId: null,
+      list: [],
+      // idle, loading, success, error
+      status: 'idle',
+      showAllQuestions: false
+    },
+    searchQuery: {
+      query: ''
+    },
+    newQuestionModal: {
+      show: false,
+    },
+    newAnswerModal: {
+      show: false,
+    },
     newQuestionForm: {
+      // active, loading, success, error
       status: 'active'
+    },
+    newAnswerForm: {
+      // active, loading, success, error
+      status: 'active',
+      question: '',
+      questionId: null
+    }
+  },
+  products: {
+    currentProduct:
+    40348,
+    productDetails: {
+     '40348': {
+      name: 'Test Product Name'
+     }
     }
   }
 };
 
 const mockStore = configureStore([thunk]);
 
-describe('Add a Question Form', () => {
+// QAModals Component
+describe('QAModals Component', () => {
   let store;
 
   beforeEach(() => {
     store = mockStore(initialState);
   })
 
-  test('Display correct input labels', () => {
+  test('Displays QANewQuestionForm component when showNewQuestionModal state is true', () => {
+    const newState = {
+      ...initialState,
+      qa: {
+        ...initialState.qa,
+        newQuestionModal: {
+          show:true
+        }
+      }
+    }
     render(
-      <Provider store={store}>
-        <QANewQuestionForm />
+      <Provider store={mockStore(newState)}>
+        <QAModals />
       </Provider>
-    );
+    )
+    expect(screen.getByText('Ask Your Question')).toBeInTheDocument();
+  });
 
-    expect(screen.getByLabelText('Your question*')).toBeInTheDocument();
-    expect(screen.getByLabelText('Your nickname*')).toBeInTheDocument();
-    expect(screen.getByLabelText('Your email*')).toBeInTheDocument();
-  })
-})
+  test('Displays QANewAnswerForm component when showNewAnswerModal state is true', () => {
+    const newState = {
+      ...initialState,
+      qa: {
+        ...initialState.qa,
+        newAnswerModal: {
+          show:true
+        }
+      }
+    }
+    render(
+      <Provider store={mockStore(newState)}>
+        <QAModals />
+      </Provider>
+    )
+    expect(screen.getByText('Submit Your Answer')).toBeInTheDocument();
+  });
+});
