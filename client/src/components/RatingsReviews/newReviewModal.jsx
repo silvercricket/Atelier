@@ -15,6 +15,7 @@ const NewReviewModal = () => {
   const [ reviewer, setReviewer ] = useState('');
   const [ recommend, setRecommend ] = useState(false);
   const [ email, setEmail ] = useState('');
+  const [ images, setImages] = useState([])
 
   // table state
   const [ size, setSize ] = useState(null);
@@ -69,7 +70,7 @@ const NewReviewModal = () => {
       body: body,
       name: reviewer,
       email: email,
-      photos: [],
+      photos: images,
       characteristics: chars
     }
     return axios.post(`/api/reviews`, reviewData)
@@ -111,6 +112,16 @@ const NewReviewModal = () => {
   const handleEmail = (e) => {
     e.preventDefault();
     setEmail(e.target.value);
+  }
+
+  const handleImage = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (file) {
+      const  fileURL = URL.createObjectURL(file);
+      console.log(fileURL);
+      setImages([...images, fileURL]);
+    }
   }
 
 
@@ -160,7 +171,7 @@ const NewReviewModal = () => {
           </div>
           {/* Photo Upload */}
           <label>Upload photos of this product
-            <input id="uploadPic" type="file" accept="image/*"/>
+            <input id="uploadPic" type="file" accept="image/*" onChange={handleImage}/>
           </label><br></br>
           {/* Nickname */}
           <label>Enter your nickname:
