@@ -10,8 +10,8 @@ import QAPhotoUploader from './QAPhotoUploader.jsx';
 import QANotification from './QANotification.jsx';
 
 const QANewAnswerForm = () => {
-  // TODO: For testing only
-  const productName = useSelector((state) => state.qa.productName);
+  const productId = useSelector((state) => state.products.currentProduct);
+  const productName = useSelector((state) => state.products.productDetails[productId].name);
   const question = useSelector((state) => state.qa.newAnswerForm.question);
 
   const newAnswerFormStatus = useSelector((state) => state.qa.newAnswerForm.status);
@@ -53,7 +53,7 @@ const QANewAnswerForm = () => {
   }
 
   return (
-    <div>
+    <div className="qa-form-wrapper">
       {
         (newAnswerFormStatus === 'active' ||  newAnswerFormStatus === 'loading') && (
           <>
@@ -92,17 +92,17 @@ const QANewAnswerForm = () => {
               notice="For authentication reasons, you will not be emailed"
               />
 
-              <QAPhotoUploader formData={formData} setFormData={setFormData} />
+              <QAPhotoUploader formPhotos={formData.photos} formThumbnails={formData.thumbnails} setFormData={setFormData} />
 
               {
                 errMsg &&
                 <div className="qa-form-err-msg-container">
-                  <p>You must enter the following:</p>
-                  <div>{ errMsg.split('\n').map((msg) => <p className="qa-form-err-msg">{msg}</p>) }</div>
+                  <p className="qa-form-err-msg-title">You must enter the following:</p>
+                  <div>{ errMsg.split('\n').map((msg, i) => <p className="qa-form-err-msg" key={i}>{msg}</p>) }</div>
                 </div>
               }
 
-              <button disabled={newAnswerFormStatus === 'loading'}>{newAnswerFormStatus === 'loading' ? 'Submitting your answer...' : 'Submit answer'}</button>
+              <button className="qa-submit-btn" disabled={newAnswerFormStatus === 'loading'}>{newAnswerFormStatus === 'loading' ? 'Submitting your answer...' : 'Submit answer'}</button>
             </form>
           </>
         )

@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { filterReviews, resetFilter, resetRendered } from '../../store/ratingsReviews/reviewsSlice.js';
 
 const RatingBreakdown = () => {
   const dispatch = useDispatch();
 
+  const [ isFiltered, setIsFiltered ] = useState(false);
+  const [ filter5, setFilter5 ] = useState(false);
+  const [ filter4, setFilter4 ] = useState(false);
+  const [ filter3, setFilter3 ] = useState(false);
+  const [ filter2, setFilter2 ] = useState(false);
+  const [ filter1, setFilter1 ] = useState(false);
+
   const reviews = useSelector((state) => {
     return state.reviews.reviews || [];
+  })
+
+  const filteredReviews = useSelector((state) => {
+    return state.reviews.filteredReviews;
   })
 
   const avgRating = () => {
@@ -86,6 +98,61 @@ const RatingBreakdown = () => {
     full: <i className="fa-solid fa-star"></i>
   }
 
+  const handleReset = () => {
+    setIsFiltered(false);
+    setFilter5(false);
+    setFilter4(false);
+    setFilter3(false);
+    setFilter2(false);
+    setFilter1(false);
+    dispatch(resetFilter());
+  }
+
+  const checkFilters = (stars) => {
+    if (stars === 5) {
+      setFilter5(true);
+      return;
+    }
+    if (stars === 4) {
+      setFilter4(true);
+      return;
+    }
+    if (stars === 3) {
+      setFilter3(true);
+      return;
+    }
+    if (stars === 2) {
+      setFilter2(true);
+      return;
+    }
+    if (stars === 1) {
+      setFilter1(true);
+      return;
+    }
+  }
+
+  const handleFilter = (stars) => {
+    checkFilters(stars);
+    for (let review of filteredReviews) {
+      if (review.rating === stars) {
+        handleReset();
+        return;
+      }
+    }
+    let tempArr = []
+    let reviewsToAdd = reviews.filter((review) => {
+      if (review.rating === stars) {
+        tempArr.push(review);
+      }
+      return review.rating === stars;
+    })
+    dispatch(filterReviews(reviewsToAdd));
+    if (!isFiltered) {
+      dispatch(resetRendered(tempArr.slice(0, 2)));
+      setIsFiltered(true);
+    }
+  }
+
 
   // handle async http requests or empty reviews
   if (!reviews.length) {
@@ -117,6 +184,9 @@ const RatingBreakdown = () => {
   return (
     <div className="ratingBreakdown">
       <h1>{avgStar}</h1>
+      <div>
+        { isFiltered ? <span id="resetReviews" onClick={handleReset}>Reset Review List</span> : null}
+      </div>
         <div className="rating">
           {avgStar >= 1 ? stars.full : avgStar >= 0.5 ? stars.half : stars.empty}
           {avgStar >= 2 ? stars.full : avgStar >= 1.5 ? stars.half : stars.empty}
@@ -126,11 +196,21 @@ const RatingBreakdown = () => {
         </div>
         <div className="starBars">
           <p>{percentRec()}% of reviews reccomend this product</p>
-          <p>5 stars</p><progress className="ratingCounter" value={fiveStar()} max="100"></progress>
-          <p>4 stars</p><progress className="ratingCounter" value={fourStar()} max="100"></progress>
-          <p>3 stars</p><progress className="ratingCounter" value={threeStar()} max="100"></progress>
-          <p>2 stars</p><progress className="ratingCounter" value={twoStar()} max="100"></progress>
-          <p>1 stars</p><progress className="ratingCounter" value={oneStar()} max="100"></progress>
+          <div className="ratingHover" onClick={() => handleFilter(5)}><p>5 stars</p><progress className="ratingCounter" value={fiveStar()} max="100"></progress>
+            { filter5 ? <p className="rating-filter">showing reviews with 5 star rating</p> : null}
+          </div>
+          <div className="ratingHover" onClick={() => handleFilter(4)}><p>4 stars</p><progress className="ratingCounter" value={fourStar()} max="100"></progress>
+            { filter4 ? <p className="rating-filter">showing reviews with 4 star rating</p> : null}
+          </div>
+          <div className="ratingHover" onClick={() => handleFilter(3)}><p>3 stars</p><progress className="ratingCounter" value={threeStar()} max="100"></progress>
+            { filter3 ? <p className="rating-filter">showing reviews with 3 star rating</p> : null}
+          </div>
+          <div className="ratingHover" onClick={() => handleFilter(2)}><p>2 stars</p><progress className="ratingCounter" value={twoStar()} max="100"></progress>
+            { filter2 ? <p className="rating-filter">showing reviews with 2 star rating</p> : null}
+          </div>
+          <div className="ratingHover" onClick={() => handleFilter(1)}><p>1 stars</p><progress className="ratingCounter" value={oneStar()} max="100"></progress>
+            { filter1 ? <p className="rating-filter">showing reviews with 1 star rating</p> : null}
+          </div>
         </div>
     </div>
 

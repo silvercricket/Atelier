@@ -5,13 +5,15 @@ const initialState = {
   loading: false,
   reviews: [],
   renderedReviews: [],
+  filteredReviews: [],
   error: ''
 };
 
-export const fetchReviews = createAsyncThunk('reviews/fetchReviews', async (_, thunkAPI) => {
-  const product_id = thunkAPI.getState().products.currentProduct
+export const fetchReviews = createAsyncThunk('reviews/fetchReviews', async (sortOptions, thunkAPI) => {
+  const sortBy = sortOptions || 'relevant';
+  const product_id = thunkAPI.getState().products.currentProduct;
   return axios
-    .get(`/api/reviews/?product_id=${product_id}`)
+    .get(`/api/reviews/?product_id=${product_id}&sort=${sortBy}&count=200`)
     .then((response) => {
       return response.data.results;
     })
@@ -23,6 +25,17 @@ const reviewsSlice = createSlice({
   reducers: {
     moreReviews:  (state, action) => {
       state.renderedReviews = state.renderedReviews.concat(action.payload);
+    },
+    filterReviews: (state, action) => {
+      state.filteredReviews = state.filteredReviews.concat(action.payload);
+    },
+    resetFilter: (state) => {
+      state.filteredReviews = [];
+    },
+    resetRendered: (state, action) => {
+      state.renderedReviews = [];
+      state.renderedReviews = state.renderedReviews.concat(action.payload);
+
     }
   },
   extraReducers: (builder) => {
@@ -33,18 +46,20 @@ const reviewsSlice = createSlice({
       state.loading = false;
       state.reviews = action.payload;
       state.renderedReviews = action.payload.slice(0, 2);
+      state.filteredReviews = [];
       state.error = '';
     })
     builder.addCase(fetchReviews.rejected, (state, action) => {
       state.loading = false;
       state.reviews = [];
       state.renderedReviews = [];
+      state.filteredReviews = [];
       state.error = action.error.message;
     })
   }
 })
 
-export const { moreReviews } = reviewsSlice.actions;
+export const { moreReviews, filterReviews, resetFilter, resetRendered } = reviewsSlice.actions;
 
 export default reviewsSlice.reducer;
 

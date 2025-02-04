@@ -5,6 +5,7 @@ import QAModal from './QAModal.jsx';
 
 const QAPhoto = ({ photo }) => {
   const [expandPhoto, setExpandPhoto] = useState(false);
+  const imgSrc = photo.includes('cloudinary.com') ? photo.replace(/v\d+/, 'c_fill,w_90,h_60') : photo;
 
   const handlePhotoClick = () => {
     setExpandPhoto(true);
@@ -22,7 +23,7 @@ const QAPhoto = ({ photo }) => {
         )
       }
       <div className="qa-answer-thumbnail-container">
-        <img className="qa-answer-thumbnail" src={photo.replace(/v\d+/, 'c_fill,w_90,h_60')} onClick={handlePhotoClick} />
+        <img className="qa-answer-thumbnail" src={imgSrc} onClick={handlePhotoClick} />
       </div>
     </>
   )
