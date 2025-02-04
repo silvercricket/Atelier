@@ -62,9 +62,9 @@ const ProductDetails = () => {
       )}
       {details ? (
         <div>
-          <div>
+          <div className='product-info'>
             <p>{details?.category}</p>
-            <h1>{details?.name}</h1>
+            <h1 className='product-name'>{details?.name}</h1>
             <p>{price}</p>
           </div>
           <div className='social-media-icons'>
