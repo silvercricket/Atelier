@@ -410,10 +410,24 @@ progress.ratingCounter::-moz-progress-bar {
   width: 33%;
   float: left;
   height: 400px;
-  padding: 5px;
   align-items: center;
   justify-content: center;
   text-align: left;
+}
+
+.addToOutfitCard {
+  border-width: 2px;
+  border-style: groove;
+  width: 33%;
+  float: left;
+  height: 400px;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  flex-shrink: 0;
 }
 
 .actionButton {
@@ -427,9 +441,11 @@ progress.ratingCounter::-moz-progress-bar {
 
 .actionButtonOutfit {
   float: right;
+  position: absolute;
   top: 10px;
   right: 10px;
-  transform: scale(1.5, 1.5)
+  transform: scale(1.5, 1.5);
+  z-index: 2;
 }
 
 .leftButton {

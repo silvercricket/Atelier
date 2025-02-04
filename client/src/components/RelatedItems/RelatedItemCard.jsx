@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ComparisonCard from './ComparisonCard.jsx';
-import { showPreviousCard, showNextCard, addToOutfit, getRelatedItemURLs } from '../../store/relatedItemsSlice.js';
+import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs } from '../../store/relatedItemsSlice.js';
 import { getProducts, getProductDetails, getProductStyles, setCurrentProduct } from '../../store/productsSlice.js';
 
 const RelatedItemCard = ( {item} ) => {
@@ -17,6 +17,10 @@ const RelatedItemCard = ( {item} ) => {
     //instead of showing comparison card, will update state for product overview to be id for that specific item
   }
 
+  const currentProduct = useSelector((state) => {
+    return state.products.currentProduct
+  })
+
   const currentIndex = useSelector((state) => {
     return state.relatedItems.currentCardIndex
   })
@@ -29,12 +33,14 @@ const RelatedItemCard = ( {item} ) => {
     var outfit = {
       category: item.category,
       name: event.target.value,
-      price: item.default_price
+      price: item.default_price,
+      id: item.id
     }
     dispatch(addToOutfit(outfit))
   }
 
   const handleCardClick = () => {
+    console.log(item.id)
     dispatch(setCurrentProduct(item.id))
 
     const fetchData = async () => {
@@ -47,6 +53,10 @@ const RelatedItemCard = ( {item} ) => {
       }
     };
 
+    // dispatch(getRelatedItems())
+    // dispatch(getRelatedItemDetails(item.id))
+    // dispatch(getRelatedItemURLs(item.id))
+
     fetchData();
 
   }
@@ -54,14 +64,13 @@ const RelatedItemCard = ( {item} ) => {
    useEffect(() => {
     dispatch(getRelatedItemURLs(item.id))
       .then((results) => {
-        // console.log(results)
         setURL(results.payload)
       })
     }, [])
 
   return (
     <div className = "relatedItemCard" style = {carouselStyle}>
-      <img className = "relatedItemImage" onClick = {handleCardClick} src = {URL}></img>
+      <img className = "relatedItemImage" onClick = {handleCardClick} src = {URL} ></img>
       <span className = "actionButton" onClick = {handleDetailClick}><i className="fa-regular fa-star"></i></span>
       <div onClick = {handleCardClick}>
         <p>{item.category}</p>

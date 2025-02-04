@@ -11,12 +11,14 @@ const initialState = {
   error: null,
   relatedItemDetails: [],
   relatedItemURLs: [],
-  currentOutfitCardIndex: 0
+  currentOutfitCardIndex: 0,
+  currentProductDetails: {}
 
 }
 
-export const getRelatedItems = createAsyncThunk('products/related', async (productId, { rejectWithValue }) => {
+export const getRelatedItems = createAsyncThunk('products/related', async (_, thunkAPI) => {
   try {
+    const productId = thunkAPI.getState().products.currentProduct;
     const response = await axios.get(`/api/products/${productId}/related`)
     return response.data;
   } catch (err) {
@@ -24,7 +26,7 @@ export const getRelatedItems = createAsyncThunk('products/related', async (produ
   }
 })
 
-export const getRelatedItemDetails = createAsyncThunk('products/related/details', async (productId, { rejectWithValue }) => {
+export const getRelatedItemDetails = createAsyncThunk('products/related/details', async (productId, thunkAPI) => {
     try {
       const response = await axios.get(`/api/products/${productId}`);
       return response.data;
@@ -33,7 +35,7 @@ export const getRelatedItemDetails = createAsyncThunk('products/related/details'
     }
 })
 
-export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async (productId, { rejectWithValue }) => {
+export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async (productId, thunkAPI) => {
   try {
     const response = await axios.get(`/api/products/${productId}/styles`);
     // console.log(response.data.results[0].photos[0].url)
@@ -47,6 +49,15 @@ export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async
   }
 })
 
+export const getCurrentProductDetails = createAsyncThunk('products/related', async (_, thunkAPI) => {
+  try {
+    const productId = thunkAPI.getState().products.currentProduct;
+    const response = await axios.get(`/api/products/${productId}`)
+    return response.data;
+  } catch (err) {
+    return rejectWithValue(err.message);
+  }
+})
 // export const fetchAPIData = createAsyncThunk('api/products', async () => {
 //   const response = await axios.get('/api/products')
 //   console.log(response)
@@ -58,15 +69,18 @@ export const relatedItemsSlice = createSlice({
   initialState,
   reducers: {
     showNextCard: (state) => {
-      if (state.currentCardIndex !== state.relatedItems.length - 1) {
-        state.currentCardIndex += 1;
-        // state.currentCardIndex = ((prevIndex) => (prevIndex + 1) % state.relatedItems.length)
+      if (state.currentCardIndex !== state.outfit.length - 1) {
+        // state.currentOutfitCardIndex += 1;
+        return {
+          ...state,
+          currentCardIndex: state.currentCardIndex + 1
+        }
       }
     },
     showPreviousCard: (state) => {
       if (state.currentCardIndex !== 0) {
         state.currentCardIndex -= 1;
-        // state.currentCardIndex = ((prevIndex) => (prevIndex - 1 + state.relatedItems.length) % state.relatedItems.length);
+
 
       }
     },
@@ -80,16 +94,26 @@ export const relatedItemsSlice = createSlice({
     },
     showNextOutfitCard: (state, action) => {
       if (state.currentOutfitCardIndex !== state.outfit.length - 1) {
+        console.log(state.currentOutfitCardIndex)
         state.currentOutfitCardIndex += 1;
+        // return {
+        //   ...state,
+        //   currentOutfitCardIndex: state.currentOutfitCardIndex + 1
+        // }
         // state.currentCardIndex = ((prevIndex) => (prevIndex + 1) % state.relatedItems.length)
       }
     },
     showPreviousOutfitCard: (state, action) => {
       if (state.currentOutfitCardIndex !== 0) {
+        console.log(state.currentOutfitCardIndex)
+
         state.currentOutfitCardIndex -= 1;
         // state.currentCardIndex = ((prevIndex) => (prevIndex - 1 + state.relatedItems.length) % state.relatedItems.length);
 
       }
+    },
+    clearRelatedItems: (state, action) => {
+      state.relatedItems = [];
     }
   },
   extraReducers: (builder) => {
@@ -100,6 +124,7 @@ export const relatedItemsSlice = createSlice({
       .addCase(getRelatedItems.fulfilled, (state, action) => {
         state.status = 'fulfilled'
         state.relatedItemIds = action.payload;
+
       })
       .addCase(getRelatedItems.rejected, (state, action) => {
         state.status = 'failed';
@@ -112,6 +137,8 @@ export const relatedItemsSlice = createSlice({
         state.status = 'fulfilled'
         state.relatedItemDetails = [...state.relatedItemDetails, action.payload];
         state.relatedItems = [...state.relatedItems, action.payload];
+        // state.relatedItemDetails.push(action.payload);
+        // state.relatedItems.push(action.payload);
       })
       .addCase(getRelatedItemDetails.rejected, (state, action) => {
         state.status = 'failed';
@@ -131,6 +158,6 @@ export const relatedItemsSlice = createSlice({
   }
 })
 
-export const { showNextCard, showPreviousCard, addToOutfit } = relatedItemsSlice.actions;
+export const { showNextCard, showPreviousCard, addToOutfit, clearRelatedItems, showPreviousOutfitCard, showNextOutfitCard, removeFromOutfit } = relatedItemsSlice.actions;
 
 export default relatedItemsSlice.reducer;
