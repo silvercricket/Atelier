@@ -20,14 +20,18 @@
 }
 
 .reviews-link {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+  text-decoration: underline;
+  color: #000000;
+  cursor: pointer;
 }
 
-.reviews-link a {
-  text-decoration: underline;
-  color: #666;
+.reviews-product-details {
+  display: flex;
+  flex-direction: row;
+}
+
+.rating {
+  padding-right: 10PX;
 }
 
 .category {
@@ -43,6 +47,18 @@
 
 .price {
   font-size: 20px;
+}
+
+.social-media-icons {
+  font-size: 20px;
+  padding-top: 20px;
+}
+
+.fa-facebook,
+.fa-twitter,
+.fa-pinterest {
+  padding-right: 10px;
+  cursor: pointer;
 }
 
 .style-selector {
@@ -75,7 +91,7 @@
   padding-right: 30px;
 }
 
-.quantity-selector{
+.quantity-selector {
   margin-right: 40px;
 }
 
