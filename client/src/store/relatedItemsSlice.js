@@ -59,6 +59,14 @@ export const getCurrentProductDetails = createAsyncThunk('products/current', asy
   }
 })
 
+export const fetchReviews = createAsyncThunk('reviews/fetchReviews', async (productId, thunkAPI) => {
+  return axios
+    .get(`/api/reviews/?product_id=${productId}&sort=relevant&count=200`)
+    .then((response) => {
+      return response.data.results;
+    })
+})
+
 export const relatedItemsSlice = createSlice({
   name: 'relatedItem',
   initialState,
@@ -74,8 +82,6 @@ export const relatedItemsSlice = createSlice({
     showPreviousCard: (state) => {
       if (state.currentCardIndex !== 0) {
         state.currentCardIndex -= 1;
-
-
       }
     },
     addToOutfit: (state, action) => {
@@ -94,9 +100,7 @@ export const relatedItemsSlice = createSlice({
     },
     showPreviousOutfitCard: (state, action) => {
       if (state.currentOutfitCardIndex !== 0) {
-
         state.currentOutfitCardIndex -= 1;
-
       }
     },
     clearRelatedItems: (state, action) => {
@@ -164,6 +168,16 @@ export const relatedItemsSlice = createSlice({
         state.currentProductDetails = action.payload;
       })
       .addCase(getCurrentProductDetails.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(fetchReviews.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchReviews.fulfilled, (state, action) => {
+        state.status = 'fulfilled'
+      })
+      .addCase(fetchReviews.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       })

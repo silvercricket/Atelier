@@ -57,9 +57,6 @@ export const addAnswer = createAsyncThunk(
 );
 
 const initialState = {
-  // TODO: FOR TESTING ONLY
-  currentProduct: 40347,
-  productName: 'Great Product Name',
   questions: {
     productId: null,
     list: [],

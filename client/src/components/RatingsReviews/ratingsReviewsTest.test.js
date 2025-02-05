@@ -9,12 +9,14 @@ import MockAdapter from 'axios-mock-adapter';
 import { fetchReviews } from '../../store/ratingsReviews/reviewsSlice.js';
 import axios from 'axios';
 
+
 // import components
 import RatingBreakdown from './ratingBreakdown.jsx';
 import ReviewList from './reviewList.jsx';
 import CharacteristicsTable from './CharacteristicsTable.jsx';
 import ReviewImageModal from './ReviewImageModal.jsx';
 import NewReviewModal from './newReviewModal.jsx';
+import Breakdowns from './breakdowns.jsx';
 
 const mockReviews = {
   reviews: [
@@ -143,10 +145,9 @@ const initialState = {
   newReviewForm: { formOpen : true }
 }
 
-const mockStore = configureStore({
-  reducer: (state = initialState) => state,
-  middleware: [thunk]
-});
+jest.mock('axios');
+
+const mockStore = configureStore([thunk]);
 
 describe('Rating Breakdown', () => {
   let store;
@@ -252,3 +253,46 @@ describe('Review Image Modal', () => {
 });
 
 
+describe('Review List', () => {
+  let store;
+  let user;
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+    user = userEvent.setup();
+  })
+
+  test('renders first 2 reviews from review list', async () => {
+    const mockData = { data : { results : mockReviews.reviews}};
+    axios.get.mockResolvedValueOnce(mockData);
+    await store.dispatch(fetchReviews());
+
+    render(
+      <Provider store={store}>
+        <ReviewList />
+      </Provider>
+    );
+
+    await waitFor(() => {
+      const reviews = screen.getAllByTestId('review-tile');
+      expect(reviews.length).toBe(2);
+    })
+  })
+
+  test('renders # of reviews in list', async () => {
+    const mockData = { data : { results : mockReviews.reviews}};
+    axios.get.mockResolvedValueOnce(mockData);
+    await store.dispatch(fetchReviews());
+
+    render(
+      <Provider store={store}>
+        <ReviewList />
+      </Provider>
+    );
+
+    await waitFor(() => {
+      const reviewCount = screen.getByText('5 reviews, sorted by');
+      expect(reviewCount).toBeInTheDocument();
+    })
+  })
+})
