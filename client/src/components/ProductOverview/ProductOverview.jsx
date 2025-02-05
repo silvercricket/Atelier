@@ -23,6 +23,7 @@ const ProductOverview = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
+  console.log('ID', id)
 
   useEffect(() => {
     if (styles?.length) setSelectedStyle(styles?.[0]);

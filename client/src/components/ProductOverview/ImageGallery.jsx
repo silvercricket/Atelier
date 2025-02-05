@@ -111,9 +111,6 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
         <p>
           {details?.description}
         </p>
-        {/* <div>
-          {details?.features[0]}
-        </div> */}
       </div>
     </div >
   )
