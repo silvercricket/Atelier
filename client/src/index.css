@@ -506,8 +506,8 @@ progress.ratingCounter::-moz-progress-bar {
 
 /* QUESTIONS & ANSWERS */
 .qa {
-  max-width: 1000px;
-  margin: 0 auto 0 auto;
+  max-width: 1200px;
+  margin: 70px auto 70px auto;
 }
 
 .qa p, .qa h4 {
