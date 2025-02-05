@@ -7,7 +7,8 @@
     "server-dev": "npx nodemon --watch server server/index.js",
     "client-dev": "npx webpack --watch --mode=development",
     "test": "jest",
-    "test-ratings-reviews": "npx jest /client/src/components/RatingsReviews/ratingsReviewsTest.test.js"
+    "test-ratings-reviews": "npx jest /client/src/components/RatingsReviews/ratingsReviewsTest.test.js",
+    "test-related-items": "npx jest /client/src/components/RelatedItems/__tests__/RelatedItems.js"
   },
   "repository": {
     "type": "git",

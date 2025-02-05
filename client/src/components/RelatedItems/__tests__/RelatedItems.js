@@ -1,13 +1,17 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import RelatedItems from '../RelatedItems.jsx'
-import addToOutfit from '../../../store/relatedItemsSlice.js'
+import ComparisonCard from '../ComparisonCard.jsx';
+// import { addToOutfit, showPreviousCard } from '../../../store/relatedItemsSlice.js';
+import addToOutfit from '../../../store/relatedItemsSlice.js';
+// import showPrevious
+// { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs, clearRelatedItems, clearIndex, getCurrentProductDetails }
 
 const relatedItemIds = [
   40344,
@@ -87,6 +91,104 @@ const relatedItemDetails = [
 }
 ]
 
+const currentProductDetails = {
+  "id": 40347,
+  "campus": "hr-rfp",
+  "name": "Slacker's Slacks",
+  "slogan": "Comfortable for everything, or nothing",
+  "description": "I'll tell you how great they are after I nap for a bit.",
+  "category": "Pants",
+  "default_price": "65.00",
+  "created_at": "2021-08-13T14:38:44.509Z",
+  "updated_at": "2021-08-13T14:38:44.509Z",
+  "features": [
+      {
+          "feature": "Fabric",
+          "value": "99% Cotton 1% Elastic"
+      },
+      {
+          "feature": "Cut",
+          "value": "Loose"
+      }
+  ]
+}
+
+const comparisonProductDetails = {
+  "id": 40348,
+  "campus": "hr-rfp",
+  "name": "Heir Force Ones",
+  "slogan": "A sneaker dynasty",
+  "description": "Now where da boxes where I keep mine? You should peep mine, maybe once or twice but never three times. I'm just a sneaker pro, I love Pumas and shell toes, but can't nothin compare to a fresh crispy white pearl",
+  "category": "Kicks",
+  "default_price": "99.00",
+  "created_at": "2021-08-13T14:38:44.509Z",
+  "updated_at": "2021-08-13T14:38:44.509Z",
+  "features": [
+      {
+          "feature": "Sole",
+          "value": "Rubber"
+      },
+      {
+          "feature": "Material",
+          "value": "FullControlSkin"
+      },
+      {
+          "feature": "Mid-Sole",
+          "value": "ControlSupport Arch Bridge"
+      },
+      {
+          "feature": "Stitching",
+          "value": "Double Stitch"
+      }
+  ]
+}
+
+const comparisonFeatures = [
+  {
+    currentObject: [
+      {
+          "feature": "Fabric",
+          "value": "99% Cotton 1% Elastic"
+      },
+      {
+          "feature": "Cut",
+          "value": "Loose"
+      }
+  ],
+    currentObjectId: 40347
+  },
+  {
+    currentObject: [
+      {
+          "feature": "Sole",
+          "value": "Rubber"
+      },
+      {
+          "feature": "Material",
+          "value": "FullControlSkin"
+      },
+      {
+          "feature": "Mid-Sole",
+          "value": "ControlSupport Arch Bridge"
+      },
+      {
+          "feature": "Stitching",
+          "value": "Double Stitch"
+      }
+  ],
+    currentObjectId: 40348
+  }
+
+]
+
+jest.mock('axios');
+
+const mockStore = configureStore([thunk]);
+
+const mockData = { data : { results : mockReviews.reviews}};
+    axios.get.mockResolvedValueOnce(mockData);
+    await store.dispatch(fetchReviews());
+
 const initialState = {
   relatedItems: {
     detailView: false,
@@ -100,8 +202,11 @@ const initialState = {
       {category: 'Pants', name: "Slacker's Slacks", price: '65.00'}
     ],
     error: null,
-    relatedItemDetails: []
-  }
+    relatedItemDetails: [],
+    currentProductDetails: currentProductDetails,
+    comparisonFeatures: comparisonFeatures
+  },
+  products: { currentProduct: 40347 }
 };
 
 const mockStore = configureStore([thunk]);
@@ -130,7 +235,7 @@ describe('RelatedItems', () => {
     user = userEvent.setup();
   })
 
-  test('display related item names on cards', async () => {
+  test('renders related item names on cards', async () => {
     render(
       <Provider store={store}>
         <RelatedItems />
@@ -141,5 +246,17 @@ describe('RelatedItems', () => {
     expect(screen.getAllByText('Bright Future Sunglasses')[0]).toBeInTheDocument();
     expect(screen.getAllByText('Slacker\'s Slacks')[0]).toBeInTheDocument();
   });
+
+  test('renders comparison cards', async () => {
+    render(
+      <Provider store = {store}>
+        <ComparisonCard item = {comparisonProductDetails}/>
+      </Provider>
+    )
+    expect(screen.getByText('Mid-Sole')).toBeInTheDocument();
+    expect(screen.getByText('Double Stitch')).toBeInTheDocument();
+    expect(screen.getByText('FullControlSkin')).toBeInTheDocument();
+    expect(screen.getByText('99% Cotton 1% Elastic')).toBeInTheDocument();
+  })
 });
 
