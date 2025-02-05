@@ -5,8 +5,8 @@ const Breakdowns = () => {
 
   return (
     <div className="breakdowns">
-      <RatingBreakdown />
-      <ProductBreakdown />
+      <RatingBreakdown data-testid="breakdown"/>
+      <ProductBreakdown data-testid="breakdown"/>
     </div>
   );
 }

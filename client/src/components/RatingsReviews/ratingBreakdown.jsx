@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { filterReviews, resetFilter, resetRendered } from '../../store/ratingsReviews/reviewsSlice.js';
 
-const RatingBreakdown = ({ reviewsRef }) => {
+const RatingBreakdown = () => {
   const dispatch = useDispatch();
 
   const [isFiltered, setIsFiltered] = useState(false);
@@ -187,7 +187,7 @@ const RatingBreakdown = ({ reviewsRef }) => {
       <div>
         {isFiltered ? <span id="resetReviews" onClick={handleReset}>Reset Review List</span> : null}
       </div>
-      <div className="rating" ref={reviewsRef}>
+      <div className="rating">
         {avgStar >= 1 ? stars.full : avgStar >= 0.5 ? stars.half : stars.empty}
         {avgStar >= 2 ? stars.full : avgStar >= 1.5 ? stars.half : stars.empty}
         {avgStar >= 3 ? stars.full : avgStar >= 2.5 ? stars.half : stars.empty}
