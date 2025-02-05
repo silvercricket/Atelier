@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
@@ -10,6 +10,8 @@ import MockAdapter from 'axios-mock-adapter';
 import QAModals from '../QAModals.jsx';
 import QANewQuestionForm from '../QANewQuestionForm.jsx';
 import QANewAnswerForm from '../QANewAnswerForm.jsx';
+import QANotification from '../QANotification.jsx';
+import QAPhotoUploader from '../QAPhotoUploader.jsx';
 
 
 //state.qa.newAnswerForm.question
@@ -99,3 +101,43 @@ describe('QAModals Component', () => {
     expect(screen.getByText('Submit Your Answer')).toBeInTheDocument();
   });
 });
+
+// QA Notification
+describe('QANotification Component', () => {
+  test('Returns a div element with a correct classname corresponding to the type of the notification', () => {
+    const {container} = render(
+      <QANotification type="error" msg='Test message' />
+    )
+    const notificationDiv = container.querySelector('div');
+
+    expect(notificationDiv).toHaveClass('qa-notification-error');
+    expect(screen.getByText('Test message')).toBeInTheDocument();
+  })
+});
+
+// QAPhotoUploader
+describe('QAPhotoUploader Component', () => {
+  test('Uploads a photo and updates form data', async () => {
+    const mockSetFormData = jest.fn();
+    render(
+      <QAPhotoUploader formPhotos={[]} formThumbnails={[]} setFormData={mockSetFormData} />
+    )
+    const file = new File(['photo'], 'photo.jpg', {type: 'image/jpeg'});
+    const input = screen.getByLabelText(/Upload a photo/i);
+
+    fireEvent.change(input, { target: { files: [file] } });
+
+    const loadingMessage = await screen.findByText(/Uploading your photo. Please wait.../i);
+
+    expect(loadingMessage).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(mockSetFormData).toHaveBeenCalledWith(
+        expect.objectContaining({
+          photos: expect.any(Array),
+          thumbnails: expect.any(Array)
+        })
+      );
+    });
+  })
+})
