@@ -10,6 +10,7 @@ const RelatedItems = () => {
 
   const dispatch = useDispatch();
 
+  //states
   const currentProduct = useSelector((state) => {
     return state.products.currentProduct
   })
@@ -42,6 +43,7 @@ const RelatedItems = () => {
     return state.relatedItems.relatedItemURLs
   })
 
+  //carousel styling
   const carouselStyle = {
     transform: `translateX(-${currentIndex * 100}%)`
   }
@@ -78,4 +80,3 @@ const RelatedItems = () => {
 export default RelatedItems;
 
 
-// style = {{left: position.x; top: position.y}}

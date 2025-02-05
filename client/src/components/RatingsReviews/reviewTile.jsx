@@ -55,7 +55,7 @@ const ReviewTile = ({review}) => {
 
 
   return (
-    <div className="reviewTile">
+    <div className="reviewTile" data-testid="review-tile">
       { imageModal ? <ReviewImageModal photo={imageURL} setImageModal={setImageModal} setImageURL={setImageURL}/> : null}
       <span className="reviewDate">{date}</span>
       <h3 className="reviewerName">{review.reviewer_name}</h3>
