@@ -1,29 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ComparisonCard from './ComparisonCard.jsx';
-import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs } from '../../store/relatedItemsSlice.js';
+import Stars from './Stars.jsx'
+import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs, fetchReviews } from '../../store/relatedItemsSlice.js';
 import { getProducts, getProductDetails, getProductStyles, setCurrentProduct } from '../../store/productsSlice.js';
 
 const RelatedItemCard = ( {item} ) => {
 
-  const dispatch = useDispatch();
-
   const [comparisonCard, setComparisonCard] = useState(false);
   const [URL, setURL] = useState('');
 
+  const dispatch = useDispatch();
+
+  //states
   const comparisonFeatures = useSelector((state) => {
     return state.relatedItems.comparisonFeatures
   })
-
-  const getComparisonInfo = (currentId, comparisonId) => {
-    var comparisonInfo = [];
-
-  }
-
-  const handleDetailClick = () => {
-    setComparisonCard(!comparisonCard);
-
-  }
 
   const currentProduct = useSelector((state) => {
     return state.products.currentProduct
@@ -37,14 +29,20 @@ const RelatedItemCard = ( {item} ) => {
     return state.relatedItems.outfit
   })
 
+  //carousel styling
   const carouselStyle = {
     transform: `translateX(-${currentIndex * 100}%)`
   }
 
+  //event handlers
   const handleAddToOutfit = (event) => {
     if (!outfit.includes(item)) {
       dispatch(addToOutfit(item))
     }
+  }
+
+  const handleDetailClick = () => {
+    setComparisonCard(!comparisonCard);
   }
 
   const handleCardClick = () => {
@@ -81,7 +79,7 @@ const RelatedItemCard = ( {item} ) => {
         <h3>{item.name}</h3>
         <div>&nbsp;</div>
         <div>{item.default_price}</div>
-        <div>Rating</div>
+        <div><Stars item = {item}/></div>
       </div>
       <button value = {item.name} onClick = {handleAddToOutfit}>Add To Outfit</button>
       {comparisonCard ? <ComparisonCard item = {item}/> : null}
