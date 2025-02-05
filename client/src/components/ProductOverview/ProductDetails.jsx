@@ -8,7 +8,7 @@ const ProductDetails = () => {
   const details = useSelector(state => state.products.productDetails?.[id]);
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
   const status = useSelector(state => state.products.status);
-  const reviews = useSelector(state => state?.reviews.reviews) || [];
+  const reviews = useSelector(state => state?.reviews?.reviews) || [];
 
 
   // if (!details || !styles) return <div>Loading product details...</div>;

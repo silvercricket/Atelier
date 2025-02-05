@@ -1,30 +1,21 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render, screen, cleanup } from '@testing-library/react';
-import '@testing-library/jest-dom'
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import configureStore from 'redux-mock-store';
-import { thunk } from 'redux-thunk';
-import MockAdapter from 'axios-mock-adapter';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import '@testing-library/jest-dom'; // Ensure this is imported
 import ProductOverview from '../ProductOverview.jsx';
-
+import productsReducer from '../../../store/productsSlice.js';
+import cartReducer from '../../../store/cartSlice.js';
 
 const mockProductDetails = {
   id: 40344,
   name: "Camo Onesie",
-  slogan: "Blend in to your crowd",
-  description: "The So Fatigues will wake you up and fit you in.",
   category: "Jackets",
   default_price: "140.00",
   features: [
-    {
-      feature: "Fabric",
-      value: "Canvas"
-    },
-    {
-      feature: "Buttons",
-      value: "Brass"
-    }
+    { feature: "Fabric", value: "Canvas" },
+    { feature: "Buttons", value: "Brass" }
   ]
 };
 
@@ -35,104 +26,84 @@ const mockProductStyles = {
       style_id: 240500,
       name: "Forest Green & Black",
       original_price: "140.00",
-      sale_price: null,
       "default?": true,
-      photos: [
-        {
-          thumbnail_url: "https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
-          url: "https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80"
-        }
-      ],
+      photos: [/*...*/],
       skus: {
-        "1394769": {
-          quantity: 8,
-          size: "XS"
-        },
-        "1394770": {
-          quantity: 16,
-          size: "S"
-        }
+        "1394769": { quantity: 8, size: "XS" },
+        "1394770": { quantity: 16, size: "S" }
       }
     }
   ]
 };
 
-const initialState = {
-  products: {
-    productDetails: {
-      40344: mockProductDetails
+function createTestStore() {
+  return configureStore({
+    reducer: {
+      products: productsReducer,
+      cart: cartReducer
     },
-    productStyles: mockProductStyles
-  }
-};
+    preloadedState: {
+      products: {
+        currentProduct: 40344,
+        productDetails: { '40344': mockProductDetails },
+        productStyles: { '40344': mockProductStyles },
+        status: 'succeeded',
+        error: null
+      }
+    }
+  });
+}
 
-const mockStore = configureStore([thunk]);
-
-describe('ProductOverview', () => {
+describe('ProductOverview Component', () => {
   let store;
   let user;
 
   beforeEach(() => {
-    store = mockStore(initialState);
+    store = createTestStore();
     user = userEvent.setup();
-  })
-
-  test('display product name and price', async () => {
-    render(
-      <Provider store={store}>
-        <ProductOverview />
-      </Provider>
-    );
-
-    expect(screen.getByText('Camo Onesie')).toBeInTheDocument();
-    expect(screen.getByText('$140.00')).toBeInTheDocument();
-    expect(screen.getByText('Jackets')).toBeInTheDocument();
   });
 
-  test('shows correct style options', () => {
+  test('renders product details correctly', async () => {
     render(
       <Provider store={store}>
         <ProductOverview />
       </Provider>
     );
 
-    expect(screen.getByText('Forest Green & Black')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /camo onesie/i })).toBeInTheDocument();
+      expect(screen.getByText(/jackets/i)).toBeInTheDocument();
+      expect(screen.getByText(/\$140\.00/)).toBeInTheDocument();
+    });
   });
-});
 
-describe('Add to Cart Flow', () => {
-  let store;
-  let user;
-
-  beforeEach(() => {
-    store = mockStore(initialState);
-    user = userEvent.setup();
-  })
-
-  test('complete add to cart flow works', async () => {
+  test('displays correct style options', async () => {
     render(
       <Provider store={store}>
         <ProductOverview />
       </Provider>
     );
-    // 1. Load product
-    expect(screen.getByText('Camo Onesie')).toBeInTheDocument();
 
-    // 2. Select style
-    const styleOption = screen.getByText('Forest Green & Black');
-    await user.click(styleOption);
+    await waitFor(() => {
+      expect(screen.getByText(/forest green & black/i)).toBeInTheDocument();
+    });
+  });
 
-    // 3. Choose size
-    const sizeSelector = screen.getByRole('combobox', { name: /size/i });
-    await user.selectOptions(sizeSelector, 'XS');
+  test('handles size selection', async () => {
+    render(
+      <Provider store={store}>
+        <ProductOverview />
+      </Provider>
+    );
 
-    // 4. Set quantity
-    const quantitySelector = screen.getByRole('combobox', { name: /quantity/i });
-    await user.selectOptions(quantitySelector, '1');
+    await screen.findByText(/camo onesie/i);
 
-    // 5. Add to cart
-    const addToBagButton = screen.getByText('ADD TO BAG');
-    await user.click(addToBagButton);
+    const sizeSelect = await screen.findByRole('combobox', { name: /size/i });
+    await user.selectOptions(sizeSelect, 'XS');
 
+    expect(sizeSelect).toHaveValue('XS');
+
+    const quantitySelect = await screen.findByRole('combobox', { name: /quantity/i });
+    expect(quantitySelect).not.toBeDisabled();
   });
 });

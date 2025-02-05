@@ -68,7 +68,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
           <button className='click-away-button' onClick={handleClickAway}><i className="fa-solid fa-x"></i></button>
         }
         <img
-          src={selectedStyle?.photos?.[selectedImageIndex].url || brokenImage}
+          src={selectedStyle?.photos?.[selectedImageIndex]?.url || brokenImage}
           alt='style-photo-main'
           onClick={handleImageClick}
           className='main-image-photo'

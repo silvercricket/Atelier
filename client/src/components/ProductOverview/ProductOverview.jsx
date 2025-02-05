@@ -12,9 +12,11 @@ import './ProductOverview.css';
 const ProductOverview = () => {
   const dispatch = useDispatch();
 
-  const id = useSelector(state => state.products.currentProduct) || 40347;
-  const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
-  const status = useSelector(state => state.products?.status);
+  const id = useSelector(state => state.products?.currentProduct) || 40347;
+  const styles = useSelector(state => state?.products?.productStyles?.[id]?.results) || [];
+  const error = useSelector(state => state?.products?.error);
+  const details = useSelector(state => state?.products?.productDetails?.[id]);
+  const status = useSelector(state => state?.products?.status);
 
   const [selectedStyle, setSelectedStyle] = useState(styles?.[0]);
   const [selectedSize, setSelectedSize] = useState('');
@@ -37,12 +39,15 @@ const ProductOverview = () => {
       }
     };
 
-    if (status === 'idle') fetchData();
-  }, [dispatch, status]);
+    if (status === 'idle' && (!details || !styles)) {
+      fetchData();
+    }
+  }, [dispatch, status, details, styles]);
 
 
   if (status === 'loading') return <div>Loading...</div>;
   if (status === 'failed') return <div>Error: {error}</div>;
+  if (!details || !styles) return <div>Loading product details...</div>;
 
   return (
     <div className='product-container'>

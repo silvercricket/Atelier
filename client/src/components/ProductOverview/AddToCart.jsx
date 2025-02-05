@@ -11,6 +11,10 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
 
 
+  if (!details || !styles.length) {
+    return <div className="loading-message">Loading product details...</div>;
+  }
+
   // const handleGetCart = () => {
   //   dispatch(getCart());
   // };
