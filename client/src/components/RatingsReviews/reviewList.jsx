@@ -32,7 +32,7 @@ const ReviewList = () => {
   // will make this its own component eventually
   let reviewCards = renderedReviews.map((review) => {
     return (
-      <ReviewTile key={review.review_id} review={review} data-testid="review-tile"/>
+      <ReviewTile key={review.review_id} review={review} />
     );
   })
 
