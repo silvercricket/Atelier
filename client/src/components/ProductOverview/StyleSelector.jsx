@@ -17,7 +17,7 @@ const StyleSelector = ({ selectedStyle, setSelectedStyle, selectedSize, setSelec
         <strong>Style -</strong> {selectedStyle?.name}
       </p>
       <div className='style-options'>
-        {styles.length && styles.map(style => (
+        {styles?.length && styles.map(style => (
           <div
             key={style?.style_id}
             className={`style-option ${selectedStyle?.style_id === style?.style_id ? 'selected' : ''}`}
@@ -32,7 +32,6 @@ const StyleSelector = ({ selectedStyle, setSelectedStyle, selectedSize, setSelec
             <img
               src={style?.photos[0]?.thumbnail_url || brokenImage}
               alt={style?.name}
-
             />
           </div>
         ))}

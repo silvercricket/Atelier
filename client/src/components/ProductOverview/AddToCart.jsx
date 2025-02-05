@@ -48,8 +48,10 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
     <div className="cart-container">
       <div className="selectors">
         <select
-          className="size-selector"
           value={selectedSize}
+          className="size-selector"
+          data-testid="size-selector"
+          name='size'
           disabled={!skus.length}
           onChange={(e) => {
             setSelectedSize(e.target.value);
@@ -65,7 +67,9 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
         </select>
         <select
           className="quantity-selector"
+          data-testid="quantity-selector"
           value={quantity}
+          name='quantity'
           onChange={(e) => setQuantity(e.target.value)}
           disabled={!selectedSize || !skus.length}
         >
