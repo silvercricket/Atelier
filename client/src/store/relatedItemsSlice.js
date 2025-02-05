@@ -117,8 +117,6 @@ export const relatedItemsSlice = createSlice({
       })
       .addCase(getRelatedItems.fulfilled, (state, action) => {
         state.status = 'fulfilled'
-        console.log('*RID', relatedItemIds)
-        console.log('**', action.payload)
         state.relatedItemIds = action.payload;
 
       })

@@ -39,7 +39,6 @@ const RelatedItems = () => {
     return state.relatedItems.relatedItemIds
   })
 
-  console.log('*IDS*', relatedItemIds);
 
   const url = useSelector((state) => {
     return state.relatedItems.relatedItemURLs

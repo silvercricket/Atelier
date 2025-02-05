@@ -3,10 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
+  const id = useSelector(state => state.products.currentProduct) || 40347;
   const details = useSelector(state => state.products.productDetails?.[id]);
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
   const status = useSelector(state => state.products.status);
   const reviews = useSelector(state => state?.reviews?.reviews) || [];
+
+
 
 
   const price = details?.sale_price ? (
