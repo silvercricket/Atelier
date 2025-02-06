@@ -73,7 +73,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
           onClick={handleImageClick}
           className='main-image-photo'
           style={{
-            cursor: expanded || zoomed ? 'zoom-out' : 'zoom-in',
+            cursor: expanded && zoomed ? 'zoom-out' : 'zoom-in',
             transform: zoomed ? 'scale(2.5)' : 'scale(1)',
             transition: 'transform 0.3s ease-in-out',
           }}
