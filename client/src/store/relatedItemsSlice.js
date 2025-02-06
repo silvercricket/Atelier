@@ -10,7 +10,7 @@ const initialState = {
   outfit: [],
   error: null,
   relatedItemDetails: [],
-  relatedItemURLs: [],
+  relatedItemURLs: {},
   currentOutfitCardIndex: 0,
   currentProductDetails: {},
   comparisonFeatures: []
@@ -40,9 +40,13 @@ export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async
   try {
     const response = await axios.get(`/api/products/${productId}/styles`);
     if (response.data.results[0].photos[0].url === null) {
-      return 'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
+      var data = {};
+      data[productId] = 'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
+      return data;
     } else {
-      return response.data.results[0].photos[0].url;
+      var data = {};
+      data[productId] = response.data.results[0].photos[0].url
+      return data;
     }
   } catch (err) {
     return rejectWithValue(err.message)
@@ -93,7 +97,7 @@ export const relatedItemsSlice = createSlice({
       var index = action.payload;
       state.outfit.splice(index, 1)
     },
-    showNextOutfitCard: (state, action) => {
+    showNextOutfitCard: (state) => {
       if (state.currentOutfitCardIndex !== state.outfit.length - 1) {
         state.currentOutfitCardIndex += 1;
       }
@@ -148,7 +152,7 @@ export const relatedItemsSlice = createSlice({
       })
       .addCase(getRelatedItemURLs.fulfilled, (state, action) => {
         state.status = 'fulfilled'
-        state.relatedItemURLs = [...state.relatedItemURLs, action.payload];
+        state.relatedItemURLs = {...state.relatedItemURLs, ...action.payload};
       })
       .addCase(getRelatedItemURLs.rejected, (state, action) => {
         state.status = 'failed';

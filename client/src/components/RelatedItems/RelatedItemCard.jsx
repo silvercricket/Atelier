@@ -29,6 +29,10 @@ const RelatedItemCard = ( {item} ) => {
     return state.relatedItems.outfit
   })
 
+  const urls = useSelector((state) => {
+    return state.relatedItems.relatedItemURLs
+  })
+
   //carousel styling
   const carouselStyle = {
     transform: `translateX(-${currentIndex * 100}%)`
@@ -46,7 +50,6 @@ const RelatedItemCard = ( {item} ) => {
   }
 
   const handleCardClick = () => {
-    console.log(item.id)
     dispatch(setCurrentProduct(item.id))
 
     const fetchData = async () => {
@@ -63,16 +66,9 @@ const RelatedItemCard = ( {item} ) => {
 
   }
 
-   useEffect(() => {
-    dispatch(getRelatedItemURLs(item.id))
-      .then((results) => {
-        setURL(results.payload)
-      })
-    }, [])
-
   return (
     <div className = "relatedItemCard" style = {carouselStyle}>
-      <img className = "relatedItemImage" onClick = {handleCardClick} src = {URL} ></img>
+      <img className = "relatedItemImage" onClick = {handleCardClick} src = {urls[item.id]} ></img>
       <span className = "actionButton" onClick = {handleDetailClick}><i className="fa-regular fa-star"></i></span>
       <div onClick = {handleCardClick}>
         <p>{item.category}</p>
