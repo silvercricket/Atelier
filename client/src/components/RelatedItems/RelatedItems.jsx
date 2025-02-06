@@ -39,6 +39,11 @@ const RelatedItems = () => {
     return state.relatedItems.relatedItemIds
   })
 
+
+  const url = useSelector((state) => {
+    return state.relatedItems.relatedItemURLs
+  })
+
   //carousel styling
   const carouselStyle = {
     transform: `translateX(-${currentIndex * 100}%)`

@@ -11,6 +11,10 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
 
 
+  if (!details || !styles.length) {
+    return <div className="loading-message">Loading product details...</div>;
+  }
+
   // const handleGetCart = () => {
   //   dispatch(getCart());
   // };
@@ -33,19 +37,21 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   };
 
   const handleClick = () => {
-    if (selectedSku?.id) dispatch(postCart({ sku_id: selectedSku?.id }));
+    if (selectedSku?.id) dispatch(postCart({ sku_id: selectedSku?.id, count: quantity }));
     setSelectedSize('');
     setQuantity(1);
     if (!selectedSku) window.alert('Pick a size and quantity to continue')
-    else window.alert(`Item: ${selectedSku?.id}, Size: ${selectedSku?.size}, Quantity: ${selectedSku?.quantity} added to cart`)
+    else window.alert(`Item: ${selectedSku?.id}, Size: ${selectedSku?.size}, Quantity: ${quantity} added to cart`)
   };
 
   return (
     <div className="cart-container">
       <div className="selectors">
         <select
-          className="size-selector"
           value={selectedSize}
+          className="size-selector"
+          data-testid="size-selector"
+          name='size'
           disabled={!skus.length}
           onChange={(e) => {
             setSelectedSize(e.target.value);
@@ -61,7 +67,9 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
         </select>
         <select
           className="quantity-selector"
+          data-testid="quantity-selector"
           value={quantity}
+          name='quantity'
           onChange={(e) => setQuantity(e.target.value)}
           disabled={!selectedSize || !skus.length}
         >
@@ -79,6 +87,7 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
       <div className="add-to-bag">
         <button
           className="add-to-bag-button"
+          data-testid="add-to-bag-button"
           disabled={!skus.length}
           onClick={handleClick}
         >

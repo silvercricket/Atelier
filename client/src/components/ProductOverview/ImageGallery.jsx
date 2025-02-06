@@ -43,14 +43,14 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   };
 
   const handleNext = (selectedImageIndex) => {
-    if (selectedImageIndex < selectedStyle?.photos.length - 1) setSelectedImageIndex(selectedImageIndex + 1);
+    if (selectedImageIndex < selectedStyle?.photos?.length - 1) setSelectedImageIndex(selectedImageIndex + 1);
   };
 
 
   return (
     <div className={`image-gallery ${expanded ? 'expanded' : ''} `}>
       <div className='thumbnail-images'>
-        {selectedStyle?.photos.length && selectedStyle?.photos.map((photo, index) => (
+        {selectedStyle?.photos?.length && selectedStyle?.photos.map((photo, index) => (
           <div
             key={index}
             className={`thumbnail ${selectedImageIndex === index ? 'selected' : ''}`}
@@ -68,7 +68,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
           <button className='click-away-button' onClick={handleClickAway}><i className="fa-solid fa-x"></i></button>
         }
         <img
-          src={selectedStyle?.photos?.[selectedImageIndex].url || brokenImage}
+          src={selectedStyle?.photos?.[selectedImageIndex]?.url || brokenImage}
           alt='style-photo-main'
           onClick={handleImageClick}
           className='main-image-photo'
@@ -84,7 +84,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
             onClick={() => handlePrevious(selectedImageIndex)}>
             <span><i className="fa-solid fa-arrow-left"></i></span></button>
         )}
-        {selectedImageIndex < selectedStyle?.photos.length - 1 && (
+        {selectedImageIndex < selectedStyle?.photos?.length - 1 && (
           <button
             className='next-button'
             onClick={() => handleNext(selectedImageIndex)}>
@@ -111,9 +111,6 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
         <p>
           {details?.description}
         </p>
-        {/* <div>
-          {details?.features[0]}
-        </div> */}
       </div>
     </div >
   )
