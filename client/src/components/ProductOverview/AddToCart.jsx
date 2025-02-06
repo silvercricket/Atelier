@@ -25,8 +25,7 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
       id: skuId,
       size: data.size,
       quantity: data.quantity
-    })).filter(item => item.quantity > 0)
-    : [];
+    })).filter(item => item.quantity > 0) : [];
 
   const selectedSku = skus.find(sku => sku.size === selectedSize);
   const maxQuantity = selectedSku ? Math.min(selectedSku.quantity, 15) : 0;

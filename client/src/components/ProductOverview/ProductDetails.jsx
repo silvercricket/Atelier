@@ -9,9 +9,6 @@ const ProductDetails = () => {
   const status = useSelector(state => state.products.status);
   const reviews = useSelector(state => state?.reviews?.reviews) || [];
 
-
-
-
   const price = details?.sale_price ? (
     <>
       <s>${details?.default_price}</s>
@@ -43,6 +40,7 @@ const ProductDetails = () => {
       behavior: 'smooth'
     });
   };
+
 
   return (
     <div className='product-details'>

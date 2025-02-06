@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import brokenImage from '../../images/placeholder.jpeg';
 
@@ -13,6 +13,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
   const status = useSelector(state => state.products?.status);
   const error = useSelector(state => state.products?.error);
+
 
   if (status === 'loading') return <div>Loading...</div>;
   if (status === 'failed') return <div>Error: {error}</div>;
@@ -47,6 +48,21 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   };
 
 
+  const handleThumbnailScroll = () => {
+    const selectedThumbnail = document.querySelector(`.thumbnail.selected`);
+    if (selectedThumbnail) {
+      selectedThumbnail.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
+
+
+  useEffect(() => {
+    handleThumbnailScroll();
+  }, [selectedImageIndex]);
+
   return (
     <div className={`image-gallery ${expanded ? 'expanded' : ''} `}>
       <div className='thumbnail-images'>
@@ -73,7 +89,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
           onClick={handleImageClick}
           className='main-image-photo'
           style={{
-            cursor: expanded || zoomed ? 'zoom-out' : 'zoom-in',
+            cursor: expanded && zoomed ? 'zoom-out' : 'zoom-in',
             transform: zoomed ? 'scale(2.5)' : 'scale(1)',
             transition: 'transform 0.3s ease-in-out',
           }}
