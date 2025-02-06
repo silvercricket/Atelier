@@ -39,10 +39,6 @@ const RelatedItems = () => {
     return state.relatedItems.relatedItemIds
   })
 
-  const url = useSelector((state) => {
-    return state.relatedItems.relatedItemURLs
-  })
-
   //carousel styling
   const carouselStyle = {
     transform: `translateX(-${currentIndex * 100}%)`
@@ -62,6 +58,7 @@ const RelatedItems = () => {
           console.log(relatedItemIds);
           relatedItemIds.forEach((productId) => {
             dispatch(getRelatedItemDetails(productId))
+            dispatch(getRelatedItemURLs(productId))
           })
       }
     }

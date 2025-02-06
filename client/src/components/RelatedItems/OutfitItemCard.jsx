@@ -15,7 +15,9 @@ const OutfitItemCard = ({item}) => {
     dispatch(removeFromOutfit(index))
   }
 
-  const [URL, setURL] = useState('')
+  const urls = useSelector((state) => {
+    return state.relatedItems.relatedItemURLs
+  })
 
   const currentOutfitIndex = useSelector((state) => {
     return state.relatedItems.currentOutfitCardIndex;
@@ -25,17 +27,9 @@ const OutfitItemCard = ({item}) => {
     transform: `translateX(-${currentOutfitIndex * 100}%)`
   }
 
-  useEffect (() => {
-    dispatch(getRelatedItemURLs(item.id))
-    .then((results) => {
-      setURL(results.payload)
-    })
-
-  }, [outfit])
-
   return (
     <span className = "outfitItemCard" style = {carouselStyle}>
-      <img className = "relatedItemImage" src = {URL}></img>
+      <img className = "relatedItemImage" src = {urls[item.id]}></img>
       <span className = "actionButtonOutfit" onClick = {handleOutfitAction}><i class="fa-solid fa-x"></i></span>
       <div>{item.category}</div>
       <h3>{item.name}</h3>
