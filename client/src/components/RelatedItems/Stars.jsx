@@ -34,12 +34,12 @@ const Stars = ({item}) => {
 
   return (
     <div className="rating" >
-    {avgStar >= 1 ? stars.full : avgStar >= 0.5 ? stars.half : stars.empty}
-    {avgStar >= 2 ? stars.full : avgStar >= 1.5 ? stars.half : stars.empty}
-    {avgStar >= 3 ? stars.full : avgStar >= 2.5 ? stars.half : stars.empty}
-    {avgStar >= 4 ? stars.full : avgStar >= 3.5 ? stars.half : stars.empty}
-    {avgStar >= 5 ? stars.full : avgStar >= 4.5 ? stars.half : stars.empty}
-  </div>
+      {avgStar >= 1 ? stars.full : avgStar >= 0.5 ? stars.half : stars.empty}
+      {avgStar >= 2 ? stars.full : avgStar >= 1.5 ? stars.half : stars.empty}
+      {avgStar >= 3 ? stars.full : avgStar >= 2.5 ? stars.half : stars.empty}
+      {avgStar >= 4 ? stars.full : avgStar >= 3.5 ? stars.half : stars.empty}
+      {avgStar >= 5 ? stars.full : avgStar >= 4.5 ? stars.half : stars.empty}
+    </div>
   )
 }
 
