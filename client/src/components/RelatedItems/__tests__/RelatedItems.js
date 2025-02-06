@@ -8,10 +8,7 @@ import { thunk } from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import RelatedItems from '../RelatedItems.jsx'
 import ComparisonCard from '../ComparisonCard.jsx';
-// import { addToOutfit, showPreviousCard } from '../../../store/relatedItemsSlice.js';
 import addToOutfit from '../../../store/relatedItemsSlice.js';
-// import showPrevious
-// { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs, clearRelatedItems, clearIndex, getCurrentProductDetails }
 
 const relatedItemIds = [
   40344,
@@ -181,13 +178,15 @@ const comparisonFeatures = [
 
 ]
 
+
+
 jest.mock('axios');
 
 const mockStore = configureStore([thunk]);
 
-const mockData = { data : { results : mockReviews.reviews}};
-    axios.get.mockResolvedValueOnce(mockData);
-    await store.dispatch(fetchReviews());
+// const mockData = { data : { results : mockReviews.reviews}};
+//     axios.get.mockResolvedValueOnce(mockData);
+//     await store.dispatch(fetchReviews());
 
 const initialState = {
   relatedItems: {
@@ -209,7 +208,7 @@ const initialState = {
   products: { currentProduct: 40347 }
 };
 
-const mockStore = configureStore([thunk]);
+// const mockStore = configureStore([thunk]);
 
 describe('Add to Outfit reducer', () => {
   it('should add an outfit to outfit array', () => {
@@ -247,6 +246,18 @@ describe('RelatedItems', () => {
     expect(screen.getAllByText('Slacker\'s Slacks')[0]).toBeInTheDocument();
   });
 
+  test('renders related item prices on cards', async () => {
+    render(
+      <Provider store={store}>
+        <RelatedItems />
+      </Provider>
+    );
+
+    expect(screen.getByText('140.00')).toBeInTheDocument();
+    expect(screen.getByText('69.00')).toBeInTheDocument();
+    expect(screen.getByText('65.00')).toBeInTheDocument();
+  });
+
   test('renders comparison cards', async () => {
     render(
       <Provider store = {store}>
@@ -258,5 +269,7 @@ describe('RelatedItems', () => {
     expect(screen.getByText('FullControlSkin')).toBeInTheDocument();
     expect(screen.getByText('99% Cotton 1% Elastic')).toBeInTheDocument();
   })
+
+  // test('renders')
 });
 
