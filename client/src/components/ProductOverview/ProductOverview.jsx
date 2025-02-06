@@ -39,9 +39,8 @@ const ProductOverview = () => {
       }
     };
 
-    if (status === 'idle' && (!details || !styles)) {
-      fetchData();
-    }
+    if (status === 'idle' && (!details || !styles)) fetchData();
+
   }, [dispatch, status, details, styles]);
 
 

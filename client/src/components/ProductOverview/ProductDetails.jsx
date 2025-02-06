@@ -41,6 +41,7 @@ const ProductDetails = () => {
     });
   };
 
+
   return (
     <div className='product-details'>
       {reviews.length && (
