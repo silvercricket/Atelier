@@ -20,6 +20,7 @@ const initialState = {
 export const getRelatedItems = createAsyncThunk('products/related', async (_, thunkAPI) => {
   try {
     const productId = thunkAPI.getState().products.currentProduct;
+    console.log(productId)
     const response = await axios.get(`/api/products/${productId}/related`)
     return response.data;
   } catch (err) {
@@ -63,7 +64,7 @@ export const getCurrentProductDetails = createAsyncThunk('products/current', asy
   }
 })
 
-export const fetchReviews = createAsyncThunk('reviews/fetchReviews', async (productId, thunkAPI) => {
+export const fetchReviews = createAsyncThunk('relatedItems/fetchReviews', async (productId, thunkAPI) => {
   return axios
     .get(`/api/reviews/?product_id=${productId}&sort=relevant&count=200`)
     .then((response) => {
@@ -76,7 +77,7 @@ export const relatedItemsSlice = createSlice({
   initialState,
   reducers: {
     showNextCard: (state) => {
-      if (state.currentCardIndex !== state.relatedItems.length - 1) {
+      if (state.currentCardIndex !== state.relatedItems.length - 3) {
         return {
           ...state,
           currentCardIndex: state.currentCardIndex + 1
@@ -175,16 +176,16 @@ export const relatedItemsSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
-      .addCase(fetchReviews.pending, (state, action) => {
-        state.status = 'loading'
-      })
-      .addCase(fetchReviews.fulfilled, (state, action) => {
-        state.status = 'fulfilled'
-      })
-      .addCase(fetchReviews.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      })
+      // .addCase(fetchReviews.pending, (state, action) => {
+      //   state.status = 'loading'
+      // })
+      // .addCase(fetchReviews.fulfilled, (state, action) => {
+      //   state.status = 'fulfilled'
+      // })
+      // .addCase(fetchReviews.rejected, (state, action) => {
+      //   state.status = 'failed';
+      //   state.error = action.payload;
+      // })
   }
 })
 
