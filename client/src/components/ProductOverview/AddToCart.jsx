@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCart, postCart, putCart } from '../../store/cartSlice.js';
+import Cart from './Cart.jsx';
 
 
 const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedSize, quantity, setQuantity }) => {
@@ -14,10 +15,6 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   if (!details || !styles.length) {
     return <div className="loading-message">Loading product details...</div>;
   }
-
-  // const handleGetCart = () => {
-  //   dispatch(getCart());
-  // };
 
 
   const skus = selectedStyle?.skus ?
@@ -45,6 +42,7 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
 
   return (
     <div className="cart-container">
+      {/* <Cart /> */}
       <div className="selectors">
         <select
           value={selectedSize}
