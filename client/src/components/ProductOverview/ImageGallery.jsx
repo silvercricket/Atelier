@@ -58,7 +58,6 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
     }
   };
 
-
   useEffect(() => {
     handleThumbnailScroll();
   }, [selectedImageIndex]);
