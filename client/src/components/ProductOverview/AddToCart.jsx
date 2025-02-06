@@ -37,11 +37,11 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
   };
 
   const handleClick = () => {
-    if (selectedSku?.id) dispatch(postCart({ sku_id: selectedSku?.id }));
+    if (selectedSku?.id) dispatch(postCart({ sku_id: selectedSku?.id, count: quantity }));
     setSelectedSize('');
     setQuantity(1);
     if (!selectedSku) window.alert('Pick a size and quantity to continue')
-    else window.alert(`Item: ${selectedSku?.id}, Size: ${selectedSku?.size}, Quantity: ${selectedSku?.quantity} added to cart`)
+    else window.alert(`Item: ${selectedSku?.id}, Size: ${selectedSku?.size}, Quantity: ${quantity} added to cart`)
   };
 
   return (
@@ -87,6 +87,7 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
       <div className="add-to-bag">
         <button
           className="add-to-bag-button"
+          data-testid="add-to-bag-button"
           disabled={!skus.length}
           onClick={handleClick}
         >
