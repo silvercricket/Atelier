@@ -55,7 +55,6 @@ const RelatedItems = () => {
           // const relatedItemIds = useSelector((state) => {
           //   return state.relatedItems.relatedItemIds
           // })
-          console.log(relatedItemIds);
           relatedItemIds.forEach((productId) => {
             dispatch(getRelatedItemDetails(productId))
             dispatch(getRelatedItemURLs(productId))

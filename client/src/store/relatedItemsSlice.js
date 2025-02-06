@@ -39,6 +39,7 @@ export const getRelatedItemDetails = createAsyncThunk('products/related/details'
 export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async (productId, thunkAPI) => {
   try {
     const response = await axios.get(`/api/products/${productId}/styles`);
+
     if (response.data.results[0].photos[0].url === null) {
       var data = {};
       data[productId] = 'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
