@@ -17,10 +17,30 @@ Atelier is a fully functional e-commerce web application that meets the specific
 4. Run commands `npm run server-dev` and `npm run client-dev` in two separate terminals
 
 ## Features 
-- Product Detail 
+- Product Detail
+    - Image gallery 
+    - Product information
+    - Style selector
+    - Add to cart
+
 - Related Items & Outfit Creation
-- Questions & Answers 
-- Ratings & Reviews 
+   - Comparison view
+   - Related Products List
+   - Your Outfit List
+     
+- Questions & Answers
+  - View questions
+  - Search for a question
+  - Asking a question
+  - Answering a question
+
+- Ratings & Reviews
+  - Write a review
+  - Reviews List
+  - Sorting
+  - Rating Breakdown
+  - Product Breakdown
+
 
 ##
 
