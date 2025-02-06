@@ -59,6 +59,7 @@ const ComparisonCard = ({ item }) => {
       featuresArray.push(featuresObject[key])
     }
     setFeatureData(featuresArray);
+
   }, [])
 
   return (
