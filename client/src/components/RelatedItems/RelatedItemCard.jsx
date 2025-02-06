@@ -36,8 +36,13 @@ const RelatedItemCard = ( {item} ) => {
 
   //event handlers
   const handleAddToOutfit = () => {
-    console.log(item)
-    if (!outfit.includes(item)) {
+    var containsItem = false;
+    for (var i = 0; i < outfit.length; i++) {
+      if (outfit[i].id === item.id) {
+        containsItem = true;
+      }
+    }
+    if (!containsItem) {
       dispatch(addToOutfit(item))
     }
   }
