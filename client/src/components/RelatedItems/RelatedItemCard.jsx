@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ComparisonCard from './ComparisonCard.jsx';
 import Stars from './Stars.jsx'
-import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs, fetchReviews } from '../../store/relatedItemsSlice.js';
+import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs, fetchReviews, clearRelatedItems, clearIndex } from '../../store/relatedItemsSlice.js';
 import { getProducts, getProductDetails, getProductStyles, setCurrentProduct } from '../../store/productsSlice.js';
 
 const RelatedItemCard = ( {item} ) => {
@@ -39,8 +39,14 @@ const RelatedItemCard = ( {item} ) => {
   }
 
   //event handlers
-  const handleAddToOutfit = (event) => {
-    if (!outfit.includes(item)) {
+  const handleAddToOutfit = () => {
+    var containsItem = false;
+    for (var i = 0; i < outfit.length; i++) {
+      if (outfit[i].id === item.id) {
+        containsItem = true;
+      }
+    }
+    if (!containsItem) {
       dispatch(addToOutfit(item))
     }
   }
@@ -49,8 +55,11 @@ const RelatedItemCard = ( {item} ) => {
     setComparisonCard(!comparisonCard);
   }
 
-  const handleCardClick = () => {
+  const handleCardClick = (event) => {
+    event.preventDefault();
     dispatch(setCurrentProduct(item.id))
+    dispatch(clearRelatedItems())
+    dispatch(clearIndex())
 
     const fetchData = async () => {
       try {

@@ -8,7 +8,8 @@
     "client-dev": "npx webpack --watch --mode=development",
     "test": "jest",
     "test-ratings-reviews": "npx jest /client/src/components/RatingsReviews/ratingsReviewsTest.test.js",
-    "test-related-items": "npx jest /client/src/components/RelatedItems/__tests__/RelatedItems.js"
+    "test-related-items": "npx jest /client/src/components/RelatedItems/__tests__/RelatedItems.js",
+    "test-product-overview": "npx jest /client/src/components/ProductOverview/__tests__/ProductOverview.js"
   },
   "repository": {
     "type": "git",

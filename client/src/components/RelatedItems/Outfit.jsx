@@ -31,9 +31,16 @@ const Outfit = ({ currentProductDetails }) => {
 
 
   //event handlers
-  const handleAddOutfit = (event) => {
+  const handleAddOutfit = () => {
     var currentProduct = currentProductDetails;
-    if (!outfit.includes(currentProduct)) {
+
+    var containsItem = false;
+    for (var i = 0; i < outfit.length; i++) {
+      if (outfit[i].id === currentProduct.id) {
+        containsItem = true;
+      }
+    }
+    if (!containsItem) {
       dispatch(addToOutfit(currentProduct))
     }
 

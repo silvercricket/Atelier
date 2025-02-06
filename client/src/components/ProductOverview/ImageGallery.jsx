@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import brokenImage from '../../images/placeholder.jpeg';
 
@@ -13,6 +13,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
   const status = useSelector(state => state.products?.status);
   const error = useSelector(state => state.products?.error);
+
 
   if (status === 'loading') return <div>Loading...</div>;
   if (status === 'failed') return <div>Error: {error}</div>;
@@ -43,14 +44,29 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   };
 
   const handleNext = (selectedImageIndex) => {
-    if (selectedImageIndex < selectedStyle?.photos.length - 1) setSelectedImageIndex(selectedImageIndex + 1);
+    if (selectedImageIndex < selectedStyle?.photos?.length - 1) setSelectedImageIndex(selectedImageIndex + 1);
   };
 
+
+  const handleThumbnailScroll = () => {
+    const selectedThumbnail = document.querySelector(`.thumbnail.selected`);
+    if (selectedThumbnail) {
+      selectedThumbnail.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
+
+
+  useEffect(() => {
+    handleThumbnailScroll();
+  }, [selectedImageIndex]);
 
   return (
     <div className={`image-gallery ${expanded ? 'expanded' : ''} `}>
       <div className='thumbnail-images'>
-        {selectedStyle?.photos.length && selectedStyle?.photos.map((photo, index) => (
+        {selectedStyle?.photos?.length && selectedStyle?.photos.map((photo, index) => (
           <div
             key={index}
             className={`thumbnail ${selectedImageIndex === index ? 'selected' : ''}`}
@@ -68,12 +84,12 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
           <button className='click-away-button' onClick={handleClickAway}><i className="fa-solid fa-x"></i></button>
         }
         <img
-          src={selectedStyle?.photos?.[selectedImageIndex].url || brokenImage}
+          src={selectedStyle?.photos?.[selectedImageIndex]?.url || brokenImage}
           alt='style-photo-main'
           onClick={handleImageClick}
           className='main-image-photo'
           style={{
-            cursor: expanded || zoomed ? 'zoom-out' : 'zoom-in',
+            cursor: expanded && zoomed ? 'zoom-out' : 'zoom-in',
             transform: zoomed ? 'scale(2.5)' : 'scale(1)',
             transition: 'transform 0.3s ease-in-out',
           }}
@@ -84,7 +100,7 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
             onClick={() => handlePrevious(selectedImageIndex)}>
             <span><i className="fa-solid fa-arrow-left"></i></span></button>
         )}
-        {selectedImageIndex < selectedStyle?.photos.length - 1 && (
+        {selectedImageIndex < selectedStyle?.photos?.length - 1 && (
           <button
             className='next-button'
             onClick={() => handleNext(selectedImageIndex)}>
@@ -111,9 +127,6 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
         <p>
           {details?.description}
         </p>
-        {/* <div>
-          {details?.features[0]}
-        </div> */}
       </div>
     </div >
   )
