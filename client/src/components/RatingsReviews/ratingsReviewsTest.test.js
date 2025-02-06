@@ -12,6 +12,7 @@ import axios from 'axios';
 
 // import components
 import RatingBreakdown from './ratingBreakdown.jsx';
+import ProductBreakdown from './productBreakdown.jsx';
 import ReviewList from './reviewList.jsx';
 import CharacteristicsTable from './CharacteristicsTable.jsx';
 import ReviewImageModal from './ReviewImageModal.jsx';
@@ -168,6 +169,17 @@ describe('Rating Breakdown', () => {
     expect(screen.getByText(4)).toBeInTheDocument();
   });
 
+  test('renders 1 progress bar to represent each star rating', async () => {
+    render(
+      <Provider store={store}>
+        <RatingBreakdown />
+      </Provider>
+    );
+
+    const bars = screen.getAllByTestId('star-bar');
+    expect(bars.length).toBe(5);
+  })
+
   test('renders % of customers who recommend product', async () => {
     render(
       <Provider store={store}>
@@ -175,7 +187,7 @@ describe('Rating Breakdown', () => {
       </Provider>
     );
     // 60% of the reviews recommend the product
-    expect(screen.getByText('60% of reviews reccomend this product')).toBeInTheDocument();
+    expect(screen.getByText('60% of reviews recommend this product')).toBeInTheDocument();
   })
 });
 
@@ -229,6 +241,18 @@ describe('New Review Modal', () => {
     const modal = screen.getByRole('dialog');
     expect(modal).toBeInTheDocument();
   })
+
+  test('renders a button to close modal without submitting a review', async () => {
+    render(
+      <Provider store={store}>
+        <NewReviewModal />
+      </Provider>
+    );
+
+    const button = screen.getByTestId('close-modal-btn');
+    expect(button).toBeInTheDocument();
+
+  })
 });
 
 describe('Review Image Modal', () => {
@@ -249,6 +273,17 @@ describe('Review Image Modal', () => {
 
     const modal = screen.getByRole('dialog');
     expect(modal).toBeInTheDocument();
+  })
+
+  test('renders a button to close the modal', async () => {
+    render(
+      <Provider store={store}>
+        <ReviewImageModal />
+      </Provider>
+    );
+
+    const buttonText = screen.getByText('Close Window');
+    expect(buttonText).toBeInTheDocument();
   })
 });
 
@@ -294,5 +329,30 @@ describe('Review List', () => {
       const reviewCount = screen.getByText('5 reviews, sorted by');
       expect(reviewCount).toBeInTheDocument();
     })
+  })
+})
+
+describe('Product Breakdown', () => {
+  let store;
+  let user;
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+    user = userEvent.setup();
+  })
+
+  test('renders correct characteristics for current product', async () => {
+    const mockData = { data : { characteristics : mockChars.characteristics}};
+    axios.get.mockResolvedValueOnce(mockData);
+    await store.dispatch(fetchReviews());
+
+    render(
+      <Provider store={store}>
+        <ProductBreakdown />
+      </Provider>
+    );
+
+    const breakdowns = screen.getAllByTestId('product-breakdown');
+    expect(breakdowns.length).toBe(4);
   })
 })
