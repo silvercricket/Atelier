@@ -16,10 +16,6 @@ const RelatedItemCard = ( {item} ) => {
     return state.relatedItems.comparisonFeatures
   })
 
-  // const currentProduct = useSelector((state) => {
-  //   return state.products.currentProduct
-  // })
-
   const currentIndex = useSelector((state) => {
     return state.relatedItems.currentCardIndex
   })
