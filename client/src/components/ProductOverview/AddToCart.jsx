@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCart, postCart, putCart } from '../../store/cartSlice.js';
-import Cart from './Cart.jsx';
 
 
 const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedSize, quantity, setQuantity }) => {
@@ -42,7 +41,6 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
 
   return (
     <div className="cart-container">
-      {/* <Cart /> */}
       <div className="selectors">
         <select
           value={selectedSize}
