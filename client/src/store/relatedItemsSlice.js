@@ -20,7 +20,6 @@ const initialState = {
 export const getRelatedItems = createAsyncThunk('products/related', async (_, thunkAPI) => {
   try {
     const productId = thunkAPI.getState().products.currentProduct;
-    console.log(productId)
     const response = await axios.get(`/api/products/${productId}/related`)
     return response.data;
   } catch (err) {
@@ -176,16 +175,16 @@ export const relatedItemsSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
-      // .addCase(fetchReviews.pending, (state, action) => {
-      //   state.status = 'loading'
-      // })
-      // .addCase(fetchReviews.fulfilled, (state, action) => {
-      //   state.status = 'fulfilled'
-      // })
-      // .addCase(fetchReviews.rejected, (state, action) => {
-      //   state.status = 'failed';
-      //   state.error = action.payload;
-      // })
+      .addCase(fetchReviews.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchReviews.fulfilled, (state, action) => {
+        state.status = 'fulfilled'
+      })
+      .addCase(fetchReviews.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
   }
 })
 
