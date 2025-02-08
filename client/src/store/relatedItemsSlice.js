@@ -20,7 +20,6 @@ const initialState = {
 export const getRelatedItems = createAsyncThunk('products/related', async (_, thunkAPI) => {
   try {
     const productId = thunkAPI.getState().products.currentProduct;
-    console.log(productId)
     const response = await axios.get(`/api/products/${productId}/related`)
     return response.data;
   } catch (err) {
