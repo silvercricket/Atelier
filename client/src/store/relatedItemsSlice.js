@@ -176,16 +176,16 @@ export const relatedItemsSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
-      // .addCase(fetchReviews.pending, (state, action) => {
-      //   state.status = 'loading'
-      // })
-      // .addCase(fetchReviews.fulfilled, (state, action) => {
-      //   state.status = 'fulfilled'
-      // })
-      // .addCase(fetchReviews.rejected, (state, action) => {
-      //   state.status = 'failed';
-      //   state.error = action.payload;
-      // })
+      .addCase(fetchReviews.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchReviews.fulfilled, (state, action) => {
+        state.status = 'fulfilled'
+      })
+      .addCase(fetchReviews.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
   }
 })
 
