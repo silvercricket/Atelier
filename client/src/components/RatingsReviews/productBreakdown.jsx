@@ -69,7 +69,7 @@ const ProductBreakdown = () => {
     const position = Math.round((rating / 5) * 100) + '%';
     const descriptors = findDescription(char);
     return (
-      <div key={index} className="rating-container">
+      <div key={index} className="rating-container" data-testid="product-breakdown">
         <span>{char}</span>
         <div className="slider">
           <div className="slider-track">

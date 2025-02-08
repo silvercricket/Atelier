@@ -195,20 +195,20 @@ const RatingBreakdown = () => {
         {avgStar >= 5 ? stars.full : avgStar >= 4.5 ? stars.half : stars.empty}
       </div>
       <div className="starBars">
-        <p>{percentRec()}% of reviews reccomend this product</p>
-        <div className="ratingHover" onClick={() => handleFilter(5)}><p>5 stars</p><progress className="ratingCounter" value={fiveStar()} max="100"></progress>
+        <p>{percentRec()}% of reviews recommend this product</p>
+        <div className="ratingHover" onClick={() => handleFilter(5)} data-testid="star-bar"><p>5 stars</p><progress className="ratingCounter" value={fiveStar()} max="100"></progress>
           {filter5 ? <p className="rating-filter">showing reviews with 5 star rating</p> : null}
         </div>
-        <div className="ratingHover" onClick={() => handleFilter(4)}><p>4 stars</p><progress className="ratingCounter" value={fourStar()} max="100"></progress>
+        <div className="ratingHover" onClick={() => handleFilter(4)} data-testid="star-bar"><p>4 stars</p><progress className="ratingCounter" value={fourStar()} max="100"></progress>
           {filter4 ? <p className="rating-filter">showing reviews with 4 star rating</p> : null}
         </div>
-        <div className="ratingHover" onClick={() => handleFilter(3)}><p>3 stars</p><progress className="ratingCounter" value={threeStar()} max="100"></progress>
+        <div className="ratingHover" onClick={() => handleFilter(3)} data-testid="star-bar"><p>3 stars</p><progress className="ratingCounter" value={threeStar()} max="100"></progress>
           {filter3 ? <p className="rating-filter">showing reviews with 3 star rating</p> : null}
         </div>
-        <div className="ratingHover" onClick={() => handleFilter(2)}><p>2 stars</p><progress className="ratingCounter" value={twoStar()} max="100"></progress>
+        <div className="ratingHover" onClick={() => handleFilter(2)} data-testid="star-bar"><p>2 stars</p><progress className="ratingCounter" value={twoStar()} max="100"></progress>
           {filter2 ? <p className="rating-filter">showing reviews with 2 star rating</p> : null}
         </div>
-        <div className="ratingHover" onClick={() => handleFilter(1)}><p>1 stars</p><progress className="ratingCounter" value={oneStar()} max="100"></progress>
+        <div className="ratingHover" onClick={() => handleFilter(1)} data-testid="star-bar"><p>1 stars</p><progress className="ratingCounter" value={oneStar()} max="100"></progress>
           {filter1 ? <p className="rating-filter">showing reviews with 1 star rating</p> : null}
         </div>
       </div>

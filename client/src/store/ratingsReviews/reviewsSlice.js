@@ -12,10 +12,11 @@ const initialState = {
 export const fetchReviews = createAsyncThunk('reviews/fetchReviews', async (sortOptions, thunkAPI) => {
   const sortBy = sortOptions || 'relevant';
   const product_id = thunkAPI.getState().products.currentProduct;
+
   return axios
-    .get(`/api/reviews/?product_id=${product_id}&sort=${sortBy}&count=200`)
+    .get(`/api/reviews/?product_id=${product_id}&sort=${sortBy}&count=200&page=1`)
     .then((response) => {
-      return response.data.results;
+        return response.data.results;
     })
 })
 
