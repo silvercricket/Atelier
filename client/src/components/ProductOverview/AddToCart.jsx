@@ -15,10 +15,6 @@ const AddToCart = ({ selectedStyle, setSelectedStyle, selectedSize, setSelectedS
     return <div className="loading-message">Loading product details...</div>;
   }
 
-  // const handleGetCart = () => {
-  //   dispatch(getCart());
-  // };
-
 
   const skus = selectedStyle?.skus ?
     Object.entries(selectedStyle.skus).map(([skuId, data]) => ({

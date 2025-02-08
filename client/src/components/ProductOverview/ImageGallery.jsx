@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import brokenImage from '../../images/placeholder.jpeg';
 
@@ -7,12 +7,17 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
   const [expanded, setExpanded] = useState(false);
   const [zoomed, setZoomed] = useState(false);
   const [zoomScale, setZoomScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
 
   const id = useSelector(state => state.products.currentProduct) || 40347;
   const details = useSelector(state => state.products.productDetails?.[id]);
   const styles = useSelector(state => state.products.productStyles?.[id]?.results) || [];
   const status = useSelector(state => state.products?.status);
   const error = useSelector(state => state.products?.error);
+
+  const imageRef = useRef(null);
 
 
   if (status === 'loading') return <div>Loading...</div>;
@@ -23,12 +28,37 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
       setExpanded(true);
       setZoomed(false);
       setZoomScale(1);
+      setPosition({ x: 0, y: 0 });
     } else if (expanded && !zoomed) {
       setZoomed(true);
       setZoomScale(2.5);
     } else if (expanded && zoomed) {
       setZoomed(false);
       setZoomScale(1);
+      setPosition({ x: 0, y: 0 });
+    }
+  };
+
+  const handleMouseDown = e => {
+    if (zoomed) {
+      setDragging(true);
+      setStartPos({
+        x: e.clientX - position.x,
+        y: e.clientY - position.y
+      })
+    }
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+
+  const handleMouseMove = e => {
+    if (dragging) {
+      setPosition({
+        x: e.clientX - startPos.x,
+        y: e.clientY - startPos.y
+      })
     }
   };
 
@@ -58,7 +88,6 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
     }
   };
 
-
   useEffect(() => {
     handleThumbnailScroll();
   }, [selectedImageIndex]);
@@ -79,19 +108,26 @@ const ImageGallery = ({ selectedStyle, setSelectedStyle, selectedImageIndex, set
           </div>
         ))}
       </div>
-      <div className={`main-image ${expanded ? "expanded" : ''} ${zoomed ? 'zoomed' : ''}`}>
+      <div
+        className={`main-image ${expanded ? "expanded" : ''} ${zoomed ? 'zoomed' : ''}`}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onDragStart={(e) => e.preventDefault()}
+      >
         {expanded &&
           <button className='click-away-button' onClick={handleClickAway}><i className="fa-solid fa-x"></i></button>
         }
         <img
+          ref={imageRef}
           src={selectedStyle?.photos?.[selectedImageIndex]?.url || brokenImage}
           alt='style-photo-main'
           onClick={handleImageClick}
           className='main-image-photo'
           style={{
-            cursor: expanded && zoomed ? 'zoom-out' : 'zoom-in',
-            transform: zoomed ? 'scale(2.5)' : 'scale(1)',
-            transition: 'transform 0.3s ease-in-out',
+            cursor: expanded && zoomed ? (dragging ? 'grabbing' : 'grab') : 'zoom-in',
+            transform: `scale(${zoomScale}) translate(${position.x}px, ${position.y}px)`,
+            transition: dragging ? 'none' : 'transform 0.3s ease-in-out',
           }}
         />
         {selectedImageIndex > 0 && (
