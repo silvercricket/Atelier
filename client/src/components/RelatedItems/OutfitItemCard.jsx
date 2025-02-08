@@ -29,7 +29,7 @@ const OutfitItemCard = ({item}) => {
 
   return (
     <span className = "outfitItemCard" style = {carouselStyle}>
-      <img className = "relatedItemImage" src = {urls[item.id]}></img>
+      <img className = "relatedItemImage" src = {urls[item.id]} alt = {item.name}></img>
       <span className = "actionButtonOutfit" onClick = {handleOutfitAction}><i class="fa-solid fa-x"></i></span>
       <div>{item.category}</div>
       <h3>{item.name}</h3>

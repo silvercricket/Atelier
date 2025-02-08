@@ -20,7 +20,6 @@ const initialState = {
 export const getRelatedItems = createAsyncThunk('products/related', async (_, thunkAPI) => {
   try {
     const productId = thunkAPI.getState().products.currentProduct;
-    console.log(productId)
     const response = await axios.get(`/api/products/${productId}/related`)
     return response.data;
   } catch (err) {
@@ -40,6 +39,7 @@ export const getRelatedItemDetails = createAsyncThunk('products/related/details'
 export const getRelatedItemURLs = createAsyncThunk('products/related/URL', async (productId, thunkAPI) => {
   try {
     const response = await axios.get(`/api/products/${productId}/styles`);
+
     if (response.data.results[0].photos[0].url === null) {
       var data = {};
       data[productId] = 'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
@@ -176,16 +176,16 @@ export const relatedItemsSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
-      // .addCase(fetchReviews.pending, (state, action) => {
-      //   state.status = 'loading'
-      // })
-      // .addCase(fetchReviews.fulfilled, (state, action) => {
-      //   state.status = 'fulfilled'
-      // })
-      // .addCase(fetchReviews.rejected, (state, action) => {
-      //   state.status = 'failed';
-      //   state.error = action.payload;
-      // })
+      .addCase(fetchReviews.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchReviews.fulfilled, (state, action) => {
+        state.status = 'fulfilled'
+      })
+      .addCase(fetchReviews.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
   }
 })
 

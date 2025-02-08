@@ -184,17 +184,13 @@ jest.mock('axios');
 
 const mockStore = configureStore([thunk]);
 
-// const mockData = { data : { results : mockReviews.reviews}};
-//     axios.get.mockResolvedValueOnce(mockData);
-//     await store.dispatch(fetchReviews());
-
 const initialState = {
   relatedItems: {
     detailView: false,
     relatedItems: relatedItemDetails,
     relatedItemIds: relatedItemIds,
     currentCardIndex: 0,
-    status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+    status: 'idle',
     outfit: [
       {category: 'Jackets', name: 'Camo Onesie', price: '140.00'},
       {category: 'Accessories', name: 'Bright Future Sunglasses', price: '69.00'},
@@ -207,8 +203,6 @@ const initialState = {
   },
   products: { currentProduct: 40347 }
 };
-
-// const mockStore = configureStore([thunk]);
 
 describe('Add to Outfit reducer', () => {
   it('should add an outfit to outfit array', () => {
@@ -270,6 +264,6 @@ describe('RelatedItems', () => {
     expect(screen.getByText('99% Cotton 1% Elastic')).toBeInTheDocument();
   })
 
-  // test('renders')
+
 });
 

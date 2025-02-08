@@ -12,7 +12,6 @@ const RelatedItemCard = ( {item} ) => {
 
   const dispatch = useDispatch();
 
-  //states
   const comparisonFeatures = useSelector((state) => {
     return state.relatedItems.comparisonFeatures
   })
@@ -29,15 +28,18 @@ const RelatedItemCard = ( {item} ) => {
     return state.relatedItems.relatedItemURLs
   })
 
-  //carousel styling
   const carouselStyle = {
     transform: `translateX(-${currentIndex * 100}%)`
   }
 
-  //event handlers
   const handleAddToOutfit = () => {
-    console.log(item)
-    if (!outfit.includes(item)) {
+    var containsItem = false;
+    for (var i = 0; i < outfit.length; i++) {
+      if (outfit[i].id === item.id) {
+        containsItem = true;
+      }
+    }
+    if (!containsItem) {
       dispatch(addToOutfit(item))
     }
   }
@@ -68,7 +70,7 @@ const RelatedItemCard = ( {item} ) => {
 
   return (
     <div className = "relatedItemCard" style = {carouselStyle}>
-      <img className = "relatedItemImage" onClick = {handleCardClick} src = {urls[item.id]} ></img>
+      <img className = "relatedItemImage" onClick = {handleCardClick} src = {urls[item.id]} alt = {item.name}></img>
       <span className = "actionButton" onClick = {handleDetailClick}><i className="fa-regular fa-star"></i></span>
       <div onClick = {handleCardClick}>
         <p>{item.category}</p>

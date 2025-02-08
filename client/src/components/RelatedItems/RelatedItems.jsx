@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RelatedItemCard from './RelatedItemCard.jsx'
 import { showPreviousCard, showNextCard, addToOutfit, getRelatedItems, getRelatedItemDetails, getRelatedItemURLs, clearRelatedItems, clearIndex, getCurrentProductDetails } from '../../store/relatedItemsSlice.js';
-// import { getProducts, getProductDetails, getProductStyles } from '../../store/productsSlice.js';
 import Outfit from './Outfit.jsx'
 import axios from 'axios';
 
@@ -12,7 +11,6 @@ const RelatedItems = () => {
 
   const [relatedItemIds, setRelatedItemIds] = useState([]);
 
-  //states
   const currentProduct = useSelector((state) => {
     return state.products.currentProduct
   })
@@ -34,32 +32,19 @@ const RelatedItems = () => {
     return state.relatedItems.relatedItems
   })
 
-  // const relatedItemIds = useSelector((state) => {
-  //   return state.relatedItems.relatedItemIds
-  // })
-
-
   const url = useSelector((state) => {
     return state.relatedItems.relatedItemURLs
   })
 
-  //carousel styling
   const carouselStyle = {
     transform: `translateX(-${currentIndex * 100}%)`
   }
-
-
-  //promisify this
 
     useEffect(() => {
       const fetchData = async () => {
         if (currentProduct) {
           const { payload: relatedItemIds } = await dispatch(getRelatedItems())
           await dispatch(getCurrentProductDetails(currentProduct))
-          // const relatedItemIds = useSelector((state) => {
-          //   return state.relatedItems.relatedItemIds
-          // })
-          console.log(relatedItemIds);
           relatedItemIds.forEach((productId) => {
             dispatch(getRelatedItemDetails(productId))
             dispatch(getRelatedItemURLs(productId))
