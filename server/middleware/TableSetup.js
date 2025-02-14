@@ -13,13 +13,19 @@ const filepathCharsRevs = '/oldData/characteristic_reviews.csv';
 const filepathPhotos = './oldData/reviews_photos.csv';
 const filepathRevs = './oldData/reviews.csv';
 
-  Review.hasMany(Picture);
+  Review.hasMany(Picture,{
+    foreignKey: 'review_id',
+  });
   Picture.belongsTo(Review);
   //Review.hasMany(Char);
   //Char.belongsTo(Review);
-  Review.hasMany(CharRev);
+  Review.hasMany(CharRev,{
+    foreignKey: 'review_id',
+  });
   CharRev.belongsTo(Review);
-  Char.hasMany(CharRev);
+  Char.hasMany(CharRev,{
+    foreignKey: 'characteristic_id',
+  });
   CharRev.belongsTo(Char);
 
   Review.sync();

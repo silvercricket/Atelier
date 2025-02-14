@@ -7,11 +7,19 @@ const axios = require('axios')
 
 const app = express();
 
+var router = require('./routes.js');
+
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
 
 // attach auth key to all routes
 app.use('/api', auth);
+app.use('/reviews', router);
+// app.get('/reviews',(req,res)=>{
+//   res.json('noice');
+// })
+
 
 //console.log(ETL);
 

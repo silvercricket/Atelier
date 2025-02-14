@@ -17,22 +17,31 @@ const filepathRevs = './oldData/reviews.csv';
   const db = new Sequelize('reviews','root','my-secret-pw',
      {
       port: '52771:3306⁠',
-      dialect: 'mysql'
+      dialect: 'mysql',
+      //logging: false
     });
 
 
 
   const CharRev = db.define('characteristics_reviews',{//id,characteristic_id,review_id,value
     //id: Sequelize.INTEGER,
+    review_id: {type: Sequelize.INTEGER},
+    characteristic_id: {type: Sequelize.INTEGER},
     value: Sequelize.INTEGER
   }
 )
   const Char = db.define('characteristics',{//id,product_id,name
-    //id: Sequelize.INTEGER,
+    product_id: {type: Sequelize.INTEGER, index: true, allowNull:false},
+
     name: Sequelize.STRING,
+  },
+  {
+    indexes:[{unique: false, fields:['product_id']}]//take a look at this later
   })
+
   const Picture = db.define('pictures',{//id,review_id,url
     //id: {type: Number, unique: true},
+    review_id: {type: Sequelize.INTEGER},
     url: Sequelize.STRING
   })
 
@@ -41,12 +50,11 @@ const filepathRevs = './oldData/reviews.csv';
     body: Sequelize.STRING(1000),
     summary: Sequelize.STRING,
     helpfullness: Sequelize.STRING,
-    date: Sequelize.DATE,
     reviewer_name: Sequelize.STRING,
     response: Sequelize.STRING,
     reccomend: Sequelize.BOOLEAN,
     reviewer_email: Sequelize.STRING,
-    product_id: Sequelize.INTEGER
+    product_id: {type: Sequelize.INTEGER, index: true, allowNull:false}
 
   },
   {
