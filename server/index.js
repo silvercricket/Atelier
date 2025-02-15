@@ -2,13 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const auth = require('./middleware/authorization.js');
-
+var bodyParser = require('body-parser')
 const axios = require('axios')
 
 const app = express();
 
 var router = require('./routes.js');
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
