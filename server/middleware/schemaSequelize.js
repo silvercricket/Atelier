@@ -18,30 +18,30 @@ const filepathRevs = './oldData/reviews.csv';
      {
       port: '52771:3306⁠',
       dialect: 'mysql',
-      logging: false
+      //logging: false
     });
 
 
 
-  const CharRev = db.define('characteristics_reviews',{//id,characteristic_id,review_id,value
+  const CharRev = db.define('characteristics_reviews',{//id,characteristicId,reviewId,value
     //id: Sequelize.INTEGER,
-    review_id: {type: Sequelize.INTEGER},
-    characteristic_id: {type: Sequelize.INTEGER},
+    // reviewId: {type: Sequelize.INTEGER},
+    // characteristicId: {type: Sequelize.INTEGER},
     value: Sequelize.INTEGER
   }
 )
-  const Char = db.define('characteristics',{//id,product_id,name
-    product_id: {type: Sequelize.INTEGER, index: true, allowNull:false},
+  const Char = db.define('characteristics',{//id,productId,name
+    productId: {type: Sequelize.INTEGER, index: true, allowNull:false},
 
     name: Sequelize.STRING,
   },
   {
-    indexes:[{unique: false, fields:['product_id']}]//take a look at this later
+    indexes:[{unique: false, fields:['productId']}]//take a look at this later
   })
 
-  const Picture = db.define('pictures',{//id,review_id,url
+  const Picture = db.define('pictures',{//id,reviewId,url
     //id: {type: Number, unique: true},
-    review_id: {type: Sequelize.INTEGER},
+    // reviewId: {type: Sequelize.INTEGER},
     url: Sequelize.STRING
   })
 
@@ -53,14 +53,53 @@ const filepathRevs = './oldData/reviews.csv';
     reviewer_name: Sequelize.STRING,
     response: Sequelize.STRING,
     reccomend: Sequelize.BOOLEAN,
+    reported: Sequelize.BOOLEAN,
     reviewer_email: Sequelize.STRING,
-    product_id: {type: Sequelize.INTEGER, index: true, allowNull:false}
+    productId: {type: Sequelize.INTEGER, index: true, allowNull:false}
 
   },
   {
-    indexes:[{unique: false, fields:['product_id']}]//take a look at this later
+    indexes:[{unique: false, fields:['productId']}]//take a look at this later
   })
 
+  // Review.hasMany(CharRev,{
+  //   foreignKey: 'reviewId'
+  // });
+  // // Picture.belongsTo(Review,{
+  // //   foreignKey:'reviewId'
+  // // });
+
+  // CharRev.belongsTo(Review, {
+  //   foreignKey: 'reviewId'
+  // });
+  // Char.associate = (models) =>{
+  //   CharRev.belongsTo(models.Char, {
+  //     foreignKey: 'characteristicId'
+  //   });
+  //   Char.hasOne(models.CharRev,{
+  //     foreignKey: 'characteristicId'
+  //   });
+  // }
+
+
+  // Review.hasMany(CharRev,{
+  //   sourceKey: 'id',
+  //   foreignKey: 'reviewId'
+  // });
+  // Review.hasMany(Picture,{
+  //   sourceKey: 'id',
+  //   foreignKey: 'reviewId'
+  // });
+
+  // // Picture.belongsTo(Review,{
+  // //   through:'reviewId',
+  // //   targetKey: 'id'
+  // // });
+  // Review.sync();
+  // Char.sync();
+  // CharRev.sync();
+
+  // Picture.sync();
 
 
   exports.db = db;

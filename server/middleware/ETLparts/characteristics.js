@@ -7,7 +7,7 @@ var Sequelize = require('sequelize');
 const fs = require('fs');
 const {parse} = require('csv-parse');
 //const filepath = require('./oldData');
-const filepathChars = '../oldData/characteristics.csv';
+const filepathChars = '../oldData/characteristics_stub.csv';
 const filepathCharsRevs = '../oldData/characteristic_reviews.csv';
 const filepathPhotos = '../oldData/reviews_photos.csv';
 const filepathRevs = '../oldData/reviews.csv';
@@ -29,7 +29,7 @@ const {Char} = require('./../schemaSequelize.js');
       const readCharStream = fs.createReadStream(path.join(__dirname,filepathChars))
       .pipe(parse({delimiter: ',', from_line: 2}));
       readCharStream.on('data', (row)=>{
-        data.push({id:Number(row[0]),product_id:Number(row[1]),name:row[2]});
+        data.push({id:Number(row[0]),productId:Number(row[1]),name:row[2]});
         if(data.length === PROCESS_LIMIT){
           dataPass = data.slice();
           data = [];

@@ -7,10 +7,10 @@ var Sequelize = require('sequelize');
 const fs = require('fs');
 const {parse} = require('csv-parse');
 //const filepath = require('./oldData');
-const filepathChars = '../oldData/characteristics.csv';
-const filepathCharsRevs = '../oldData/characteristic_reviews.csv';
-const filepathPhotos = '../oldData/reviews_photos.csv';
-const filepathRevs = '../oldData/reviews.csv';
+const filepathChars = '../oldData/characteristics_stub.csv';
+const filepathCharsRevs = '../oldData/characteristic_reviews_stub.csv';
+const filepathPhotos = '../oldData/reviews_photos_stub.csv';
+const filepathRevs = '../oldData/reviews_stub.csv';
 
 const {Review} = require('./../schemaSequelize.js');
 
@@ -38,7 +38,7 @@ const {Review} = require('./../schemaSequelize.js');
           reccomended = false;
         data.push({
           id:Number(row[0]),
-          product_id:Number(row[1]),
+          productId:Number(row[1]),
           rating:row[2],
           createdAt:new Date(Number(row[3])),
           summary:row[4],

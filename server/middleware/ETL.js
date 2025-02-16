@@ -12,10 +12,10 @@ const {TPhotos} = require('./ETLparts/photos.js');
 const fs = require('fs');
 const {parse} = require('csv-parse');
 //const filepath = require('./oldData');
-const filepathChars = '/oldData/characteristics.csv';
-const filepathCharsRevs = '/oldData/characteristic_reviews.csv';
-const filepathPhotos = './oldData/reviews_photos.csv';
-const filepathRevs = './oldData/reviews.csv';
+const filepathChars = '/oldData/characteristics_stub.csv';
+const filepathCharsRevs = '/oldData/characteristic_reviews_stub.csv';
+const filepathPhotos = './oldData/reviews_photos_stub.csv';
+const filepathRevs = './oldData/reviews_stub.csv';
 
 
 
