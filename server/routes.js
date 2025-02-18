@@ -142,7 +142,9 @@ router.get('/metaData', (req, res)=>{
 
 
 router.post('/reviews', (req, res)=>{
-  console.log(req.body);
+  //console.log(req);
+  //console.log('no really, I\'m a birdie yo______________');
+  //console.log(req.headers)
   const product_id = JSON.parse(req.headers.product_id);
   const review = req.body;
   const body = review.body;
@@ -150,11 +152,15 @@ router.post('/reviews', (req, res)=>{
   const reccomend = JSON.parse(review.reccomend);
   const reviewer_name = review.reviewer_name;
   const reviewer_email = review.reviewer_email;
-  console.log(typeof review.pictures);
-  const pics = JSON.parse(review.pictures);
-  const characteristics = JSON.parse(review.characteristics);
+  if(review.pictures.length){
+    const pics = JSON.parse(review.pictures);
+  }else{
+    const pics = [];
+  }
+  //console.log(review.characteristics);
+  const characteristics = review.characteristics;
   response = false;
-  console.log(characteristics);
+  //console.log(characteristics);
   Review.create({
     productId: product_id,
     body : body,
