@@ -13,7 +13,7 @@ let expect = require('chai').expect;
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-console.log('testing');
+
 
 app.use('/reviews', router);
 app.set({'product_id': 1})
@@ -70,10 +70,9 @@ describe('/reviews', () => {
         console.log((res.body[res.body.length - 1].body))
         expect(res.body[res.body.length - 1].body).to.equal('I\'m so tired... os so soooooooo tire my boi')
         var reviewId = res.body[res.body.length - 1].id;
-        console.log('this should happen first_______');
 
         //it('and finally report them and no longer retrieve them', () => {
-          console.log('this should happen second_______');
+
 
           request(app)
           .post('/reviews/report')

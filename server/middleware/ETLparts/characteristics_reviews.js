@@ -8,7 +8,7 @@ const fs = require('fs');
 const {parse} = require('csv-parse');
 //const filepath = require('./oldData');
 const filepathChars = '../oldData/characteristics.csv';
-const filepathCharsRevs = '../oldData/characteristic_reviews_stub.csv';
+const filepathCharsRevs = '../oldData/characteristic_reviews.csv';
 const filepathPhotos = '../oldData/reviews_photos.csv';
 const filepathRevs = '../oldData/reviews.csv';
 

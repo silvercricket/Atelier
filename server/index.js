@@ -1,46 +1,47 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const auth = require('./middleware/authorization.js');
+//const auth = require('./middleware/authorization.js');
 var bodyParser = require('body-parser')
 const axios = require('axios')
 
-const app = express();
+const cluster = require('node:cluster');
+const os = require('os');
 
-var router = require('./routes.js');
+if(cluster.isMaster){
+  console.log(`Master process: ${process.pid} is running`);
+  console.log('cores: ')
+  var cores=os.cpus().length;
+  if(cores>8){
+    cores = 8;
+  }
+  //const cores = Math.floor(os.cpus().length*.4);
+  for(var i = 0; i < cores; i++){
+    cluster.fork();
+  }
+} else {
+  console.log(`Worker process: ${process.pid} started`);
+  const app = express();
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+  var router = require('./routes.js');
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
-app.use(express.json());
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
-// attach auth key to all routes
-app.use('/api', auth);
-app.use('/reviews', router);
-// app.get('/reviews',(req,res)=>{
-//   res.json('noice');
-// })
+  //app.use(express.static(path.join(__dirname, '../client/dist')));
+  app.use(express.json());
 
-
-//console.log(ETL);
-
-// app.get('/products', auth, (req, res) => {
-//   // console.log('GETTING ALL PRODUCTS');
-// });
-
-// app.get('/products/:id', auth, (req, res) => {
-//   // console.log('GETTING PRODUCT ID: ', req.params.id);
-// });
-
-// app.get('/products/:id/styles', auth, (req, res) => {
-//   // console.log('GETTING STYLES: ', req.params.id);
-// });
+  // attach auth key to all routes
+  //app.use('/api', auth);
+  app.use('/reviews', router);
 
 
 
 
-app.listen(3000, () => {
-  console.log('currently listening on port 3000');
-})
+
+  app.listen(3000, () => {
+    console.log('currently listening on port 3000');
+  })
+}
+

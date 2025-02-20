@@ -10,7 +10,7 @@ const {parse} = require('csv-parse');
 const filepathChars = '../oldData/characteristics_stub.csv';
 const filepathCharsRevs = '../oldData/characteristic_reviews_stub.csv';
 const filepathPhotos = '../oldData/reviews_photos_stub.csv';
-const filepathRevs = '../oldData/reviews_stub.csv';
+const filepathRevs = '../oldData/reviews.csv';
 
 const {Review} = require('./../schemaSequelize.js');
 

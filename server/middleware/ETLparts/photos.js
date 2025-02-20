@@ -8,7 +8,7 @@ const fs = require('fs');
 const {parse} = require('csv-parse');
 //const filepath = require('./oldData');
 
-const filepathPhotos = '../oldData/reviews_photos_stub.csv';
+const filepathPhotos = '../oldData/reviews_photos.csv';
 
 
 const {Review, Picture} = require('./../schemaSequelize.js');
@@ -41,7 +41,7 @@ const {Review, Picture} = require('./../schemaSequelize.js');
       .pipe(parse({delimiter: ',', from_line: 2}));
       readPicturesStream.on('data', (row)=>{
 
-        data.push({id:Number(row[0]),reviewId:1,url:row[2]});
+        data.push({id:Number(row[0]),reviewId:row[1],url:row[2]});
         if(data.length === PROCESS_LIMIT){
           dataPass = data.slice();
           data = [];

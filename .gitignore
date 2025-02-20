@@ -4,3 +4,5 @@ node_modules
 client/dist
 coverage
 server/middleware/oldData
+artillery.yaml
+notGreat.pem

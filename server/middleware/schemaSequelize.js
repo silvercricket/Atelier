@@ -18,7 +18,7 @@ const filepathRevs = './oldData/reviews.csv';
      {
       port: '52771:3306⁠',
       dialect: 'mysql',
-      //logging: false
+      logging: false
     });
 
 
