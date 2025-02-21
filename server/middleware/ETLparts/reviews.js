@@ -15,7 +15,7 @@ const filepathRevs = '../oldData/reviews.csv';
 const {Review} = require('./../schemaSequelize.js');
 
 
-  const PROCESS_LIMIT = 100000;
+  const PROCESS_LIMIT = 1000;
   var process = 0;
 
 
@@ -53,7 +53,11 @@ const {Review} = require('./../schemaSequelize.js');
         if(data.length === PROCESS_LIMIT){
           dataPass = data.slice();
           data = [];
-          Review.bulkCreate(dataPass);
+          readRevsStream.pause();
+          Review.bulkCreate(dataPass)
+          .then(()=>{
+            readRevsStream.resume();
+          })
         }
 
 

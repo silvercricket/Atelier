@@ -14,7 +14,7 @@ const filepathPhotos = '../oldData/reviews_photos.csv';
 const {Review, Picture} = require('./../schemaSequelize.js');
 
 
-  const PROCESS_LIMIT = 100000;
+  const PROCESS_LIMIT = 1000;
   var process = 0;
 
   Review.hasMany(Picture,{
@@ -43,9 +43,13 @@ const {Review, Picture} = require('./../schemaSequelize.js');
 
         data.push({id:Number(row[0]),reviewId:row[1],url:row[2]});
         if(data.length === PROCESS_LIMIT){
+          readPicturesStream.pause();
           dataPass = data.slice();
           data = [];
-          Picture.bulkCreate(dataPass,{include: [Review]});
+          Picture.bulkCreate(dataPass,{include: [Review]})
+          .then(()=>{
+            readPicturesStream.resume();
+          })
         }
       })
       .on('end', ()=>{

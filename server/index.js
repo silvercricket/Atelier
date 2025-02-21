@@ -16,7 +16,7 @@ if(cluster.isMaster){
     cores = 8;
   }
   //const cores = Math.floor(os.cpus().length*.4);
-  for(var i = 0; i < cores; i++){
+  for(var i = 0; i < 1; i++){
     cluster.fork();
   }
 } else {

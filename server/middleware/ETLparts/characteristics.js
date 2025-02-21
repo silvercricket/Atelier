@@ -15,7 +15,7 @@ const filepathRevs = '../oldData/reviews.csv';
 const {Char} = require('./../schemaSequelize.js');
 
 
-  const PROCESS_LIMIT = 100000;
+  const PROCESS_LIMIT = 1000;
   var process = 0;
 
 
@@ -31,9 +31,13 @@ const {Char} = require('./../schemaSequelize.js');
       readCharStream.on('data', (row)=>{
         data.push({id:Number(row[0]),productId:Number(row[1]),name:row[2]});
         if(data.length === PROCESS_LIMIT){
+          readCharStream.pause();
           dataPass = data.slice();
           data = [];
-          Char.bulkCreate(dataPass);
+          Char.bulkCreate(dataPass)
+          .then(()=>{
+            readCharStream.resume();
+          })
         }
       })
       .on('end', ()=>{

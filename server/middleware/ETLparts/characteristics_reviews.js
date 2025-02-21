@@ -15,7 +15,7 @@ const filepathRevs = '../oldData/reviews.csv';
 const {CharRev,Review,Char} = require('./../schemaSequelize.js');
 
 
-  const PROCESS_LIMIT = 100000;
+  const PROCESS_LIMIT = 1000;
   var process = 0;
 
   Review.hasMany(CharRev,{
@@ -53,9 +53,13 @@ const {CharRev,Review,Char} = require('./../schemaSequelize.js');
       readCharRevStream.on('data', (row)=>{
         data.push({id:Number(row[0]),characteristicId:Number(row[1]),reviewId:Number(row[2]),value:Number(row[3])});
         if(data.length === PROCESS_LIMIT){
+          readCharRevStream.pause();
           dataPass = data.slice();
           data = [];
-          CharRev.bulkCreate(dataPass,{include: [Review,Char]});
+          CharRev.bulkCreate(dataPass,{include: [Review,Char]})
+          .then(()=>{
+            readCharRevStream.resume();
+          })
         }
       })
       .on('end', ()=>{
