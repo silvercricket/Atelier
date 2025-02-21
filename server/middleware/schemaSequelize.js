@@ -13,7 +13,7 @@ const filepathPhotos = './oldData/reviews_photos.csv';
 const filepathRevs = './oldData/reviews.csv';
 
 
-
+  //for deployed host
   const db = new Sequelize('reviews','root','my-secret-pw',
      {
       host: '3.143.17.81',
@@ -21,6 +21,15 @@ const filepathRevs = './oldData/reviews.csv';
       dialect: 'mysql',
       //logging: false
     });
+
+    //for local host
+  // const db = new Sequelize('reviews','root','my-secret-pw',
+  //     {
+  //     //  host: '3.143.17.81',
+  //      port: '52771:3306',
+  //      dialect: 'mysql',
+  //      //logging: false
+  //    });
 
 
 
