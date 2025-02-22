@@ -42,7 +42,7 @@ Picture.sync();
 
 router.get('/', (req,res)=>{
   console.log('ahahahahahah');
-  res.json('eesh');
+  res.send('health');
 });
 router.get('/reviews', (req, res)=>{
 
