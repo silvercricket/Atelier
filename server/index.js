@@ -12,11 +12,8 @@ if(cluster.isMaster){
   console.log(`Master process: ${process.pid} is running`);
   console.log('cores: ')
   var cores=os.cpus().length;
-  if(cores>8){
-    cores = 8;
-  }
   //const cores = Math.floor(os.cpus().length*.4);
-  for(var i = 0; i < 8; i++){
+  for(var i = 0; i < cores; i++){
     cluster.fork();
   }
 } else {
