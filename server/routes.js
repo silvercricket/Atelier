@@ -40,6 +40,10 @@ Picture.sync();
 
 
 
+router.get('/', (req,res)=>{
+  console.log('ahahahahahah');
+  res.json('eesh');
+});
 router.get('/reviews', (req, res)=>{
 
   Review.findAll({
