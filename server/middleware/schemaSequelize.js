@@ -19,7 +19,7 @@ const filepathRevs = './oldData/reviews.csv';
       host: '3.143.17.81',
       port: '32771',
       dialect: 'mysql',
-      //logging: false
+      logging: false
     });
 
     //for local host
