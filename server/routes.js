@@ -44,7 +44,7 @@ router.get('/', (req,res)=>{
   res.send('health');
 });
 router.get('/reviews', (req, res)=>{
-  console.log('1');
+
   Review.findAll({
     where: {
       productId: req.headers.product_id
