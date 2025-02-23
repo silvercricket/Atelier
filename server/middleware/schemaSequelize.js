@@ -16,7 +16,7 @@ const filepathRevs = './oldData/reviews.csv';
   //for deployed host
   const db = new Sequelize('reviews','root','my-secret-pw',
      {
-      host: '18.223.158.79',
+      host: '18.191.65.40',
       port: '32768',
       dialect: 'mysql',
       logging: false
